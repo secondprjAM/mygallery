@@ -33,6 +33,7 @@ section {
     <h1>AM:</h1>
     <div>Welcome to MyGallery.</div>
 <div>test 중입니다.</div>
+<div>test 중입니다.22</div>
 </section>
 
 <hr style="clear:both;">
