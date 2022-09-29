@@ -9,39 +9,27 @@ public class Member implements Serializable {
 
 	//스프링에서 데이터베이스 테이블 컬럼명과 필드(멤버변수)명을 일치시키면 마이바티스 매퍼의 resultMap 이 자동 작동 실행됨
 	private String userid;
-	private String userpwd;
+	private String userpassword;
 	private String username;
-	private String gender;
-	private int age;
-	private String phone;
-	private String email;
-	private String hobby;
-	private String etc;
-	private Date enroll_date;
-	private Date lastmodified;
-	private String login_ok;
-	private String admin;
+	private String usergender;
+	private String useremail;
+	private String userloginok;
+	private String useradmin;
 	
 	public Member() {}
 
-	public Member(String userid, String userpwd, String username, String gender, int age, String phone, String email,
-			String hobby, String etc, Date enroll_date, Date lastmodified, String login_ok, String admin) {
+	public Member(String userid, String userpassword, String username, String usergender, String useremail,
+			String userloginok, String useradmin) {
 		super();
 		this.userid = userid;
-		this.userpwd = userpwd;
+		this.userpassword = userpassword;
 		this.username = username;
-		this.gender = gender;
-		this.age = age;
-		this.phone = phone;
-		this.email = email;
-		this.hobby = hobby;
-		this.etc = etc;
-		this.enroll_date = enroll_date;
-		this.lastmodified = lastmodified;
-		this.login_ok = login_ok;
-		this.admin = admin;
+		this.usergender = usergender;
+		this.useremail = useremail;
+		this.userloginok = userloginok;
+		this.useradmin = useradmin;
 	}
-
+	
 	public String getUserid() {
 		return userid;
 	}
@@ -50,12 +38,12 @@ public class Member implements Serializable {
 		this.userid = userid;
 	}
 
-	public String getUserpwd() {
-		return userpwd;
+	public String getUserpassword() {
+		return userpassword;
 	}
 
-	public void setUserpwd(String userpwd) {
-		this.userpwd = userpwd;
+	public void setUserpassword(String userpassword) {
+		this.userpassword = userpassword;
 	}
 
 	public String getUsername() {
@@ -66,93 +54,49 @@ public class Member implements Serializable {
 		this.username = username;
 	}
 
-	public String getGender() {
-		return gender;
+	public String getUsergender() {
+		return usergender;
 	}
 
-	public void setGender(String gender) {
-		this.gender = gender;
+	public void setUsergender(String usergender) {
+		this.usergender = usergender;
 	}
 
-	public int getAge() {
-		return age;
+	public String getUseremail() {
+		return useremail;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setUseremail(String useremail) {
+		this.useremail = useremail;
 	}
 
-	public String getPhone() {
-		return phone;
+	public String getUserloginok() {
+		return userloginok;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setUserloginok(String userloginok) {
+		this.userloginok = userloginok;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getUseradmin() {
+		return useradmin;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUseradmin(String useradmin) {
+		this.useradmin = useradmin;
 	}
 
-	public String getHobby() {
-		return hobby;
-	}
-
-	public void setHobby(String hobby) {
-		this.hobby = hobby;
-	}
-
-	public String getEtc() {
-		return etc;
-	}
-
-	public void setEtc(String etc) {
-		this.etc = etc;
-	}
-
-	public Date getEnroll_date() {
-		return enroll_date;
-	}
-
-	public void setEnroll_date(Date enroll_date) {
-		this.enroll_date = enroll_date;
-	}
-
-	public Date getLastmodified() {
-		return lastmodified;
-	}
-
-	public void setLastmodified(Date lastmodified) {
-		this.lastmodified = lastmodified;
-	}
-
-	public String getLogin_ok() {
-		return login_ok;
-	}
-
-	public void setLogin_ok(String login_ok) {
-		this.login_ok = login_ok;
-	}
-
-	public String getAdmin() {
-		return admin;
-	}
-
-	public void setAdmin(String admin) {
-		this.admin = admin;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	@Override
 	public String toString() {
-		return "Member [userid=" + userid + ", userpwd=" + userpwd + ", username=" + username + ", gender=" + gender
-				+ ", age=" + age + ", phone=" + phone + ", email=" + email + ", hobby=" + hobby + ", etc=" + etc
-				+ ", enroll_date=" + enroll_date + ", lastmodified=" + lastmodified + ", login_ok=" + login_ok
-				+ ", admin=" + admin + "]";
+		return "Member [userid=" + userid + ", userpassword=" + userpassword + ", username=" + username + ", usergender="
+				+ usergender + ", useremail=" + useremail + ", userloginok=" + userloginok + ", useradmin=" + useradmin
+				+ "]";
 	}
 
-	
+
+
 }
