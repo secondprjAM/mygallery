@@ -13,7 +13,7 @@
 <header>
 	<h1>AM 팀의 My Gallery 입니다.</h1>
 	<h4>브렌치 변경 확인용</h4>
-	<h5>멤버 권한 확인</h5>
+	<h5>멤버 권한 확인</h5>ㅎㅎ
 </header>
 
 <hr style="clear:both;">
