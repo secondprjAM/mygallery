@@ -12,6 +12,7 @@
 <c:import url="/WEB-INF/views/common/menubar.jsp"/>
 <header>
 	<h1>AM 팀의 My Gallery 입니다.</h1>
+	<h4>브렌치 변경 확인용</h4>
 </header>
 
 <hr style="clear:both;">
