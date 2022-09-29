@@ -32,6 +32,7 @@ section {
 <section>
     <h1>AM:</h1>
     <div>Welcome to MyGallery.</div>
+    <h1>test22</h1>
 </section>
 
 <hr style="clear:both;">
