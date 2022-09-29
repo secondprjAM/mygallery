@@ -31,7 +31,7 @@ section {
 <c:import url="/WEB-INF/views/common/menubar.jsp"/>
 <section>
     <h1>AM:</h1>
-    <div>welcom to MyGallery.</div>
+    <div>Welcome to MyGallery.</div>
 </section>
 
 <hr style="clear:both;">
