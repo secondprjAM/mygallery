@@ -13,7 +13,11 @@
 <header>
 	<h1>AM 팀의 My Gallery 입니다.</h1>
 	<h4>브렌치 변경 확인용</h4>
+<<<<<<< HEAD
 	<h5>멤버 권한 확인??</h5>
+=======
+	<h5>그아래 브렌치 확인입니다.</h5>
+>>>>>>> branch 'dev-mcg' of https://github.com/secondprjAM/mygallery.git
 </header>
 
 <hr style="clear:both;">
