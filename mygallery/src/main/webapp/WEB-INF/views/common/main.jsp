@@ -32,7 +32,7 @@ section {
 <section>
     <h1>AM:</h1>
     <div>Welcome to MyGallery.</div>
-    <button>갤러리</button>
+
 </section>
 
 <hr style="clear:both;">
