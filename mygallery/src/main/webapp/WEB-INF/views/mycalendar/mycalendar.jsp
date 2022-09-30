@@ -154,6 +154,7 @@ document.getElementsByClassName("write_btn").onclick = function(){
 </script>
 </head>
 <body>
+<c:import url="/WEB-INF/views/common/menubar.jsp"/>
 <form name="calendarFrm"  id="calendarFrm"  action=""  method="GET">
 
 <div class="calendar" >
