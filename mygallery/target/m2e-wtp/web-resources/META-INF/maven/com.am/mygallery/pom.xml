@@ -241,7 +241,15 @@
 		    <artifactId>maven-compiler-plugin</artifactId>
 		    <version>3.8.1</version>
 		</dependency>
-		
+	
+	<!-- 스프링에서 opencv 테스트 -->
+				<!-- https://mvnrepository.com/artifact/org.openpnp/opencv -->
+		<!-- https://mvnrepository.com/artifact/org.openpnp/opencv -->
+		<dependency>
+		    <groupId>org.openpnp</groupId>
+		    <artifactId>opencv</artifactId>
+		    <version>4.5.5-0</version>
+		</dependency>
 
 		
       <!-- Test -->
