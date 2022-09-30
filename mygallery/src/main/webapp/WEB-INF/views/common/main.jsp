@@ -30,7 +30,7 @@
 <body>
 <c:import url="/WEB-INF/views/common/menubar.jsp"/>
 <br>
-<button><a href="mycalendar.do">캘린더</a></button>	<!-- 회원 정보 업데이트시 수정 -->
+<button align = "center"><a href="mycalendar.do">캘린더</a></button>	<!-- 회원 정보 업데이트시 수정 -->
   <section>
     <h1>AM:</h1>
     <div>welcom to MyGallery.</div>
