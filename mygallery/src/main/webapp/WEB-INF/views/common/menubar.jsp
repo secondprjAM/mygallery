@@ -43,6 +43,7 @@
 <body>
     <ul>
         <li style="float:left"><a class="active" href="#about">My Gallery</a></li>
+        <li><a href="gallery.do">Gallery</a></li>
         <li><a href="#">로그인</a></li>
         <li><a href="#">아이디찾기</a></li>
         <li><a href="#">비밀번호찾기</a></li>
