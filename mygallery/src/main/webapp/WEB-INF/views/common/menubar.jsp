@@ -1,14 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Gallery.</title>
-    <style>
+<meta charset="UTF-8">
+<title></title>
+<style type="text/css">
         ul {
             list-style-type: none;
             margin: 0;
@@ -22,6 +21,7 @@
             float: right;
             font-size: 22px;
         }
+
         li a {
         display: block;
         margin-top: 5px;
@@ -31,14 +31,16 @@
         text-decoration: none;
         transition: 0.3s;
         }
+
         li a:hover:not(.active) {
         background-color: salmon;
         }
+
         .active {
         font-weight: 300;
         font-size: 28px;
         }
-    </style>
+</style>
 </head>
 <body>
     <ul>
@@ -49,4 +51,4 @@
         <li><a href="#">회원가입</a></li>
       </ul>
 </body>
-</html>
+</html> 
