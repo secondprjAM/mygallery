@@ -17,7 +17,7 @@ public class Member implements Serializable {
 	private String useradmin;
 	
 	public Member() {}
-
+ 
 	public Member(String userid, String userpassword, String username, String usergender, String useremail,
 			String userloginok, String useradmin) {
 		super();
