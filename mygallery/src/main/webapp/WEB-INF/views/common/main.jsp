@@ -6,8 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
-<style>
-section {
+<style type="text/css">
+        section {
           text-align: center;
         }
 
@@ -29,14 +29,12 @@ section {
 </head>
 <body>
 <c:import url="/WEB-INF/views/common/menubar.jsp"/>
-<section>
+<br>
+<button><a href="mycalendar.do">캘린더</a></button>	<!-- 회원 정보 업데이트시 수정 -->
+  <section>
     <h1>AM:</h1>
-    <div>Welcome to MyGallery.</div>
-<div>test 중입니다.</div>
-<div>test 중입니다.22</div>
-</section>
-
-<hr style="clear:both;">
+    <div>welcom to MyGallery.</div>
+  </section>
 <c:import url="/WEB-INF/views/common/footer.jsp"/>
 
 </body>
