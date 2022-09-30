@@ -17,7 +17,7 @@ public class MemberServiceImpl implements MemberService {
 	public int insertMember(Member member) {
 		return memberDao.insertMember(member);
 	}
-	
+	 
 	@Override
 	public Member selectMember(String userid) {
 		return memberDao.selectMember(userid);

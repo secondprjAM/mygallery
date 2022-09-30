@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.am.mygallery.member.model.vo.Member;
-
+ 
 @Repository("memberDao")  //xml 자동 등록됨 (id지정함)
 public class MemberDao {
 	//마이바티스 매퍼파일의 쿼리문 실행

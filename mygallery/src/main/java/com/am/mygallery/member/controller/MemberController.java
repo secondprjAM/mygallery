@@ -119,7 +119,7 @@ public class MemberController {
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
 	public String loginMethod(@RequestParam("userid") String userid, @RequestParam("userpassword") String userpassword, 
 			HttpSession loginSession, SessionStatus status,
-			Model model) {
+			Model model) { 
 //		logger.info("login.do : " + userid + ", userpassword : " + userpassword);
 		
 		//암호화 처리된 패스워드 일치 조회는 select 해 온 값으로 비교함
