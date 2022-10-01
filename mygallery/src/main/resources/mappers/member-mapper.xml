@@ -3,6 +3,44 @@
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="memberMapper">
-	
-	
+
+	<!-- select 한 결과집합 ResultSet 에서 한 행씩 꺼내서 
+	각 컬럼값들을 vo 객체의 각 필드에 저장 처리하는 작업
+	: 결과 매핑
+	리스트나 맵에 여러 객체를 저장 처리도 포함됨 -->
+	<resultMap type="Member" id="resultList">
+		<result property="userid" column="userid" />
+		<result property="userpassword" column="userpassword" />
+		<result property="useremail" column="useremail" />
+		<result property="username" column="username" />
+		<result property="usergender" column="usergender" />
+		<result property="userloginok" column="userlogin_ok" />
+		<result property="useradmin" column="useradmin" />
+	</resultMap>
+
+		<!-- 회원 아이디(userid)로 회원정보 조회 -->
+	<select id="selectMember" parameterType="string" resultType="Member">
+		select * from member
+		where userid = #{ userid }
+	</select>
+
+	<!-- 회원 가입 -->
+	<insert id="insertMember" parameterType="Member">
+		insert into member (userid, userpassword, useremail, username, usergender, useradmin, userloginok)
+		values (#{ userid }, #{ userpassword }, #{ useremail }, #{ username }, #{ usergender }, default, default)
+	</insert>
+
+	<!-- 회원가입시 아이디 중복 체크 처리용 -->
+	<select id="selectCheckId" parameterType="string" resultType="_int">
+		select count(userid) from member
+		where userid = #{ uid }
+	</select>
+
+	<!-- 로그인 -->
+	<select id="selectLogin" parameterType="Member" resultType="Member">
+		select * from member
+		where userid = #{ userid } and userpassword = #{ userpassword }
+		and userloginok = 'Y'
+	</select>
+
 </mapper>

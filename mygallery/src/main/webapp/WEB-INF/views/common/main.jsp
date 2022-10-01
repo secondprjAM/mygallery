@@ -30,10 +30,13 @@
 <body>
 <c:import url="/WEB-INF/views/common/menubar.jsp"/>
 <br>
+<c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.useradmin eq 'N' }">
 <button align = "center"><a href="mycalendar.do">캘린더</a></button>	<!-- 회원 정보 업데이트시 수정 -->
+<button type="button"><a href="gallery.do">갤러리</a></button>
+</c:if>
   <section>
     <h1>AM:</h1>
-    <div>welcom to MyGallery.</div>
+    <div>Welcome to MyGallery.</div>
   </section>
 <c:import url="/WEB-INF/views/common/footer.jsp"/>
 

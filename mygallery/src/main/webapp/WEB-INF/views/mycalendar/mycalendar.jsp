@@ -232,6 +232,7 @@ document.getElementsByClassName("write_btn").onclick = function(){
 						<div class="date">
 							<a href="main.do"  style="font-size:20px;">
 								${dateList.date}
+								
 							</a>
 						</div>
 						<div>

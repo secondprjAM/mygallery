@@ -72,31 +72,27 @@ section div {
 				<li><a href="#">아이디찾기</a></li>
 				<li><a href="#">비밀번호찾기</a></li>
 				<li><a href="enrollPage.do">회원가입</a></li>
-				<li><a
-					href=" ${pageContext.servletContext.contextPath }/nlist.do">공지사항</a></li>
+				<li><a href=" ${pageContext.servletContext.contextPath }/nlist.do">공지사항</a></li>
 			</ul>
 		</c:if>
 		<!-- 로그인 한 경우 : 관리자인 경우 -->
-		<c:if
-			test="${ !empty sessionScope.loginMember and sessionScope.loginMember.useradmin eq 'Y' }">
+		<c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.useradmin eq 'Y' }">
 			<ul id = "menubar">
 				<li style="float: left"><a class="active" href="main.do">MyGallery</a></li>
-				<li><a href="#"></a>공지사항</li>
-				<li><a href="#"></a>버그리포트</li>
-				<li><a href="#"></a>회원관리</li>
-				<li><a href="#"></a>내정보</li>
+				<li><a href="#">공지사항</a></li>
+				<li><a href="#">버그리포트</a></li>
+				<li><a href="#">회원관리</a></li>
+				<li><a href="#">내정보</a></li>
 				<li><a href="logout.do">로그아웃</a></li>
 			</ul>
 		</c:if>
 		<!-- 로그인 한 경우 : 일반회원인 경우 -->
-		<c:if
-			test="${ !empty sessionScope.loginMember and sessionScope.loginMember.useradmin ne 'Y' }">
+		<c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.useradmin ne 'Y' }">
 			<ul id="menubar">
-			<li style="float:left"><a class="active" href="main.do">MyGallery</a></li>
+				<li style="float:left"><a class="active" href="main.do">MyGallery</a></li>
 				<li><a href="#">공지사항</a></li>
-				<li><a href="#">게시글</a></li>
-				<li><a href="#">QnA</a></li>
-				<li><a href="#">사진게시글</a></li>
+				<li><a href="#">버그리포트</a></li>
+				<li><a href="#">내정보</a></li>
 				<li><a href="logout.do">로그아웃</a></li>
 			</ul>
 		</c:if>
