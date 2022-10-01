@@ -11,7 +11,6 @@
 
 
 
-
 </head>
 <body>
 	<c:import url="/WEB-INF/views/common/menubar.jsp"/>

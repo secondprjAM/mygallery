@@ -12,6 +12,7 @@ import com.am.mygallery.gallery.model.vo.Gallery;
 @Service("galleryService")
 public class GalleryServiceImpl implements GalleryService {
 	
+	
 	@Autowired
 	private GalleryDao galleryDao;
 	

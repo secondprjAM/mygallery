@@ -46,4 +46,5 @@ public class GalleryDao {
 			List<Gallery> list = session.selectList("galleryMapper.selectAll");
 			return (ArrayList<Gallery>)list;
 		}
+		
 }

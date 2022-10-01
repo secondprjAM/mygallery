@@ -4,6 +4,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="galleryMapper">
 
+
 	<!-- mybatis의 장점 : -->
 	<!-- select 한 결과집합 ResultSet 에서 한 행씩 꺼내서 각 컬럼값들을 vo 객체의 각 필드에 저장 처리 작업 이것을 
 		결과 매핑라 한다. 이것은 리스트나 맾에 여러 객체를 저장 처리도 포함됨. -->

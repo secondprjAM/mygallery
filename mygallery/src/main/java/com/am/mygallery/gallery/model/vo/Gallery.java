@@ -6,6 +6,7 @@ public class Gallery implements java.io.Serializable {
 	// 상수필드
 	private static final long serialVersionUID = -6094331181718026794L;
 	
+	
 	// 필드
 	private int user_snum;
 	private int snum;
