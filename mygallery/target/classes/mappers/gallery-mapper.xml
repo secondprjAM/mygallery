@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="galleryMapper">
+
+	<!-- mybatis의 장점 : -->
+	<!-- select 한 결과집합 ResultSet 에서 한 행씩 꺼내서 각 컬럼값들을 vo 객체의 각 필드에 저장 처리 작업 이것을 
+		결과 매핑라 한다. 이것은 리스트나 맾에 여러 객체를 저장 처리도 포함됨. -->
+	<resultMap type="Gallery" id="resultGallery">
+			<id  property="user_snum" column="user_snum"  />
+			<result property="snum" column="snum" />
+			<result property="userid" column="userid" />
+			<result property="mb_imgname" column="mb_imgname" />
+			<result property="mb_sname" column="mb_sname" />
+			<result property="mb_image_date" column="mb_image_date" />
+			<result property="category" column="category" />
+			<!-- <result property="ad_sname" column="ad_sname" /> -->
+	</resultMap>
+	
+	<insert id="insertGallery" parameterType="Gallery">
+		insert into gallery_member
+		(user_snum, snum, userid, mb_imgname, mb_sname, mb_image_date, category) 
+		values (mb_gallery_seq.nextval, 
+				default,
+				#{userid}, 
+				#{mb_imgname}, 
+				#{mb_sname}, 
+				sysdate, 
+				#{category})
+	</insert>
+
+	
+	<insert id="insertSticker" parameterType="Gallery">
+		insert into gallery_member
+		(user_snum, snum, userid, mb_imgname, mb_sname, mb_image_date, category) 
+		values (mb_gallery_seq.nextval, 
+				default,
+				#{userid}, 
+				#{mb_imgname}, 
+				#{mb_sname}, 
+				sysdate, 
+				#{category})
+	</insert>
+
+	<select id="selectAll" parameterType="Gallery" resultMap="resultGallery">
+		select * from gallery_member
+	</select>
+
+	<delete id="deleteImg" parameterType="_int">
+		delete from gallery_member
+		where user_snum = #{ user_snum }
+	</delete>
+
+</mapper>
