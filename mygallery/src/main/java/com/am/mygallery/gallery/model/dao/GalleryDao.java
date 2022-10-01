@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.am.mygallery.gallery.model.vo.Gallery;
 
+
 @Repository("galleryDao")
 public class GalleryDao {
 	// MyBatis mapper file 의 query문을 dao가 실행함.
