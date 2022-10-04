@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.am.mygallery.gallery.model.dao.GalleryDao;
 import com.am.mygallery.gallery.model.vo.Gallery;
+import com.am.mygallery.sticker.Sticker;
 
 @Service("galleryService")
 public class GalleryServiceImpl implements GalleryService {
@@ -22,13 +23,12 @@ public class GalleryServiceImpl implements GalleryService {
 	}
 
 	@Override
-	public int stickerImageUpload(Gallery gallery) {
-		return galleryDao.insertStickerName(gallery);
+	public int stickerImageUpload(Sticker sticker) {
+		return galleryDao.insertStickerName(sticker);
 	}
 
 	@Override
 	public Gallery imageModify(Gallery gallery) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -39,19 +39,17 @@ public class GalleryServiceImpl implements GalleryService {
 
 	@Override
 	public int stickerImageDelete(int snum) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public Gallery moveMainPage(Gallery gallery) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<Gallery> selectList() {
-		return galleryDao.selectList();
+	public ArrayList<Gallery> selectImgList(String userid) {
+		return galleryDao.selectImgList(userid);
 	}
 
 	@Override
@@ -61,8 +59,12 @@ public class GalleryServiceImpl implements GalleryService {
 
 	@Override
 	public int deleteGallery(int inum) {
-		// TODO Auto-generated method stub
 		return galleryDao.deleteImg(inum);
+	}
+
+	@Override
+	public ArrayList<Sticker> selectStickerList(String userid) {
+		return galleryDao.selectStickerList(userid);
 	}
 
 	

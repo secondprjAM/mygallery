@@ -6,8 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
-<style>
-section {
+<style type="text/css">
+        section {
           text-align: center;
         }
 
@@ -29,13 +29,22 @@ section {
 </head>
 <body>
 <c:import url="/WEB-INF/views/common/menubar.jsp"/>
-<section>
+<br>
+<c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.useradmin eq 'N' }">
+<c:url var="cal" value = "/mycalendar.do">
+<c:param name="userid" value="${ sessionScope.loginMember.userid }"></c:param>
+</c:url>
+<button align = "center"><a href= "${ cal }">캘린더</a></button>
+
+<c:url var="gal" value = "/gallery.do">
+<c:param name="userid" value="${ sessionScope.loginMember.userid }"></c:param>
+</c:url>
+<button type="button"><a href="${ gal }">갤러리</a></button>
+</c:if>
+  <section>
     <h1>AM:</h1>
     <div>Welcome to MyGallery.</div>
-    <button>갤러리</button>
-</section>
-
-<hr style="clear:both;">
+  </section>
 <c:import url="/WEB-INF/views/common/footer.jsp"/>
 
 </body>

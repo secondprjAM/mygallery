@@ -54,8 +54,8 @@
 	</center>
 	<form action="stkinsert.do" method="post" enctype="multipart/form-data">
 	<table align="center" width="500" border="1" cellspacing="0" cellpadding="5">
-	<tr><th>스티커 이름</th><td><input type="text" name="mb_sname"></td></tr>
-	<tr><th>작성자</th><td><input type="text" name="userid" readonly value="admin"></td></tr><!-- readonly value="${ sessionScope.userid }" -->
+	<tr><th>스티커 이름</th><td><input type="text" name="s_ori_name"></td></tr>
+	<tr><th>작성자</th><td><input type="text" name="userid" readonly value="${  sessionScope.loginMember.userid  }"></td></tr><!-- readonly value="${ sessionScope.userid }" -->
 	<tr><th>스티커업로드</th><td><input type="file" name="upfile" accept="image/png, image/jpeg"></td></tr><!-- accept="image/*" -->
 	<tr>
 	<th colspan="2">

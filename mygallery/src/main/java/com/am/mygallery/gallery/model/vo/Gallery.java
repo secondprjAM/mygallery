@@ -6,39 +6,28 @@ public class Gallery implements java.io.Serializable {
 
 	private static final long serialVersionUID = 3042047769618408673L;
 
-	// 필드
-		private int user_snum;
-		private int snum;
+		private int img_num;
 		private String userid;
-		private String mb_imgname;
-		private String mb_sname;
-		private Date mb_image_date;
-		private String category;
+		private String img_ori_name;
+		private String img_rename;
+		private Date image_date;
+		
 		public Gallery() {
 			super();
 		}
-		public Gallery(int user_snum, int snum, String userid, String mb_imgname, String mb_sname, Date mb_image_date,
-				String category) {
+		public Gallery(int img_num, String userid, String img_ori_name, String img_rename, Date image_date) {
 			super();
-			this.user_snum = user_snum;
-			this.snum = snum;
+			this.img_num = img_num;
 			this.userid = userid;
-			this.mb_imgname = mb_imgname;
-			this.mb_sname = mb_sname;
-			this.mb_image_date = mb_image_date;
-			this.category = category;
+			this.img_ori_name = img_ori_name;
+			this.img_rename = img_rename;
+			this.image_date = image_date;
 		}
-		public int getUser_snum() {
-			return user_snum;
+		public int getImg_num() {
+			return img_num;
 		}
-		public void setUser_snum(int user_snum) {
-			this.user_snum = user_snum;
-		}
-		public int getSnum() {
-			return snum;
-		}
-		public void setSnum(int snum) {
-			this.snum = snum;
+		public void setImg_num(int img_num) {
+			this.img_num = img_num;
 		}
 		public String getUserid() {
 			return userid;
@@ -46,41 +35,28 @@ public class Gallery implements java.io.Serializable {
 		public void setUserid(String userid) {
 			this.userid = userid;
 		}
-		public String getMb_imgname() {
-			return mb_imgname;
+		public String getImg_ori_name() {
+			return img_ori_name;
 		}
-		public void setMb_imgname(String mb_imgname) {
-			this.mb_imgname = mb_imgname;
+		public void setImg_ori_name(String img_ori_name) {
+			this.img_ori_name = img_ori_name;
 		}
-		public String getMb_sname() {
-			return mb_sname;
+		public String getImg_rename() {
+			return img_rename;
 		}
-		public void setMb_sname(String mb_sname) {
-			this.mb_sname = mb_sname;
+		public void setImg_rename(String img_rename) {
+			this.img_rename = img_rename;
 		}
-		public Date getMb_image_date() {
-			return mb_image_date;
+		public Date getImage_date() {
+			return image_date;
 		}
-		public void setMb_image_date(Date mb_image_date) {
-			this.mb_image_date = mb_image_date;
-		}
-		public String getCategory() {
-			return category;
-		}
-		public void setCategory(String category) {
-			this.category = category;
-		}
-		public static long getSerialversionuid() {
-			return serialVersionUID;
+		public void setImage_date(Date image_date) {
+			this.image_date = image_date;
 		}
 		@Override
 		public String toString() {
-			return "Gallery [user_snum=" + user_snum + ", snum=" + snum + ", userid=" + userid + ", mb_imgname="
-					+ mb_imgname + ", mb_sname=" + mb_sname + ", mb_image_date=" + mb_image_date + ", category="
-					+ category + "]";
+			return "Gallery [img_num=" + img_num + ", userid=" + userid + ", img_ori_name=" + img_ori_name
+					+ ", img_rename=" + img_rename + ", image_date=" + image_date + "]";
 		}
-
-		
-		
 		
 }
