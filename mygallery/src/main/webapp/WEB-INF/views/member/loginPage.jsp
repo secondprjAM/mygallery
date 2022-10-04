@@ -1,57 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title></title>
-<style type="text/css">
-h1 {
-	font-size: 48pt;
-	color: navy;
-}
-div {
-	width: 500px;
-	height: 200px;
-	border: 2px solid navy;
-	position: relative; /* 본래 표시될 위치기준 상대적 위치로 지정 */
-	left: 300px;
-}
-div form {
-	font-size: 16pt;
-	color: navy;
-	font-weight: bold;
-	margin: 10px;
-	padding: 10px;
-}
-div#loginForm form input.pos {
-	position: absolute; /* 절대좌표로 위치 지정 */
-	left: 120px;
-	width: 300px;
-	height: 25px;
-}
-div#loginForm form input[type=submit] {
-	margin: 10px;
-	width: 250px;
-	height: 40px;
-	position: absolute;
-	left: 120px;
-	background: navy;
-	color: white;
-	font-size: 16pt;
-	font-weight: bold;
-}
-</style>
+<link rel="stylesheet" href="<c:url value="/resources/css/common.css" />">
 </head>
 <body>
-<h1 align="center">MyGallery 로그인</h1>
-<div id="loginForm">
-<form action="login.do" method="post">
-	<label>아이디 : <input type="text" name="userid" class="pos"></label> <br>
-	<label>암 호 : <input type="password" name="userpassword" class="pos"></label> <br>
-	<input type="submit" value="로그인">
-</form>
-</div>
+	<c:import url="/WEB-INF/views/common/menubar.jsp" />
+	<div height = "150"></div>
+	<h1 align="center">MyGallery</h1>
+	<form action="login.do" method="post" align="center">
+		<table align="center" id="logtable" >
+			<tr>
+				<td><font size="4">아  이  디 : &nbsp;</font></td>
+				<td><input width="300px" height ="10px" type="text" name="userid" class="pos"></td>
+				</th>
+			</tr>
+			<tr>
+				<td><font size="4">패스워드 : &nbsp; </font></td>
+				<td><input type="password" name="userpassword" class="pos"></td>
+			</tr>
+			<tr>
+				<th colspan="2"><input type="submit" value="로그인">
+				</th>
+			</tr>
+		</table>
+	</form>
 
+	<c:import url="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>

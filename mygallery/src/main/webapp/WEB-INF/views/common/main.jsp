@@ -31,8 +31,15 @@
 <c:import url="/WEB-INF/views/common/menubar.jsp"/>
 <br>
 <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.useradmin eq 'N' }">
-<button align = "center"><a href="mycalendar.do">캘린더</a></button>	<!-- 회원 정보 업데이트시 수정 -->
-<button type="button"><a href="gallery.do">갤러리</a></button>
+<c:url var="cal" value = "/mycalendar.do">
+<c:param name="userid" value="${ sessionScope.loginMember.userid }"></c:param>
+</c:url>
+<button align = "center"><a href= "${ cal }">캘린더</a></button>
+
+<c:url var="gal" value = "/gallery.do">
+<c:param name="userid" value="${ sessionScope.loginMember.userid }"></c:param>
+</c:url>
+<button type="button"><a href="${ gal }">갤러리</a></button>
 </c:if>
   <section>
     <h1>AM:</h1>

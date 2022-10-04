@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.am.mygallery.gallery.model.vo.Gallery;
+import com.am.mygallery.sticker.Sticker;
 
 @Repository("galleryDao")
 public class GalleryDao {
-	// MyBatis mapper file 의 query문을 dao가 실행함.
-		// root-context.xml 생성된 객체를 연결하여 사용함.
+	
 		@Autowired
 		private SqlSessionTemplate session;
 		
@@ -29,8 +29,8 @@ public class GalleryDao {
 			return session.insert("galleryMapper.insertGallery", gallery);
 		}
 
-		public int insertStickerName(Gallery gallery) {
-			return session.insert("galleryMapper.insertSticker", gallery);
+		public int insertStickerName(Sticker sticker) {
+			return session.insert("galleryMapper.insertSticker", sticker);
 		}
 		
 		public List<Object> selectFaceImageName1(Gallery gallery) {
@@ -41,9 +41,14 @@ public class GalleryDao {
 			return session.delete("galleryMapper.deleteImg", inum);
 		}
 
-		public ArrayList<Gallery> selectList() {
-			List<Gallery> list = session.selectList("galleryMapper.selectAll");
+		public ArrayList<Gallery> selectImgList(String userid) {
+			List<Gallery> list = session.selectList("galleryMapper.selectImgAll", userid);
 			return (ArrayList<Gallery>)list;
+		}
+
+		public ArrayList<Sticker> selectStickerList(String userid) {
+			List<Sticker> list = session.selectList("galleryMapper.selectStickerAll", userid);
+			return (ArrayList<Sticker>)list;
 		}
 		
 }

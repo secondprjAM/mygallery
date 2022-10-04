@@ -149,6 +149,7 @@ public class MemberController {
 			//로그인 성공시 내보낼 뷰파일명 지정
 			viewName = "common/main";
 		}else {  //로그인 실패
+			model.addAttribute("titleMsg","로그인 실패");
 			model.addAttribute("message", 
 					"로그인 실패 : 아이디나 암호 확인하세요.<br>"
 					+ "또는 로그인 제한 회원인지 관리자에게 문의하세요.");

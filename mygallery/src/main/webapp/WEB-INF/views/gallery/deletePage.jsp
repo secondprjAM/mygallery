@@ -26,28 +26,24 @@
 	<table align="center" border="1" cellspacing="0" cellpadding="3" width="700">
 		<tr>
 			<th>이미지</th>
-			<!-- <th>번호</th> -->
 			<th>유저아이디</th>
 			<th>등록날짜</th>
 			<th>삭제</th>
 		</tr>
 		<c:forEach items="${ requestScope.list }" var="g">
 		<tr align="center">
-			<c:if test="${ g.mb_imgname != null }">
-				<td width="100"><img src="resources/gallery/faceImages/${ g.mb_imgname }" width="100" height="100"></td>
+			<c:if test="${ g.img_rename != null }">
+				<td width="100"><img src="resources/gallery/faceImages/${ g.img_rename }" width="100" height="100"></td>
 			<td>${ g.userid }</td>
-			<td><fmt:formatDate value="${ g.mb_image_date }" pattern="yyyy-MM-dd"/></td>
+			<td><fmt:formatDate value="${ g.image_date }" pattern="yyyy-MM-dd"/></td>
 			<c:url var="gdel" value="/gdel.do">
-					<c:param name="inum" value="${ g.user_snum }"/>
+					<c:param name="rfile" value = "${ g.img_rename }"/>
+					<c:param name="inum" value="${ g.img_num }"/>
+					<c:param name= "userid" value = "${ g.userid }"/>
 				</c:url>
 			
 			<td><button onclick="javascript:location.href='${ gdel}';">delete</button></td>
-				
-				
 			</c:if>
-			<%-- <c:if test="${ g.mb_imgname == null }">&nbsp;</c:if> --%>
-			
-			
 			
 		</tr>
 		</c:forEach>

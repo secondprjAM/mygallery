@@ -3,7 +3,7 @@
 "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<settings>		<!-- mybatis에서는 null값이 자동으로 안들어간다.==>에러    settings로 설정해 주면 null값이 자동으로 들어감 -->
+	<settings>
 		<setting name="jdbcTypeForNull" value="NULL"/>
 		<setting name="cacheEnabled" value="false"/>
 	</settings>
@@ -13,12 +13,14 @@
 		<typeAlias type="com.am.mygallery.notice.model.vo.Notice" alias="Notice" />
 		<typeAlias type="com.am.mygallery.board.model.vo.Board" alias="Board" />
 		<typeAlias type="com.am.mygallery.common.SearchDate" alias="SearchDate" />
-		
+		<typeAlias type="com.am.mygallery.gallery.model.vo.Gallery" alias="Gallery"/>
+		<typeAlias type="com.am.mygallery.sticker.Sticker" alias="Sticker"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mappers/board-mapper.xml" />
 		<mapper resource="mappers/member-mapper.xml" />
 		<mapper resource="mappers/notice-mapper.xml" />
+		<mapper resource="mappers/gallery-mapper.xml" />
 	</mappers>
 </configuration>
