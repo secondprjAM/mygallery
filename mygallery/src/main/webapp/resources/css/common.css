@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+h1 {
+	font-size: 48pt;
+	margin: 0;
+}
+
+div {
+	width: 500px;
+	height: 200px;
+	position: relative; /* 본래 표시될 위치기준 상대적 위치로 지정 */
+}
+table{
+	border-collapse: separate;
+	border-spacing: 0 30px;
+}
+table#logtable input[type=submit] {
+	background-color: rgba(51, 51, 51, 1);
+	border-radius: 30px;
+	letter-spacing: 2px;
+	font-size: 15px;
+	display: inline-block;
+	color: white;
+	padding: 8px 37px;
+	text-align: center;
+	transition: 0.3s;
+	font-weight: 400;
+	cursor: pointer;
+}

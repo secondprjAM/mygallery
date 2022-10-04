@@ -20,14 +20,17 @@
 	</center>
 	<form action="imginsert.do" method="post" enctype="multipart/form-data">
 	<table align="center" width="500" border="1" cellspacing="0" cellpadding="5">
-	<tr><th>이미지 이름</th><td><input type="text" name="mb_imgname"></td></tr>
-	<tr><th>작성자</th><td><input type="text" name="userid" readonly value="admin"></td></tr><!-- readonly value="${ sessionScope.userid }" -->
+	<tr><th>이미지 이름</th><td><input type="text" name="img_ori_name"></td></tr>
+	<tr><th>작성자</th><td><input type="text" name="userid" readonly value="${  sessionScope.loginMember.userid  }"></td></tr><!-- readonly value="${ sessionScope.userid }" -->
 	<tr><th>이미지업로드</th><td><input type="file" name="upfile" accept="image/png, image/jpeg"></td></tr><!-- accept="image/*" -->
 	<tr>
 	<th colspan="2">
 		<input type="submit" value="업로드"> &nbsp; 
 		<input type="reset" value="작성취소"> &nbsp; 
-		<button onclick="javascript:history.go(-1);">이전페이지</button>
+		<c:url var="back" value = "/gallery.do">
+		<c:param name="userid" value="${ sessionScope.loginMember.userid }"></c:param>
+		</c:url>
+		<button><a href = "${ back }">이전페이지</button>
 	</th>
 	</tr>
 </table>

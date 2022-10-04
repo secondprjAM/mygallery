@@ -1,6 +1,7 @@
 package com.am.mygallery.gallery.controller;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.am.mygallery.gallery.model.service.GalleryService;
 import com.am.mygallery.gallery.model.vo.Gallery;
+import com.am.mygallery.sticker.Sticker;
 
 @Controller
 public class GalleryController {
@@ -38,6 +40,7 @@ public class GalleryController {
 	// 이미지 업로드페이지 이동 처리
 	@RequestMapping("imgUpload.do")
 	public String moveToImageUpload() {
+
 		return "gallery/imageUpload";
 	}
 
@@ -60,42 +63,36 @@ public class GalleryController {
 	public String imageInsertMethod(Gallery gallery, Model model, HttpServletRequest request,
 			@RequestParam(name = "upfile", required = false) MultipartFile mfile) {
 		logger.info("imginsert.do : " + mfile);
-
-		// 업로드된 파일 저장 폴더 지정
 		String savePath = request.getSession().getServletContext().getRealPath("resources/gallery/faceImages");
 
-		// 첨부파일이 있을 때만 업로드된 파일을 지정된 폴더로 옮기기
 		if (!mfile.isEmpty()) {
-
-			// 전송온 파일이름 추출함
 			String fileName = mfile.getOriginalFilename();
 			if (fileName != null && fileName.length() > 0) {
-
-				String renameFileName = gallery.getMb_imgname();
-				// 원본 파일의 확장자를 추출해서, 변경 파일명에 붙여줌
+				SimpleDateFormat sdf = 
+						new SimpleDateFormat("yyyyMMddHHmmss");
+				String renameFileName = sdf.format(
+						new java.sql.Date(System.currentTimeMillis()));
 				renameFileName += "." + fileName.substring(fileName.lastIndexOf(".") + 1);
-
-				// 파일 객체 만들기
+				
 				File originFile = new File(savePath + "\\" + fileName);
 				File renameFile = new File(savePath + "\\" + renameFileName);
-
-				// 업로드된 파일 저장시키고, 바로 이름바꾸기 실행함
 				try {
 					mfile.transferTo(renameFile);
 				} catch (Exception e) {
 					e.printStackTrace();
-					model.addAttribute("message", "전송파일 저장 실패!");
+					model.addAttribute("titleMsg", "이미지 업로드 실패");
+					model.addAttribute("message", e.getMessage().toString());
 					return "common/error";
 				}
 
-				// notice 객체에 첨부파일명 기록 저장하기
-				gallery.setMb_imgname(renameFileName);
-				// gallery.setMb_imgname(renameFileName);
+				gallery.setImg_ori_name(fileName);
+				gallery.setImg_rename(renameFileName);
 			}
 
 		} // 첨부파일이 있을 때만
 
 		if (galleryService.faceImageUpload(gallery) > 0) {
+			model.addAttribute("userid",gallery.getUserid());
 			return "redirect:gallery.do";
 		} else {
 			model.addAttribute("message", "사진 업로드 실패!");
@@ -107,23 +104,20 @@ public class GalleryController {
 
 	// 스티커 업로드 처리
 	@RequestMapping(value = "stkinsert.do", method = RequestMethod.POST)
-	public String stickerInsertMethod(Gallery gallery, Model model, HttpServletRequest request,
+	public String stickerInsertMethod(Sticker sticker, Model model, HttpServletRequest request,
 			@RequestParam(name = "upfile", required = false) MultipartFile mfile) {
-		logger.info("imginsert.do : " + mfile);
 
-		// 업로드된 파일 저장 폴더 지정
 		String savePath = request.getSession().getServletContext().getRealPath("resources/gallery/stickers");
-
-		// 첨부파일이 있을 때만 업로드된 파일을 지정된 폴더로 옮기기
 		if (!mfile.isEmpty()) {
 
-			// 전송온 파일이름 추출함
 			String fileName = mfile.getOriginalFilename();
 			if (fileName != null && fileName.length() > 0) {
-				String renameFileName = gallery.getMb_sname();
-				// 원본 파일의 확장자를 추출해서, 변경 파일명에 붙여줌
+				SimpleDateFormat sdf = 
+						new SimpleDateFormat("yyyyMMddHHmmss");
+				String renameFileName = sdf.format(
+						new java.sql.Date(System.currentTimeMillis()));
 				renameFileName += "." + fileName.substring(fileName.lastIndexOf(".") + 1);
-				// 파일 객체 만들기
+			
 				File originFile = new File(savePath + "\\" + fileName);
 				File renameFile = new File(savePath + "\\" + renameFileName);
 
@@ -135,12 +129,12 @@ public class GalleryController {
 					model.addAttribute("message", "전송파일 저장 실패!");
 					return "common/error";
 				}
-				// notice 객체에 첨부파일명 기록 저장하기
-				gallery.setMb_sname(renameFileName);
+				sticker.setS_ori_name(fileName);
+				sticker.setS_rename(renameFileName);
 			}
-
 		}
-		if (galleryService.stickerImageUpload(gallery) > 0) {
+		if (galleryService.stickerImageUpload(sticker) > 0) {
+			model.addAttribute("userid",sticker.getUserid());
 			return "redirect:gallery.do";
 		} else {
 			model.addAttribute("message", "스티커 업로드 실패!");
@@ -152,22 +146,18 @@ public class GalleryController {
 
 	// 이미지 전체목록 처리
 	@RequestMapping("gallery.do")
-	public String galleryListViewMethod(Model model) {
-		ArrayList<Gallery> list = galleryService.selectList();
-
-		if (list.size() > 0) {
-			model.addAttribute("list", list);
-			return "gallery/galleryPage";
-		} else {
-			model.addAttribute("message", "이미지 정보가 존재하지 않습니다.");
-			return "common/error";
-		}
+	public String galleryListViewMethod(@RequestParam("userid") String userid, Model model) {
+		ArrayList<Gallery> list = galleryService.selectImgList(userid);
+		ArrayList<Sticker> slist = galleryService.selectStickerList(userid);
+		model.addAttribute("list", list);
+		model.addAttribute("slist",slist);
+		return "gallery/galleryPage";
 	}
 
 	// 이미지 삭제하기 위한 전체 목록 조회 처리
 	@RequestMapping("delete.do")
-	public String galleryDeleteMethod(Model model) {
-		ArrayList<Gallery> list = galleryService.selectList();
+	public String galleryDeleteMethod(@RequestParam("userid") String userid, Model model) {
+		ArrayList<Gallery> list = galleryService.selectImgList(userid);
 
 		if (list.size() > 0) {
 			model.addAttribute("list", list);
@@ -179,28 +169,25 @@ public class GalleryController {
 	}
 
 	@RequestMapping("gdel.do")
-	public String galleryDeleteMethod(@RequestParam("inum") int inum,
+	public String galleryDeleteMethod(@RequestParam("inum") int img_num, @RequestParam("userid") String userid,
 			@RequestParam(name = "rfile", required = false) String renameFileName, Model model,
 			HttpServletRequest request) {
-		System.out.println("전달 받은 inum : " + inum);
-		if (galleryService.deleteGallery(inum) > 0) {
-			// 첨부된 파일이 있는 공지일때는 저장 폴더에 있는
-			// 첨부파일도 삭제함
+		if (galleryService.deleteGallery(img_num) > 0) {
 			if (renameFileName != null) {
 				new File(request.getSession().getServletContext().getRealPath("resources/gallery/faceImages") + "\\"
 						+ renameFileName).delete();
 			}
-
+			model.addAttribute("userid",userid);
 			return "redirect:gallery.do";
 		} else {
-			model.addAttribute("message", inum + "번 사진 삭제 실패!");
+			model.addAttribute("message", img_num + "번 사진 삭제 실패!");
 			return "common/error";
 		}
 	}
 
 	@RequestMapping("modify.do")
 	public String galleryModifyMethod(Model model) {
-		ArrayList<Gallery> list = galleryService.selectList();
+		ArrayList<Gallery> list = null;//galleryService.selectImgList();
 
 		if (list.size() > 0) {
 			model.addAttribute("list", list);
@@ -210,10 +197,4 @@ public class GalleryController {
 			return "common/error";
 		}
 	}
-	
-	
-	
-	
-	
-
 } // class end
