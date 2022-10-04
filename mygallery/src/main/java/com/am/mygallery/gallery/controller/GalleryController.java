@@ -167,7 +167,22 @@ public class GalleryController {
 			return "common/error";
 		}
 	}
+	
+	// 스티커 삭제하기 위한 전체 목록 조회 처리
+	@RequestMapping("sdelete.do")
+	public String stickerDeleteMethod(@RequestParam("userid") String userid, Model model) {
+		ArrayList<Sticker> slist = galleryService.selectStickerList(userid);
 
+		if (slist.size() > 0) {
+			model.addAttribute("list", slist);
+			return "gallery/stickerDelPage";
+		} else {
+			model.addAttribute("message", "스티커 정보가 존재하지 않습니다.");
+			return "common/error";
+		}
+	}
+	
+	
 	@RequestMapping("gdel.do")
 	public String galleryDeleteMethod(@RequestParam("inum") int img_num, @RequestParam("userid") String userid,
 			@RequestParam(name = "rfile", required = false) String renameFileName, Model model,
@@ -186,8 +201,8 @@ public class GalleryController {
 	}
 
 	@RequestMapping("modify.do")
-	public String galleryModifyMethod(Model model) {
-		ArrayList<Gallery> list = null;//galleryService.selectImgList();
+	public String galleryModifyMethod(@RequestParam("userid") String userid, Model model) {
+		ArrayList<Gallery> list = galleryService.selectImgList(userid);
 
 		if (list.size() > 0) {
 			model.addAttribute("list", list);
