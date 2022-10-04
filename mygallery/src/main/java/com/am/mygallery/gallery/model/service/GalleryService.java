@@ -15,11 +15,14 @@ public interface GalleryService {
 	Gallery moveMainPage(Gallery gallery);
 	int faceImageDelete(int inum);
 	List<Object> faceImageDelete(Gallery gallery);
+	
+	
+	// 이미지 삭제하기 위한 목록조회
 	ArrayList<Gallery> selectImgList(String userid);
-	ArrayList<Sticker>selectStickerList(String userid);
 	
 	int deleteGallery(int inum);
 	
-	
+	// sticker 삭제하기 위한 목록조회
+	ArrayList<Sticker> selectStickerList(String userid);
 	
 }

@@ -198,6 +198,9 @@ hr {
 	<c:url var="del" value = "/delete.do">
 	<c:param name="userid" value="${ sessionScope.loginMember.userid }"></c:param>
 	</c:url>
+	<c:url var="sdel" value = "/sdelete.do">
+	<c:param name="userid" value="${ sessionScope.loginMember.userid }"></c:param>
+	</c:url>
 	
 	<center>
 		<div class="container">
@@ -206,6 +209,7 @@ hr {
 			<a href="sticketUpload.do" class="btn-two blue rounded">스티커업로드</a> 
 			<a href="${ modi }" class="btn-two blue rounded">사진 편집</a> 
 			<a href="${ del }" class="btn-two blue rounded">사진 삭제</a>
+			<a href="${ sdel }" class="btn-two blue rounded">스티커 삭제</a>
 			<a class="btn-two blue rounded" onclick="javascript:history.go(-1);">이전페이지</a>
 		</div>
 	</center>
