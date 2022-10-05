@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="breportMapper">
+	<resultMap type="Breport" id="resultBreport">
+		<id column="b_no" property="b_no" />
+		<result column="b_title" property="b_title" />
+		<result column="b_date" property="b_date" />
+		<result column="userid" property="userid" />
+		<result column="b_content" property="b_content" />
+		<result column="b_readcount" property="b_readcount"/>
+		<result column="b_upfile" property="b_upfile" />
+		<result column="b_refile" property="b_refile" />
+		<result column="b_lev" property="b_lev" />
+		<result column="b_ref" property="b_ref" />
+		<result column="b_reply_ref" property="b_reply_ref" />
+		<result column="b_reply_lev" property="b_reply_lev" />
+	</resultMap>
+	
+	<select id="getListCount" resultType="_int">
+		select count(*) from breport
+	</select>
+	
+	<select id="selectList" parameterType="Paging" resultMap="resultBreport">
+		<![CDATA[
+			SELECT *  
+			FROM (SELECT ROWNUM RNUM, B_NO, B_TITLE, 
+						  USERID, B_CONTENT, 
+						  B_UPFILE, B_REFILE, B_DATE, 
+			               B_LEV, B_REF, B_REPLY_REF, 
+			               B_REPLY_SEQ, B_READCOUNT 
+			       FROM (SELECT * FROM BREPORT 
+			              ORDER BY B_REF DESC, 
+			              			B_REPLY_REF DESC,
+			                        B_LEV ASC, 
+			                        B_REPLY_SEQ ASC))  
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+	</select>
+	
+	
+	<update id="addReadCount" parameterType="_int">
+		update breport
+		set b_readcount = b_readcount + 1
+		where b_no = #{ b_no }
+	</update>
+	
+	<select id="selectBreport" parameterType="_int" resultMap="resultBreport">
+		select * from breport
+		where b_no = #{ b_no }
+	</select>
+	
+	
+	<update id="updateReplySeq1" parameterType="Breport">
+		update breport
+		set b_reply_seq = b_reply_seq + 1
+		where b_ref = #{ b_ref }
+		and b_lev = #{ b_lev }
+	</update>
+	
+	<update id="updateReplySeq2" parameterType="Breport">
+		update breport
+		set b_reply_seq = b_reply_seq + 1
+		where board_ref = #{ b_ref }
+		and b_lev = #{ board_lev }
+		and b_reply_ref = #{ b_reply_ref }
+	</update>
+	
+	
+	<insert id="insertReply1" parameterType="Breport">
+		insert into breport (b_no, b_title, 
+				userid, b_content, b_date, 
+				b_upfile, b_refile, b_lev, 
+				b_ref, b_reply_ref, 
+				b_reply_seq, b_readcount)
+		values ((select max(b_no) + 1 from breport), 
+				#{b_title}, #{userid}, 
+				#{b_content}, sysdate, null, null, 
+				2, #{b_ref}, 
+				(select max(b_no) + 1 from breport),
+				#{b_reply_seq}, default)
+	</insert>
+	
+	<insert id="insertReply2" parameterType="Breport">
+		insert into breport (b_no, b_title, 
+				userid, b_content, b_date, 
+				b_upfile, 
+				b_refile, b_lev, 
+				b_ref, b_reply_ref, 
+				b_reply_seq, b_readcount)
+		values ((select max(b_no) + 1 from breport), 
+				#{b_title}, #{userid}, 
+				#{b_content}, sysdate, null, null, 
+				3, #{b_ref}, #{b_reply_ref},
+				#{b_reply_seq}, default)
+	</insert>
+	
+	<insert id="insertOrigin" parameterType="Breport">
+		insert into breport (b_no, b_title, 
+				userid, b_content, b_date, 
+				b_upfile, 
+				b_refile, b_lev, 
+				b_ref, b_reply_ref, 
+				b_reply_seq, b_readcount)
+		values ((select max(b_no) + 1 from breport), 
+				#{b_title}, #{userid}, 
+				#{b_content}, sysdate, 
+				#{b_upfile}, 
+				#{b_refile}, 
+				1, (select max(b_no) + 1 from breport),
+				null, default, default)
+	</insert>
+	
+	
+	<delete id="deleteBreport" parameterType="Breport">
+		delete from breport
+		<if test="b_lev == 1">
+			where b_ref = #{b_no}
+		</if>
+		<if test="b_lev == 2">
+			where b_reply_ref = #{b_no}
+		</if>
+		<if test="b_lev == 3">
+			where b_no = #{b_no}
+		</if>
+	</delete>
+	
+	<update id="updateReply" parameterType="Breport">
+		update breport
+		set b_title = #{b_title}, 
+			b_content = #{b_content}
+		where b_no = #{ b_no }
+	</update>
+	
+	<update id="updateOrigin" parameterType="Breport">
+		update breport
+		set b_title = #{b_title}, 
+			b_content = #{b_content}
+			<if test="b_upfile != null">
+				, 
+				b_upfile = #{b_upfile},
+				b_refile = #{b_refile}
+			</if>
+			<if test="b_upfile == null">
+				, 
+				b_upfile = null,
+				b_refile = null
+			</if>
+		where b_no = #{ b_no }
+	</update>
+	
+</mapper>
