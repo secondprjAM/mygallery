@@ -1,8 +1,11 @@
 package com.am.mygallery.member.model.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.am.mygallery.common.Paging;
 import com.am.mygallery.member.model.dao.MemberDao;
 import com.am.mygallery.member.model.vo.Member;
 
@@ -33,6 +36,33 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectLogin(member);
 	}
 	
+	@Override
+	public int selectListCount() {
+		return memberDao.selectListCount();
+	}
 
+	@Override
+	public ArrayList<Member> selectList() {
+		return memberDao.selectList();
+	}
 
+	@Override
+	public ArrayList<Member> selectSearchUserid(String keyword) {
+		return memberDao.selectSearchUserid(keyword);
+	}
+
+	@Override
+	public ArrayList<Member> selectSearchLoginOK(String keyword) {
+		return memberDao.selectSearchLoginOK(keyword);
+	}
+
+	@Override
+	public int updateLoginOK(Member member) {
+		return memberDao.updateLoginOK(member);
+	}
+
+	@Override
+	public ArrayList<Member> selectList2(Paging page) {
+		return memberDao.selectList2();
+	}
 }
