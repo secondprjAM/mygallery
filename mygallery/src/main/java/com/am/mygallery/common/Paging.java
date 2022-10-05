@@ -1,3 +1,4 @@
+
 package com.am.mygallery.common;
 
 public class Paging {

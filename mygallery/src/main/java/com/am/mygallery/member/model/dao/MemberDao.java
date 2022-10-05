@@ -1,5 +1,8 @@
 package com.am.mygallery.member.model.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -28,6 +31,38 @@ public class MemberDao {
 
 	public Member selectLogin(Member member) {
 		return session.selectOne("memberMapper.selectLogin", member);
+	}
+
+	public ArrayList<Member> selectList() {
+		List<Member> list = session.selectList("memberMapper.selectList");
+		return (ArrayList<Member>)list;
+	}
+
+	
+	// 검색 처리용 ---------------------------------
+	public ArrayList<Member> selectSearchUserid(String keyword){
+		List<Member> list = session.selectList(
+				"memberMapper.selectSearchUserid", keyword);
+		return (ArrayList<Member>)list;
+	}
+	
+	public ArrayList<Member> selectSearchLoginOK(String keyword){
+		List<Member> list = session.selectList(
+				"memberMapper.selectSearchLoginOK", keyword);
+		return (ArrayList<Member>)list;
+	}
+
+	public int selectListCount() {
+		return session.selectOne("memberMapper.getListCount");
+	}
+
+	public int updateLoginOK(Member member) {
+		return session.update("memberMapper.updateLoginOK", member);
+	}
+
+	public ArrayList<Member> selectList2() {
+		List<Member> list = session.selectList("memberMapper.selectList2");
+		return (ArrayList<Member>)list;
 	}
 
 }

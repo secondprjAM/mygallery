@@ -76,13 +76,18 @@ section div {
 			</ul>
 		</c:if>
 		<!-- 로그인 한 경우 : 관리자인 경우 -->
-		<c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.useradmin eq 'Y' }">
+		<!-- 로그인 한 경우 : 관리자인 경우 -->
+		<c:if
+			test="${ !empty sessionScope.loginMember and sessionScope.loginMember.useradmin eq 'Y' }">
 			<ul id = "menubar">
 				<li style="float: left"><a class="active" href="main.do">MyGallery</a></li>
-				<li><a href="#">공지사항</a></li>
-				<li><a href="#">버그리포트</a></li>
-				<li><a href="#">회원관리</a></li>
-				<li><a href="#">내정보</a></li>
+				<li><a href="${ pageContext.servletContext.contextPath }/nlist.do">공지사항관리</a></li>
+				<li><a href="#"></a>버그리포트</li>
+				<li><a href="${ pageContext.servletContext.contextPath }/mlist.do">회원관리</a></li>
+				<li><c:url var="callMyinfo" value="/admininfo.do">
+               			<c:param name="userid" value="${ loginMember.userid }" />
+            		 </c:url>
+         			 <a href="${ callMyinfo }">내정보</a></li>				
 				<li><a href="logout.do">로그아웃</a></li>
 			</ul>
 		</c:if>
@@ -92,7 +97,10 @@ section div {
 				<li style="float:left"><a class="active" href="main.do">MyGallery</a></li>
 				<li><a href="#">공지사항</a></li>
 				<li><a href="#">버그리포트</a></li>
-				<li><a href="#">내정보</a></li>
+				<li><c:url var="callMyinfo" value="/myinfo.do">
+               			<c:param name="userid" value="${ loginMember.userid }" />
+            		 </c:url>
+         			 <a href="${ callMyinfo }">내정보</a></li>
 				<li><a href="logout.do">로그아웃</a></li>
 			</ul>
 		</c:if>
