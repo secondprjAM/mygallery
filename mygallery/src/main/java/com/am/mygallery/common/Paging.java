@@ -1,7 +1,8 @@
+
 package com.am.mygallery.common;
 
 public class Paging {
-	//한 페이지에 출력할 시작행과 끝행을 저장하는 객체
+	
 	private int startRow;
 	private int endRow;
 	
@@ -32,6 +33,7 @@ public class Paging {
 	@Override
 	public String toString() {
 		return "Paging [startRow=" + startRow + ", endRow=" + endRow + "]";
-	}	
+	}
+	
 	
 }

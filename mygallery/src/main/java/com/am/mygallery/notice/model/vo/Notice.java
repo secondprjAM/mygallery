@@ -6,93 +6,102 @@ import java.sql.Date;
 public class Notice implements Serializable {
 	private static final long serialVersionUID = 1365978153616705231L;
 	
-	private int noticeno;
-	private String noticetitle;
-	private Date noticedate;
-	private String noticewriter;
-	private String noticecontent;
-	private String original_filepath;
-	private String rename_filepath;
+	private int notice_no;
+	private String userid;
+	private String notice_title;
+	private Date notice_date;
+	private String notice_content;
+	private int notice_readcount;
+	private String notice_upfile;
+	private String notice_refile;
 	
 	public Notice() {}
-
-	public Notice(int noticeno, String noticetitle, Date noticedate, String noticewriter, String noticecontent,
-			String original_filepath, String rename_filepath) {
+	
+	public Notice(int notice_no, String userid, String notice_title, Date notice_date, String notice_content,
+			int notice_readcount, String notice_upfile, String notice_refile) {
 		super();
-		this.noticeno = noticeno;
-		this.noticetitle = noticetitle;
-		this.noticedate = noticedate;
-		this.noticewriter = noticewriter;
-		this.noticecontent = noticecontent;
-		this.original_filepath = original_filepath;
-		this.rename_filepath = rename_filepath;
+		this.notice_no = notice_no;
+		this.userid = userid;
+		this.notice_title = notice_title;
+		this.notice_date = notice_date;
+		this.notice_content = notice_content;
+		this.notice_readcount = notice_readcount;
+		this.notice_upfile = notice_upfile;
+		this.notice_refile = notice_refile;
 	}
 
-	public int getNoticeno() {
-		return noticeno;
+	public int getNotice_no() {
+		return notice_no;
 	}
 
-	public void setNoticeno(int noticeno) {
-		this.noticeno = noticeno;
+	public void setNotice_no(int notice_no) {
+		this.notice_no = notice_no;
 	}
 
-	public String getNoticetitle() {
-		return noticetitle;
+	public String getUserid() {
+		return userid;
 	}
 
-	public void setNoticetitle(String noticetitle) {
-		this.noticetitle = noticetitle;
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 
-	public Date getNoticedate() {
-		return noticedate;
+	public String getNotice_title() {
+		return notice_title;
 	}
 
-	public void setNoticedate(Date noticedate) {
-		this.noticedate = noticedate;
+	public void setNotice_title(String notice_title) {
+		this.notice_title = notice_title;
 	}
 
-	public String getNoticewriter() {
-		return noticewriter;
+	public Date getNotice_date() {
+		return notice_date;
 	}
 
-	public void setNoticewriter(String noticewriter) {
-		this.noticewriter = noticewriter;
+	public void setNotice_date(Date notice_date) {
+		this.notice_date = notice_date;
 	}
 
-	public String getNoticecontent() {
-		return noticecontent;
+	public String getNotice_content() {
+		return notice_content;
 	}
 
-	public void setNoticecontent(String noticecontent) {
-		this.noticecontent = noticecontent;
+	public void setNotice_content(String notice_content) {
+		this.notice_content = notice_content;
 	}
 
-	public String getOriginal_filepath() {
-		return original_filepath;
+	public int getNotice_readcount() {
+		return notice_readcount;
 	}
 
-	public void setOriginal_filepath(String original_filepath) {
-		this.original_filepath = original_filepath;
+	public void setNotice_readcount(int notice_readcount) {
+		this.notice_readcount = notice_readcount;
 	}
 
-	public String getRename_filepath() {
-		return rename_filepath;
+	public String getNotice_upfile() {
+		return notice_upfile;
 	}
 
-	public void setRename_filepath(String rename_filepath) {
-		this.rename_filepath = rename_filepath;
+	public void setNotice_upfile(String notice_upfile) {
+		this.notice_upfile = notice_upfile;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public String getNotice_refile() {
+		return notice_refile;
 	}
+
+	public void setNotice_refile(String notice_refile) {
+		this.notice_refile = notice_refile;
+	}
+
 
 	@Override
 	public String toString() {
-		return "Notice [noticeno=" + noticeno + ", noticetitle=" + noticetitle + ", noticedate=" + noticedate
-				+ ", noticewriter=" + noticewriter + ", noticecontent=" + noticecontent + ", original_filepath="
-				+ original_filepath + ", rename_filepath=" + rename_filepath + "]";
+		return "Notice [notice_no=" + notice_no + ", userid=" + userid + ", notice_title=" + notice_title
+				+ ", notice_date=" + notice_date + ", notice_content=" + notice_content + ", notice_readcount="
+				+ notice_readcount + ", notice_upfile=" + notice_upfile + ", notice_refile=" + notice_refile + "]";
 	}
+
+	
 	
 }
