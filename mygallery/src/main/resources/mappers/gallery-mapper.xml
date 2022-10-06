@@ -55,5 +55,26 @@
 		delete from GALLERY
 		where img_num = #{ img_num }
 	</delete>
+	
+	
+	<delete id="deleteStk" parameterType="_int">
+		delete from Sticker
+		where snum = #{ snum }
+	</delete>
+	
+<!-- 	
+	<select id="selectList" parameterType="Paging" resultMap="resultGallery">
+			<![CDATA[
+			select * from (select rownum rnum, img_num, userid, 
+							img_ori_name, img_rename, image_date from (select * from gallery
+							order by img_num desc)) where rnum >= #{ startRow } and rnum <= #{ endRow }
+			]]>
+	</select>
+	
+	<select id="getListCount" resultType="_int">
+		select count(*) from gallery
+	</select> -->
+	
+	
 
 </mapper>
