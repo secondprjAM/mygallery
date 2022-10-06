@@ -77,6 +77,16 @@ public class BreportDao {
 		return session.delete("breportMapper.deleteBreport", breport);
 	}
 
+	public ArrayList<Breport> selectSearchTitle(String keyword) {
+		List<Breport> list = session.selectList("breportMapper.searchTitle", keyword);
+		return (ArrayList<Breport>)list;
+	}
+
+	public ArrayList<Breport> selectSearchDate(SearchDate date) {
+		List<Breport> list = session.selectList("breportMapper.searchDate", date);
+		return (ArrayList<Breport>)list;
+	}
+
 	
 
 	

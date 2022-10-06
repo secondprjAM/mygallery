@@ -39,6 +39,17 @@
 		]]>
 	</select>
 	
+	<select id="searchTitle" resultMap="resultBreport" parameterType="string">
+		select * from breport
+		where b_title like '%' || #{ keyword } || '%'
+		order by b_no asc
+	</select>
+	
+	<select id="searchDate" resultMap="resultBreport" parameterType="SearchDate">
+		select * from breport
+		where b_date between #{ begin } and #{ end }
+		order by b_no asc
+	</select>
 	
 	<update id="addReadCount" parameterType="_int">
 		update breport
@@ -62,8 +73,8 @@
 	<update id="updateReplySeq2" parameterType="Breport">
 		update breport
 		set b_reply_seq = b_reply_seq + 1
-		where board_ref = #{ b_ref }
-		and b_lev = #{ board_lev }
+		where b_ref = #{ b_ref }
+		and b_lev = #{ b_lev }
 		and b_reply_ref = #{ b_reply_ref }
 	</update>
 	
@@ -149,5 +160,24 @@
 			</if>
 		where b_no = #{ b_no }
 	</update>
+	
+	
+	<update id="updateBreport" parameterType="Breport">
+		update breport
+		set b_title = #{b_title},
+			b_content = #{b_content}
+			<if test="b_upfile != null">
+			, b_upfile = #{b_upfile}
+			, b_refile = #{b_refile}
+			</if>
+			<if test="b_upfile == null">
+			, b_upfile = #{b_upfile}
+			, b_refile = #{b_refile}
+			</if>
+		where b_no = #{b_no}
+	</update>
+	
+	
+	
 	
 </mapper>
