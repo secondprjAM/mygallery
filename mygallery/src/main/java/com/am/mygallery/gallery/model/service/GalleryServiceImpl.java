@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.am.mygallery.common.Paging;
 import com.am.mygallery.gallery.model.dao.GalleryDao;
 import com.am.mygallery.gallery.model.vo.Gallery;
 import com.am.mygallery.sticker.Sticker;
@@ -39,7 +40,7 @@ public class GalleryServiceImpl implements GalleryService {
 
 	@Override
 	public int stickerImageDelete(int snum) {
-		return 0;
+		return galleryDao.deleteStk(snum);
 	}
 
 	@Override
@@ -52,10 +53,6 @@ public class GalleryServiceImpl implements GalleryService {
 		return galleryDao.selectImgList(userid);
 	}
 
-	@Override
-	public int faceImageDelete(int inum) {
-		return galleryDao.deleteImg(inum);
-	}
 
 	@Override
 	public int deleteGallery(int inum) {
@@ -66,6 +63,19 @@ public class GalleryServiceImpl implements GalleryService {
 	public ArrayList<Sticker> selectStickerList(String userid) {
 		return galleryDao.selectStickerList(userid);
 	}
+
+//	@Override
+//	public int selectListCount() {
+//		// TODO Auto-generated method stub
+//		return galleryDao.selectListCount();
+//	}
+//
+//	@Override
+//	public ArrayList<Gallery> selectList(Paging page) {
+//		return galleryDao.selectList(page);
+//	}
+
+
 
 	
 

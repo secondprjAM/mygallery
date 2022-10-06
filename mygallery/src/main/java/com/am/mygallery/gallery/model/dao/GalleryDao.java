@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.am.mygallery.common.Paging;
 import com.am.mygallery.gallery.model.vo.Gallery;
 import com.am.mygallery.sticker.Sticker;
 
@@ -50,5 +51,19 @@ public class GalleryDao {
 			List<Sticker> list = session.selectList("galleryMapper.selectStickerAll", userid);
 			return (ArrayList<Sticker>)list;
 		}
+		
+		public int deleteStk(int snum) {
+			return session.delete("galleryMapper.deleteStk", snum);
+		}
+
+//		public ArrayList<Gallery> selectList(Paging page) {
+//			List<Gallery> list = session.selectList("galleryMapper.selectList", page);
+//			return (ArrayList<Gallery>)list;
+//		}
+//
+//		public int selectListCount() {
+//			return session.selectOne("galleryMapper.getListCount");
+//		}
+		
 		
 }
