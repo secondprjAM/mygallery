@@ -65,5 +65,15 @@ public class BreportServiceImpl implements BreportService{
 	public int deleteBreport(Breport breport) {
 		return breportDao.deleteBreport(breport);
 	}
+
+	@Override
+	public ArrayList<Breport> selectSearchTitle(String keyword) {
+		return breportDao.selectSearchTitle(keyword);
+	}
+
+	@Override
+	public ArrayList<Breport> selectSearchDate(SearchDate date) {
+		return breportDao.selectSearchDate(date);
+	}
 	
 }

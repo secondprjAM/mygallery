@@ -25,6 +25,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.am.mygallery.breport.model.vo.Breport;
 import com.am.mygallery.breport.service.BreportService;
 import com.am.mygallery.common.Paging;
+import com.am.mygallery.common.SearchDate;
+import com.am.mygallery.notice.model.vo.Notice;
 
 
 @Controller
@@ -36,7 +38,7 @@ public class BreportController {
 	
 	//게시글 페이지 단위로 목록보기 요청 처리용
 		@RequestMapping("blist.do")
-		public ModelAndView boardListMethod(
+		public ModelAndView breportListMethod(
 				@RequestParam(name="page", required=false) String page,
 				ModelAndView mv) {
 			
@@ -44,28 +46,22 @@ public class BreportController {
 			if(page != null) {
 				currentPage = Integer.parseInt(page);
 			}
+	
+			int limit = 10;  
 			
-			//한 페이지에 게시글 10개씩 출력되게 하는 경우
-			//페이징 계산 처리 -- 별도의 클래스로 작성해도 됨 ---------------
-			//별도의 클래스의 메소드에서 Paging 을 리턴하면 됨
-			int limit = 10;  //한 페이지에 출력할 목록 갯수
-			//전체 페이지 갯수 계산을 위해 총 목록 갯수 조회해 옴
 			int listCount = breportService.selectListCount();
-			//페이지 수 계산
-			//주의 : 목록이 11개이면 페이지 수는 2페이지가 됨
-			// 나머지 목록 1개도 1페이지가 필요함
+			
 			int maxPage = (int)((double)listCount / limit + 0.9);
-			//현재 페이지가 포함된 페이지 그룹의 시작값 지정
-			// => 뷰 아래쪽에 표시할 페이지 수를 10개로 하는 경우
+			
+			
 			int startPage = (currentPage / 10) * 10 + 1;
-			//현재 페이지가 포함된 페이지 그룹의 끝값 지정
+			
 			int endPage = startPage + 10 - 1;
 			
 			if(maxPage < endPage) {
 				endPage = maxPage;
 			}
 			
-			//쿼리문에 전달할 현재 페이지에 적용할 목록의 시작행과 끝행 계산
 			int startRow = (currentPage - 1) * limit + 1;
 			int endRow = startRow + limit - 1;
 			Paging paging = new Paging(startRow, endRow);
@@ -93,9 +89,39 @@ public class BreportController {
 			return mv;
 		}
 		
+		
+		// 버그리포트 제목 검색용
+		@RequestMapping(value = "bsearchTitle.do", method = RequestMethod.POST)
+		public String breportSearchTitleMethod(@RequestParam("keyword") String keyword, Model model) {
+			ArrayList<Breport> list = breportService.selectSearchTitle(keyword);
+
+			if (list.size() > 0) {
+				model.addAttribute("list", list);
+				return "breport/breportListView";
+			} else {
+				model.addAttribute("message", keyword + "로 검색된 공지글 정보가 없습니다.");
+				return "common/error";
+			}
+		}
+
+
+		// 버그리포트 등록날짜 검색용
+		@RequestMapping(value = "bsearchDate.do", method = RequestMethod.POST)
+		public String breportSearchDateMethod(SearchDate date, Model model) {
+			ArrayList<Breport> list = breportService.selectSearchDate(date);
+
+			if (list.size() > 0) {
+				model.addAttribute("list", list);
+				return "breport/breportListView";
+			} else {
+				model.addAttribute("message", "해당 날짜에 등록된 공지사항 정보가 없습니다.");
+				return "common/error";
+			}
+		}
+		
 		//게시글 상세보기 처리용
 		@RequestMapping("bdetail.do")
-		public ModelAndView boardDetailMethod(ModelAndView mv, 
+		public ModelAndView breportDetailMethod(ModelAndView mv, 
 				@RequestParam("b_no") int b_no,
 				@RequestParam(name="page", required=false) String page) {
 			int currentPage = 1;
@@ -134,13 +160,13 @@ public class BreportController {
 							"resources/breport_upfile");
 			
 			//저장 폴더에서 읽을 파일에 대한 파일 객체 생성함		
-			File brefile = new File(savePath + "\\" + b_refile);
+			File renameFile = new File(savePath + "\\" + b_refile);
 			//파일다운시 내보낼 파일 객체 생성
-			File bupfile = new File(b_upfile);
+			File originFile = new File(b_upfile);
 			
 			mv.setViewName("filedown"); //등록된 파일다운로드 처리용 뷰클래스의 id명
-			mv.addObject("b_refile", b_refile);
-			mv.addObject("b_upfile", b_upfile);
+			mv.addObject("renameFile", renameFile);
+			mv.addObject("originFile", originFile);
 			
 			return mv;
 		}
@@ -193,13 +219,13 @@ public class BreportController {
 		
 		//게시 원글 쓰기 페이지로 이동 처리용
 		@RequestMapping("bwform.do")
-		public String moveBoardWriteForm() {
+		public String moveBreportWriteForm() {
 			return "breport/breportWriteForm";
 		}
 		
 		//게시 원글 등록 처리용 : 파일 첨부(업로드) 기능 있음
 		@RequestMapping(value="binsert.do", method=RequestMethod.POST)
-		public String boardInsertMethod(Breport breport, Model model, 
+		public String breportInsertMethod(Breport breport, Model model, 
 				HttpServletRequest request, 
 				@RequestParam(name="upfile", required=false) MultipartFile mfile) {
 			logger.info("binsert.do : " + mfile);
@@ -266,7 +292,7 @@ public class BreportController {
 				if(breport.getB_refile() != null) {
 					new File(request.getSession()
 							.getServletContext()
-							.getRealPath("resources/board_upfile")
+							.getRealPath("resources/breport_upfile")
 							+ "\\" + breport.getB_refile()).delete();
 				}
 				
@@ -279,7 +305,7 @@ public class BreportController {
 		}
 		
 		@RequestMapping("bupview.do")
-		public String moveBoardUpdateView(
+		public String moveBreportUpdateView(
 				@RequestParam("b_no") int b_no,
 				@RequestParam("page") int currentPage, 
 				Model model) {
@@ -297,8 +323,8 @@ public class BreportController {
 		}
 		
 		//게시 원글 수정 요청 처리용
-		@RequestMapping(value="boriginup.do", method=RequestMethod.POST)
-		public String boardUpdateMethod(
+		@RequestMapping(value="originup.do", method=RequestMethod.POST)
+		public String breportUpdateMethod(
 				Breport breport, Model model, 
 				@RequestParam("page") int page,
 				@RequestParam(name="delFlag", required=false) String delFlag,
@@ -308,7 +334,7 @@ public class BreportController {
 			//게시 원글 첨부파일 저장 폴더 경로 지정
 			String savePath = request.getSession()
 					.getServletContext().getRealPath(
-							"resources/board_upfiles");
+							"resources/breport_upfile");
 			
 			//첨부파일 수정 처리된 경우 --------------------------------
 			//1. 원래 첨부파일이 있는데 삭제를 선택한 경우

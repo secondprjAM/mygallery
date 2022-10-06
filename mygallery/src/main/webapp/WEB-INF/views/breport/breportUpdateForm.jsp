@@ -24,18 +24,18 @@
 	enctype="multipart/form-data" 값을 지정해야 함
 	method="post" 로 지정해야 함
  -->
-<form action="boriginup.do" method="post" enctype="multipart/form-data">
+<form action="originup.do" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="b_no" value="${ breport.b_no }">
 	<input type="hidden" name="page" value="${ currentPage }">
-	<c:if test="${ !empty board.b_upfile }">
+	<c:if test="${ !empty breport.b_upfile }">
 	<!-- 첨부파일이 있는 버그리포트라면 -->
 		<input type="hidden" name="b_upfile" value="${ breport.b_upfile }">
 		<input type="hidden" name="b_refile" value="${ breport.b_refile }">
 	</c:if>
 <table align="center" width="500" border="1" cellspacing="0" cellpadding="5">
-	<tr><th>제 목</th><td><input type="text" name="board_title" value="${ board.b_title }"></td></tr>
+	<tr><th>제 목</th><td><input type="text" name="b_title" value="${ breport.b_title }"></td></tr>
 	<tr><th>작성자</th>
-	<td><input type="text" name="userid" readonly value="${ b.userid }"></td></tr>
+	<td><input type="text" name="userid" readonly value="${ breport.userid }"></td></tr>
 	<tr><th>첨부파일</th>
 		<td>
 			<!-- 원래 첨부파일이 있는 경우 -->

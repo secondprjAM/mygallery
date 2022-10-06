@@ -15,7 +15,7 @@
 <!-- 절대경로로 대상 파일의 위치를 지정한 경우 -->
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
 <hr>
-<h2 align="center">${ b_no }번 게시글</h2>
+<h3 align="center">댓글 페이지</h3>
 <form action="breply.do" method="post" >
 	<!-- 원글 번호도 함께 숨겨서 전송 -->
 	<input type="hidden" name="b_ref" value="${ b_no }">
@@ -27,7 +27,7 @@ cellpadding="5">
 	<tr><th>작성자</th>
 	<td><input type="text" name="userid" readonly value="${ loginMember.userid }"></td></tr>
 	
-	<tr><th>내 용</th><td><textarea rows="5" cols="50" name="board_content"></textarea></td></tr>
+	<tr><th>내 용</th><td><textarea rows="5" cols="50" name="b_content"></textarea></td></tr>
 	<tr><th colspan="2">
 		<input type="submit" value="댓글등록하기"> &nbsp; 
 		<input type="reset" value="작성취소"> &nbsp; 
