@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mycalendarMapper">
+
+	<resultMap type="MyCalendar"  id="resultMyCalendar">
+		<result column="calendar_date"  property="calendar_date" />
+		<result column="userid"  property="userid"/>
+		<result column="user_snum"  property="user_snum"/>
+		<result column="calendar_content"  property="calendar_content"/>
+	</resultMap>
+	
+	<select id="allList"  resultMap="resultMyCalendar">
+		select * from mycalendar   
+	</select>
+	
+	<insert id="insertMyCalendar"  parameterType="MyCalendar">
+		insert into mycalendar (calendar_date, userid, user_snum, calendar_content)
+		values(sysdate, #{userid}, #{user_snum}, #{calendar_content})
+	</insert>
+	
+	<select id="selectOneMyCalendar"   parameterType="date"  resultMap="resultMyCalendar">
+		select * from mycalendar
+		where mycalendar_date = #{mycalendar_date}
+	</select>
+	
+	<update id="updateMyCalendar"  parameterType="date">
+		update mycalendar
+		set calendar_date = #{calendar_date},
+		userid = #{userid},
+		user_snum = #{user_snum},
+		calendar_content = #{calendar_content}
+	</update>
+	
+	<delete id="deleteMyCalendar"  parameterType="date">
+		delete from mycalendar
+		where mycalendar_date = #{mycalendar_date}
+	</delete>
+	
+	<select id ="searchMonth" parameterType="SearchCalendar" resultMap="resultMyCalendar">
+	select * from mycalendar
+	where to_char(calendar_date,'YYYYMMDD')>#{ dateFormat } and userid=#{id}
+	order by calendar_date
+	</select>
+
+</mapper>
