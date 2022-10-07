@@ -7,4 +7,5 @@ import com.am.mygallery.mycalender.model.vo.MyCalendar;
 
 public interface MyCalendarService {
 		ArrayList<MyCalendar> searchMonth(SearchCalendar startDay);
+		int insertMyCalendar(MyCalendar mycalendar); //원글 등록
 }

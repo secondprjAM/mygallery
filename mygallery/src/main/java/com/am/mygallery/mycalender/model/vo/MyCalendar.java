@@ -134,7 +134,7 @@ public class MyCalendar  implements Serializable {
 	}
 
 
-public void setSchedule_detail(String schedule_detail) {
+	public void setSchedule_detail(String schedule_detail) {
       this.schedule_detail = schedule_detail;
    }
 

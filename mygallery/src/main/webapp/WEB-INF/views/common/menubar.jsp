@@ -82,7 +82,7 @@ section div {
 			<ul id = "menubar">
 				<li style="float: left"><a class="active" href="main.do">MyGallery</a></li>
 				<li><a href="${ pageContext.servletContext.contextPath }/nlist.do">공지사항관리</a></li>
-				<li><a href="#"></a>버그리포트</li>
+				<li><a href="${ pageContext.servletContext.contextPath }/blist.do"></a>버그리포트</li>
 				<li><a href="${ pageContext.servletContext.contextPath }/mlist.do">회원관리</a></li>
 				<li><c:url var="callMyinfo" value="/admininfo.do">
                			<c:param name="userid" value="${ loginMember.userid }" />
@@ -95,8 +95,8 @@ section div {
 		<c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.useradmin ne 'Y' }">
 			<ul id="menubar">
 				<li style="float:left"><a class="active" href="main.do">MyGallery</a></li>
-				<li><a href="#">공지사항</a></li>
-				<li><a href="#">버그리포트</a></li>
+				<li><a href="${ pageContext.servletContext.contextPath }/nlist.do">공지사항</a></li>
+				<li><a href="${ pageContext.servletContext.contextPath }/blist.do">버그리포트</a></li>
 				<li><c:url var="callMyinfo" value="/myinfo.do">
                			<c:param name="userid" value="${ loginMember.userid }" />
             		 </c:url>

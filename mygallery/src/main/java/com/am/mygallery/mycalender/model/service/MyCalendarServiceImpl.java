@@ -20,5 +20,8 @@ public class MyCalendarServiceImpl implements MyCalendarService{
 		return calendarDao.searchMonth(startDay);
 	}
 
-	
+	@Override
+	public int insertMyCalendar(MyCalendar mycalendar) {
+		return calendarDao.insertMyCalendar(mycalendar);
+	}
 }

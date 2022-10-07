@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,9 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.am.mygallery.common.SearchCalendar;
+import com.am.mygallery.common.SearchDate;
 import com.am.mygallery.mycalender.model.service.MyCalendarService;
 import com.am.mygallery.mycalender.model.vo.MyCalendar;
 
@@ -24,7 +24,7 @@ import com.am.mygallery.mycalender.model.vo.MyCalendar;
 public class MyCalendarController {
 	private String g_userid="";
 	@Autowired
-	private MyCalendarService service;
+	private MyCalendarService mycalendarService;
 
 	@RequestMapping(value = "mycalendar.do", method = RequestMethod.GET)
 	public String calendar(Model model, HttpServletRequest request, MyCalendar dateData){
@@ -45,20 +45,16 @@ public class MyCalendarController {
 		}
 		String dateFormat = String.valueOf(today_info.get("search_year"))+String.valueOf(today_info.get("search_month"))+"01";
 		SearchCalendar searchAllCalendar = new SearchCalendar(dateFormat,this.g_userid);
-		ArrayList<MyCalendar>list = service.searchMonth(searchAllCalendar);
+		ArrayList<MyCalendar>list = mycalendarService.searchMonth(searchAllCalendar);
 		int list_size = list.size();
 		int dateNum=0;
 		if(list.size()>0)
 		{
 			for (MyCalendar myCalendar : list) {
 				String da = myCalendar.getCalendar_date().toString();
-				System.out.println(myCalendar.getCalendar_date().toString().substring(myCalendar.getCalendar_date().toString().length()-2, myCalendar.getCalendar_date().toString().length()));
 			}
 		}
 
-		///테스트 종료
-		//실질적인 달력 데이터 리스트에 데이터 삽입 시작.
-		//일단 시작 인덱스까지 아무것도 없는 데이터 삽입
 		for(int i=1; i<today_info.get("start"); i++){
 			calendarData= new MyCalendar(null, null, null, null,0);
 			dateList.add(calendarData);
@@ -102,5 +98,31 @@ public class MyCalendarController {
 		model.addAttribute("dateList", dateList);		//날짜 데이터 배열
 		model.addAttribute("today_info", today_info);
 		return "mycalendar/mycalendar";
+	}
+	
+	//글쓰기 버튼 
+	@RequestMapping("calmovewrite.do")
+	public String moveMycalendarInsertView() {
+		return "mycalendar/mycalendarWriteForm";
+	}
+	
+//	데이터 저장 파일은 안올림
+	@RequestMapping(value="minsert.do", method=RequestMethod.POST)
+	public String insertMycalendar (SearchDate date, MyCalendar mycalendar, Model model
+			, HttpServletRequest request,
+			@RequestParam(name = "upfile", required=false) MultipartFile mfile) {
+	
+		System.out.println(mycalendar);
+		if(mycalendarService.insertMyCalendar(mycalendar) > 0) {
+			return "redirect:mycalendar.do";
+		} else {
+			model.addAttribute("message", "새 캘린더 등록 실패");
+			return "common/error";
+		}
+	}
+	@RequestMapping("calmoveup.do")
+	public String moveupdatePage(HttpServletRequest request) {
+		System.out.println("ㅇㅇ"+request.getParameter("userid"));
+		return "mycalendar/mycalendarUpdateForm";
 	}
 }

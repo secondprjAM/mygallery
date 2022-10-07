@@ -17,7 +17,7 @@
 				<table class="table">
 					<tr>
 						<td>내용</td>
-						<input type="text" class="body-contents" id="contents">
+						<input type="text" class="body-contents" id="contents" name="contents">
 					</tr>
 					<tr>
 						<td>유저 아이디</td>
@@ -30,7 +30,7 @@
 			</div>
 			<div class="modal-footer">
 				<button id="modalSubmit" type="button" class="btn btn-success"
-					onclick="updateCalForm();">Submit</button>
+					onclick="updateCalForm('${ sessionScope.loginMember.userid }', '${ dateList }');">수정하기</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>

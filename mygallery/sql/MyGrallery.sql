@@ -74,7 +74,8 @@ CREATE TABLE NOTICE (
 	NOTICE_CONTENT	varchar2(2000)		NOT NULL,
 	NOTICE_READCOUNT	number	DEFAULT 0	NOT NULL,
 	NOTICE_UPFILE	        varchar2(100)		NULL,
-	NOTICE_REFILE	        varchar2(100)		NULL
+	NOTICE_REFILE	        varchar2(100)		NULL,
+	IMPORTANCE          number default 1
 );
 
 COMMENT ON COLUMN "NOTICE"."NOTICE_NO" IS '공지번호';
@@ -85,6 +86,7 @@ COMMENT ON COLUMN "NOTICE"."NOTICE_CONTENT" IS '공지내용';
 COMMENT ON COLUMN "NOTICE"."NOTICE_READCOUNT" IS '조회수';
 COMMENT ON COLUMN "NOTICE"."NOTICE_UPFILE" IS '첨부파일';
 COMMENT ON COLUMN "NOTICE"."NOTICE_REFILE" IS '첨부파일수정';
+COMMENT ON COLUMN NOTICE.IMPORTANCE IS '중요도';
 
 CREATE TABLE BREPORT (
 	B_NO	        number NOT NULL,
@@ -179,20 +181,21 @@ REFERENCES MEMBER (	"USERID");
 -------------------------------check 조건
 ALTER TABLE MEMBER
 ADD CONSTRAINT CHK_MEM_LOK CHECK (USERLOGINOK IN ('Y', 'N'));
+ALTER TABLE STICKER
+ADD CONSTRAINT CHK_CATEGORY CHECK (CATEGORY IN ('ear', 'nose'));
 
----------------------------------------admin 관리자 등록
-INSERT INTO MEMBER VALUES ('admin','admin','admin@test.org','관리자','M','Y','Y');
+-------------------------------
+update notice
+set importance = 1
+where importance = 0;
+-------------------------------
 
----------------------------------------일반 유저 2명 등록
-INSERT INTO MEMBER
-VALUES ('user01','user01','user01@test.org','일반유저','F','N','Y');
-INSERT INTO MEMBER
-VALUES ('user02','user02','user02@test.org','일반유저','M','N','Y');
+
 
 ---------------------------------------공지글 2개 등록
-INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지1번',sysdate,'첫번째 공지글입니다.',default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지1번',sysdate,'첫번째 공지글입니다.',default,default,default,default);
 
-INSERT INTO "NOTICE" VALUES (notice_seq.nextval, 'admin','공지2번',sysdate,'두번째 공지글입니다.',default,default,default);
+INSERT INTO "NOTICE" VALUES (notice_seq.nextval, 'admin','공지2번',sysdate,'두번째 공지글입니다.',default,default,default,default);
 
 ---------------------------------------버그리포트 2개 등록
 INSERT INTO "BREPORT" VALUES (bug_seq.nextval, 'user01','문제있어요',sysdate,'문제가있네요',default,default,default,

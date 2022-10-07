@@ -10,7 +10,12 @@
 
 	<typeAliases>
 		<typeAlias type="com.am.mygallery.member.model.vo.Member" alias="Member" />
+		<typeAlias type="com.am.mygallery.breport.model.vo.Breport" alias="Breport" />
 		<typeAlias type="com.am.mygallery.notice.model.vo.Notice" alias="Notice" />
+		<typeAlias type="com.am.mygallery.common.FileDownloadView" alias="FileDownloadView" />
+		<typeAlias type="com.am.mygallery.common.Paging" alias="Paging" />
+		<typeAlias type="com.am.mygallery.common.PythonCode" alias="PythonCode" />
+		<typeAlias type="com.am.mygallery.common.SearchCalendar" alias="SearchCalendar" />
 		<typeAlias type="com.am.mygallery.common.SearchDate" alias="SearchDate" />
 		<typeAlias type="com.am.mygallery.gallery.model.vo.Gallery" alias="Gallery"/>
 		<typeAlias type="com.am.mygallery.sticker.Sticker" alias="Sticker"/>
@@ -24,5 +29,6 @@
 		<mapper resource="mappers/notice-mapper.xml" />
 		<mapper resource="mappers/gallery-mapper.xml" />
 		<mapper resource="mappers/mycalendar-mapper.xml" />
+		<mapper resource="mappers/breport-mapper.xml" />
 	</mappers>
 </configuration>

@@ -21,6 +21,9 @@ public class MyCalendarDao {
 		return (ArrayList<MyCalendar>)list;
 	}
 	
+	public int insertMyCalendar(MyCalendar mycalendar) {
+		return session.insert("mycalendarMapper.insertMyCalendar", mycalendar);
+	}
 }
 
 
