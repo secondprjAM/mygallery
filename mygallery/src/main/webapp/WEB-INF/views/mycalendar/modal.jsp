@@ -15,23 +15,25 @@
 			</div>
 			<div class="modal-body">
 				<table class="table">
-					<tr>
-						<td>내용</td>
-						<input type="text" class="body-contents" id="contents">
+					<tr> 
+						<td>날짜 <input type="text" class ="body-date" id="date" name ="date" value ="??"></td>
+						
 					</tr>
 					<tr>
-						<td>유저 아이디</td>
-						<td>${ sessionScope.loginMember.userid }</td>
+						<td>내용 <input type="text" class="body-contents" id="contents" name="contents"></td>
+						
 					</tr>
 					<tr>
-					<td>이미지</td>
-					<td><p id = "imgBox"></p></td>
+						<td>유저 아이디 <input type="text" class="userid" id = "userid" name="userid" value ="${ sessionScope.loginMember.userid }"></td>
+					</tr>
+					<tr>
+					<td>이미지<br><p id = "imgBox"></p></td>
 				</table>
 			</div>
 			<div class="modal-footer">
 				<button id="modalSubmit" type="button" class="btn btn-success"
-					onclick="updateCalForm();">Submit</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					onclick="updateCalForm();">수정하기</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal" onclick="deleteCalForm();">삭제하기</button>
 			</div>
 		</div>
 	</div>

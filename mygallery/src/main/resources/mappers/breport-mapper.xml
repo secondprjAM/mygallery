@@ -38,17 +38,37 @@
 			where rnum >= #{startRow} and rnum <= #{endRow}
 		]]>
 	</select>
-	
-	<select id="searchTitle" resultMap="resultBreport" parameterType="string">
-		select * from breport
-		where b_title like '%' || #{ keyword } || '%'
-		order by b_no asc
+
+	<select id="searchTitle" resultMap="resultBreport" parameterType="SearchPaging">
+		<![CDATA[
+		SELECT *  
+			FROM (SELECT ROWNUM RNUM, B_NO, B_TITLE, 
+						  USERID, B_CONTENT, 
+						  B_UPFILE, B_REFILE, B_DATE, 
+			               B_LEV, B_REF, B_REPLY_REF, 
+			               B_REPLY_SEQ, B_READCOUNT 
+			FROM (SELECT * FROM BREPORT
+					where b_title like '%' || #{ keyword } || '%'	
+					order by b_no asc
+					))
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
 	</select>
 	
-	<select id="searchDate" resultMap="resultBreport" parameterType="SearchDate">
-		select * from breport
-		where b_date between #{ begin } and #{ end }
-		order by b_no asc
+	<select id="searchDate" resultMap="resultBreport" parameterType="SearchPaging">
+		<![CDATA[
+		SELECT *  
+			FROM (SELECT ROWNUM RNUM, B_NO, B_TITLE, 
+						  USERID, B_CONTENT, 
+						  B_UPFILE, B_REFILE, B_DATE, 
+			               B_LEV, B_REF, B_REPLY_REF, 
+			               B_REPLY_SEQ, B_READCOUNT 
+			FROM (SELECT * FROM BREPORT
+					where b_date between #{ begin } and #{ end }	
+					order by b_no asc
+					))
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
 	</select>
 	
 	<update id="addReadCount" parameterType="_int">

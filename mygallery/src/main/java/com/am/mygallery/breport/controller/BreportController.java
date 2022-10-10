@@ -26,6 +26,7 @@ import com.am.mygallery.breport.model.vo.Breport;
 import com.am.mygallery.breport.service.BreportService;
 import com.am.mygallery.common.Paging;
 import com.am.mygallery.common.SearchDate;
+import com.am.mygallery.common.SearchPaging;
 import com.am.mygallery.notice.model.vo.Notice;
 
 
@@ -91,30 +92,104 @@ public class BreportController {
 		
 		
 		// 버그리포트 제목 검색용
-		@RequestMapping(value = "bsearchTitle.do", method = RequestMethod.POST)
-		public String breportSearchTitleMethod(@RequestParam("keyword") String keyword, Model model) {
-			ArrayList<Breport> list = breportService.selectSearchTitle(keyword);
+		@RequestMapping(value = "bsearchTitle.do", method = RequestMethod.GET)
+		public String breportSearchTitleMethod(@RequestParam("keyword") String keyword,
+											   @RequestParam(name="page", required=false) String page
+												,Model model) {
 
+			
+			int currentPage = 1;
+			if(page != null) {
+				currentPage = Integer.parseInt(page);
+			}
+	
+			int limit = 10;  
+			
+			int listCount = breportService.selectListCount();
+			
+			int maxPage = (int)((double)listCount / limit + 0.9);
+			
+			
+			int startPage = (currentPage / 10) * 10 + 1;
+			
+			int endPage = startPage + 10 - 1;
+			
+			if(maxPage < endPage) {
+				endPage = maxPage;
+			}
+			
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;
+			//페이징 계산 처리 끝 ---------------------------------------
+			SearchPaging searchpaging = new SearchPaging(keyword, startRow, endRow);
+			
+			ArrayList<Breport> list = breportService.selectSearchTitle(searchpaging);
+			
 			if (list.size() > 0) {
 				model.addAttribute("list", list);
+				model.addAttribute("listCount", listCount);
+				model.addAttribute("maxPage", maxPage);
+				model.addAttribute("currentPage", currentPage);
+				model.addAttribute("startPage", startPage);
+				model.addAttribute("endPage", endPage);
+				model.addAttribute("limit", limit);
+				model.addAttribute("action", "title");
+				model.addAttribute("keyword", keyword);
 				return "breport/breportListView";
 			} else {
-				model.addAttribute("message", keyword + "로 검색된 공지글 정보가 없습니다.");
+				model.addAttribute("message", keyword + "로 검색된 글 정보가 없습니다.");
 				return "common/error";
 			}
 		}
 
 
 		// 버그리포트 등록날짜 검색용
-		@RequestMapping(value = "bsearchDate.do", method = RequestMethod.POST)
-		public String breportSearchDateMethod(SearchDate date, Model model) {
-			ArrayList<Breport> list = breportService.selectSearchDate(date);
+		@RequestMapping(value = "bsearchDate.do", method = RequestMethod.GET)
+		public String breportSearchDateMethod(SearchDate date, 
+				 @RequestParam(name="page", required=false) String page, Model model) {
+			
 
+			int currentPage = 1;
+			if(page != null) {
+				currentPage = Integer.parseInt(page);
+			}
+	
+			int limit = 10;  
+			
+			int listCount = breportService.selectListCount();
+			
+			int maxPage = (int)((double)listCount / limit + 0.9);
+			
+			
+			int startPage = (currentPage / 10) * 10 + 1;
+			
+			int endPage = startPage + 10 - 1;
+			
+			if(maxPage < endPage) {
+				endPage = maxPage;
+			}
+			
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;
+			//페이징 계산 처리 끝 ---------------------------------------
+			SearchPaging searchpaging = new SearchPaging(date.getBegin(), date.getEnd(), startRow, endRow);
+			
+			ArrayList<Breport> list = breportService.selectSearchDate(searchpaging);
+			
 			if (list.size() > 0) {
 				model.addAttribute("list", list);
+				model.addAttribute("listCount", listCount);
+				model.addAttribute("maxPage", maxPage);
+				model.addAttribute("currentPage", currentPage);
+				model.addAttribute("startPage", startPage);
+				model.addAttribute("endPage", endPage);
+				model.addAttribute("limit", limit);
+				model.addAttribute("action", "date");
+				model.addAttribute("begin", date.getBegin());
+				model.addAttribute("end", date.getEnd());
 				return "breport/breportListView";
 			} else {
-				model.addAttribute("message", "해당 날짜에 등록된 공지사항 정보가 없습니다.");
+				model.addAttribute("message", "로 검색된 글 정보가 없습니다.");
 				return "common/error";
 			}
 		}

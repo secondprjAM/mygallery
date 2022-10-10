@@ -9,6 +9,7 @@ import com.am.mygallery.common.Paging;
 import com.am.mygallery.common.SearchDate;
 import com.am.mygallery.notice.model.dao.NoticeDao;
 import com.am.mygallery.notice.model.vo.Notice;
+import com.am.mygallery.common.SearchPaging;
 
 @Service("noticeService")
 public class NoticeServiceImpl implements NoticeService{
@@ -42,18 +43,13 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 
 	@Override
-	public ArrayList<Notice> selectSearchTitle(String keyword) { 
-		return noticeDao.selectSearchTitle(keyword);
+	public ArrayList<Notice> selectSearchTitle(SearchPaging searchpaging) {
+		return noticeDao.selectSearchTitle(searchpaging);
 	}
 
 	@Override
-	public ArrayList<Notice> selectSearchWriter(String keyword) { 
-		return noticeDao.selectSearchWriter(keyword);
-	}
-
-	@Override
-	public ArrayList<Notice> selectSearchDate(SearchDate date) {
-		return noticeDao.selectSearchDate(date);
+	public ArrayList<Notice> selectSearchDate(SearchPaging searchpaging) {
+		return noticeDao.selectSearchDate(searchpaging);
 	}
 
 	@Override
@@ -69,6 +65,16 @@ public class NoticeServiceImpl implements NoticeService{
 	@Override
 	public ArrayList<Notice> selectList(Paging page) {
 		return noticeDao.selectList(page);
+	}
+
+	@Override
+	public int selectSearchTListCount(String keyword) {
+		return noticeDao.selectSearchTListCount(keyword);
+	}
+
+	@Override
+	public int selectSearchDListCount(SearchDate date) {
+		return noticeDao.selectSearchWListCount(date);
 	}
 
 }

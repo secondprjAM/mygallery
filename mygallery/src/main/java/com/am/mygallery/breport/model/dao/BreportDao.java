@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.am.mygallery.breport.model.vo.Breport;
 import com.am.mygallery.common.Paging;
 import com.am.mygallery.common.SearchDate;
+import com.am.mygallery.common.SearchPaging;
 
 
 @Repository("breportDao")
@@ -77,13 +78,13 @@ public class BreportDao {
 		return session.delete("breportMapper.deleteBreport", breport);
 	}
 
-	public ArrayList<Breport> selectSearchTitle(String keyword) {
-		List<Breport> list = session.selectList("breportMapper.searchTitle", keyword);
+		public ArrayList<Breport> selectSearchTitle(SearchPaging searchpaging) {
+		List<Breport> list = session.selectList("breportMapper.searchTitle", searchpaging);
 		return (ArrayList<Breport>)list;
 	}
 
-	public ArrayList<Breport> selectSearchDate(SearchDate date) {
-		List<Breport> list = session.selectList("breportMapper.searchDate", date);
+	public ArrayList<Breport> selectSearchDate(SearchPaging searchpaging) {
+		List<Breport> list = session.selectList("breportMapper.searchDate", searchpaging);
 		return (ArrayList<Breport>)list;
 	}
 

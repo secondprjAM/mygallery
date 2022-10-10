@@ -1,4 +1,4 @@
-var action = '';
+/*var action = '';
 var url = '';
 var type = '';
 var bno = 0;
@@ -77,4 +77,4 @@ $(document).ready(function(){
 	});
 	
 
-});
+});*/

@@ -6,25 +6,34 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.am.mygallery.common.SearchCalendar;
+import com.am.mygallery.common.SearchDate;
+import com.am.mygallery.gallery.controller.GalleryController;
+import com.am.mygallery.gallery.model.service.GalleryService;
+import com.am.mygallery.gallery.model.vo.Gallery;
 import com.am.mygallery.mycalender.model.service.MyCalendarService;
 import com.am.mygallery.mycalender.model.vo.MyCalendar;
 
 @Controller
 public class MyCalendarController {
 	private String g_userid="";
+	private static final Logger logger = LoggerFactory.getLogger(MyCalendarController.class);
 	@Autowired
-	private MyCalendarService service;
+	private MyCalendarService mycalendarService;
+	
+	@Autowired
+	private GalleryService galleryService;
 
 	@RequestMapping(value = "mycalendar.do", method = RequestMethod.GET)
 	public String calendar(Model model, HttpServletRequest request, MyCalendar dateData){
@@ -36,7 +45,7 @@ public class MyCalendarController {
 			dateData = new MyCalendar(String.valueOf(cal.get(Calendar.YEAR)),String.valueOf(cal.get(Calendar.MONTH)),String.valueOf(cal.get(Calendar.DATE)),null);
 		}
 		//검색 날짜 end
-		
+
 		Map<String, Integer> today_info =  dateData.today_info(dateData);
 		List<MyCalendar> dateList = new ArrayList<MyCalendar>();
 		///테스트 구간
@@ -45,20 +54,16 @@ public class MyCalendarController {
 		}
 		String dateFormat = String.valueOf(today_info.get("search_year"))+String.valueOf(today_info.get("search_month"))+"01";
 		SearchCalendar searchAllCalendar = new SearchCalendar(dateFormat,this.g_userid);
-		ArrayList<MyCalendar>list = service.searchMonth(searchAllCalendar);
+		ArrayList<MyCalendar>list = mycalendarService.searchMonth(searchAllCalendar);
 		int list_size = list.size();
 		int dateNum=0;
 		if(list.size()>0)
 		{
 			for (MyCalendar myCalendar : list) {
 				String da = myCalendar.getCalendar_date().toString();
-				System.out.println(myCalendar.getCalendar_date().toString().substring(myCalendar.getCalendar_date().toString().length()-2, myCalendar.getCalendar_date().toString().length()));
 			}
 		}
 
-		///테스트 종료
-		//실질적인 달력 데이터 리스트에 데이터 삽입 시작.
-		//일단 시작 인덱스까지 아무것도 없는 데이터 삽입
 		for(int i=1; i<today_info.get("start"); i++){
 			calendarData= new MyCalendar(null, null, null, null,0);
 			dateList.add(calendarData);
@@ -66,7 +71,7 @@ public class MyCalendarController {
 		//날짜 삽입
 		for (int i = today_info.get("startDay"); i <= today_info.get("endDay"); i++) {
 			if(dateNum<list_size && i ==Integer.parseInt(list.get(dateNum).getCalendar_date().toString().substring(list.get(dateNum).getCalendar_date().toString().length()-2, list.get(dateNum).getCalendar_date().toString().length())) ) {
-				
+
 				String d = list.get(dateNum).getCalendar_date().toString();
 				list.get(dateNum).setDate(d);
 				list.get(dateNum).setCalendar_date(null);
@@ -77,7 +82,6 @@ public class MyCalendarController {
 				}
 				calendarData = list.get(dateNum);
 				dateNum++;
-				System.out.println("들어감");
 			}else {
 				if(i==today_info.get("today")){
 					calendarData= new MyCalendar(String.valueOf(dateData.getYear()), String.valueOf(dateData.getMonth()), String.valueOf(i), "today");
@@ -103,4 +107,87 @@ public class MyCalendarController {
 		model.addAttribute("today_info", today_info);
 		return "mycalendar/mycalendar";
 	}
+
+	//글쓰기 버튼 
+	@RequestMapping("calmovewrite.do")
+	public String moveMycalendarInsertView(@RequestParam("userid") String userid, Model model) {
+		ArrayList<Gallery> list = galleryService.selectImgList(userid);
+		logger.info("갤러리 정보 : " + list);
+		if(list.size()>0) {
+			model.addAttribute("imgList", list);
+		}
+		return "mycalendar/mycalendarWriteForm";
+	}
+
+	//날짜 저장(이미지 정보는 갤러리에 저장되어 있는 rename 이름 가져다 사용)
+	@RequestMapping(value="minsert.do", method=RequestMethod.POST)
+	public String insertMycalendar (MyCalendar mycalendar, Model model
+			, HttpServletRequest request) {
+		String filename = request.getParameter("filename");
+		mycalendar.setFilename(filename);
+		//해당 날짜에 저장된 데이터가 있는지 확인용 
+		String date = mycalendar.getCalendar_date().toString();
+		date = date.replace("-", "");
+		SearchCalendar cal = new SearchCalendar();
+		cal.setDateFormat(date);
+		cal.setId(mycalendar.getUserid());
+		MyCalendar list = mycalendarService.serchMyCalendar(cal);
+		if(list == null) {
+			System.out.println(mycalendar);
+			if(mycalendarService.insertMyCalendar(mycalendar) > 0) {
+				return "redirect:mycalendar.do";
+			}else {
+				model.addAttribute("message", "새 캘린더 등록 실패");
+				return "common/error";
+			}
+		}
+		else {
+			model.addAttribute("message", "이미 등록된 데이터가 있습니다.");
+			return "common/error";
+		}
+	}
+
+	//수정페이지 이동
+	@RequestMapping("calmoveup.do")
+	public String moveupdatePage(HttpServletRequest request, Model model) {
+		String date = request.getParameter("date");
+		date = date.replace("-", "");
+		SearchCalendar cal = new SearchCalendar();
+		cal.setDateFormat(date);
+		cal.setId(request.getParameter("userid"));
+		MyCalendar list = mycalendarService.serchMyCalendar(cal);
+		ArrayList<Gallery> imglist = galleryService.selectImgList(request.getParameter("userid"));
+		model.addAttribute("mycalendar", list);
+		model.addAttribute("imgList", imglist);
+		return "mycalendar/mycalendarUpdateForm";
+	}
+	
+	//수정된 정보 갱신
+	@RequestMapping("calupdate.do")
+	public String updateCalendar(MyCalendar mycalendar, Model model) {
+		if(mycalendarService.updateCalendar(mycalendar)>0) {
+			return "redirect:mycalendar.do?userid="+mycalendar.getUserid();
+		}else {
+			model.addAttribute("titleMsg","내용 수정 실패");
+			model.addAttribute("message", "내용 변경 실패하였습니다.");
+			return "common/error";
+		}
+	}
+	//삭제
+	@RequestMapping("deleteCal.do")
+	public String deleteCalendar(HttpServletRequest request, Model model) {
+		SearchCalendar mycalendar = new SearchCalendar();
+		String date = request.getParameter("date");
+		date = date.replace("-", "");
+		mycalendar.setId(request.getParameter("userid"));
+		mycalendar.setDateFormat(date);
+		if(mycalendarService.deleteCalendar(mycalendar)>0) {
+			return "redirect:mycalendar.do?userid="+request.getParameter("userid");
+		}else{
+			model.addAttribute("titleMsg", request.getParameter("date")+" 삭제 실패");
+			model.addAttribute("message","삭제하는데 실패 하였습니다. 다시 확인해 주세요");
+			return "common/error";
+		}
+	}
+	
 }

@@ -7,7 +7,7 @@
 	<resultMap type="MyCalendar"  id="resultMyCalendar">
 		<result column="calendar_date"  property="calendar_date" />
 		<result column="userid"  property="userid"/>
-		<result column="user_snum"  property="user_snum"/>
+		<result column="filename"  property="filename"/>
 		<result column="calendar_content"  property="calendar_content"/>
 	</resultMap>
 	
@@ -16,14 +16,11 @@
 	</select>
 	
 	<insert id="insertMyCalendar"  parameterType="MyCalendar">
-		insert into mycalendar (calendar_date, userid, user_snum, calendar_content)
-		values(sysdate, #{userid}, #{user_snum}, #{calendar_content})
+		insert into mycalendar (calendar_date, userid, filename, calendar_content)
+		values(#{ calendar_date }, #{userid}, #{filename}, #{calendar_content})
 	</insert>
 	
-	<select id="selectOneMyCalendar"   parameterType="date"  resultMap="resultMyCalendar">
-		select * from mycalendar
-		where mycalendar_date = #{mycalendar_date}
-	</select>
+	
 	
 	<update id="updateMyCalendar"  parameterType="date">
 		update mycalendar
@@ -33,11 +30,27 @@
 		calendar_content = #{calendar_content}
 	</update>
 	
-	<delete id="deleteMyCalendar"  parameterType="date">
+	<!-- 선택된 날짜 데이터 제거 -->
+	<delete id="deleteCalendar"  parameterType="SearchCalendar">
 		delete from mycalendar
-		where mycalendar_date = #{mycalendar_date}
+	where to_char(calendar_date,'YYYYMMDD')=#{ dateFormat } and userid=#{id}
 	</delete>
 	
+	<!-- 선택된 날짜 데이터 변경 -->
+	<update id="updateCalendar" parameterType="MyCalendar">
+	update mycalendar
+	set filename = #{filename},
+		calendar_content = #{calendar_content}
+	where userid=#{userid} and to_char(calendar_date,'YYYYMMDD')=to_char(#{calendar_date},'YYYYMMDD')
+	</update>
+	
+	<!-- 선택된 날짜 데이터 조회 -->
+	<select id="serchMyCalendar"   parameterType="SearchCalendar"  resultMap="resultMyCalendar">
+		select * from mycalendar
+		where to_char(calendar_date,'YYYYMMDD') = #{ dateFormat } and userid=#{id}
+	</select>
+	
+	<!-- 월 단위 전체 목록 조회 -->
 	<select id ="searchMonth" parameterType="SearchCalendar" resultMap="resultMyCalendar">
 	select * from mycalendar
 	where to_char(calendar_date,'YYYYMMDD')>#{ dateFormat } and userid=#{id}

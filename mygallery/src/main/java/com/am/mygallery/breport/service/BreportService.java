@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.am.mygallery.breport.model.vo.Breport;
 import com.am.mygallery.common.Paging;
 import com.am.mygallery.common.SearchDate;
+import com.am.mygallery.common.SearchPaging;
 
 
 public interface BreportService {
@@ -15,8 +16,8 @@ public interface BreportService {
 	int updateAddReadcount(int b_no); //상세보기시에 조회수 1증가 처리용
 	int insertOriginBreport(Breport breport); //원글 등록용
 	int insertReply(Breport reply); //댓글 등록용 (대댓글 등록 포함)
-	ArrayList<Breport> selectSearchTitle(String keyword);
-	ArrayList<Breport> selectSearchDate(SearchDate date);
+	ArrayList<Breport> selectSearchTitle(SearchPaging searchpaging);
+	ArrayList<Breport> selectSearchDate(SearchPaging searchpaging);
 	int updateReplySeq(Breport reply); //댓글 등록시 기존 댓글 순번을 1증가 처리(최신글이 1이 되게 함)
 	int updateOrigin(Breport breport);  //원글 수정용
 	int updateReply(Breport reply);  //댓글 수정용

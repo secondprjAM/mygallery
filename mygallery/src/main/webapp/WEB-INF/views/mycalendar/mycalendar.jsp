@@ -25,43 +25,34 @@
 	function modalOpen(text, text2) {
 		$("#createBtn").click(function() {
 			var data = $(this).data('id');
-			$("#contents.body-contents").val(text2);
-			content='<img src="resources/gallery/faceImages/' + text +'">';
+			$("#contents.body-contents").value(text2);
+			content = '<img src="resources/gallery/faceImages/' + text +'">';
 			$("#imgBox").html(content);
 			console.log(text);
 			console.log(text2);
 		});
 	}
-	function modalOpen2(text, text2){
-			/* $("#contents.body-contents").val(text);
-			content='<img src="resources/gallery/faceImages/' + text2 +'">';
-			//$("#imgBox").html(content);
-			console.log(content); */
-			$("#contents.body-contents").val(text);
-			content='<img src="resources/gallery/faceImages/' + text2 +'">';
-			$("#imgBox").html(content);
-			console.log(text);
-			console.log(text2);
+	function modalOpen2(date, schedule,filename) {
+		$("#date.body-date").val(date);
+		$("#contents.body-contents").val(schedule);
+		content = '<img src="resources/gallery/faceImages/' + filename +'">';
+		$("#imgBox").html(content);
 	}
-		/* const formData = new FormData();
-		//formData.append("list", $(this).data("list"));
-		formData.append("date",$(this).data("date"));
-		$.ajax({
-			url : "calDetail.do",
-			type : "POST",
-			processData : false,
-			contentType : false,
-			data : formData,
-			success : function(data) {
-				console.log("success : " + data); //Object 로 출력됨=
-			},
-			error : function(jqXHR, textStatus, errorThrown) {
-				console.log("error : " + jqXHR + ", " + textStatus + ", "
-						+ errorThrown);
-			}
-		}); */
-	
-	
+	function showWriteForm(userid) {
+		location.href = "${ pageContext.servletContext.contextPath }/calmovewrite.do?userid="+userid;
+	}
+	function updateCalForm(){
+		var sedate = $("#date.body-date").val();
+		var userid = $("#userid.userid").val();
+		console.log(sedate);
+		console.log(userid);
+		location.href="${ pageContext.servletContext.contextPath }/calmoveup.do?userid="+userid+"&date="+sedate;
+	}
+	function deleteCalForm(){
+		var sedate = $("#date.body-date").val();
+		var userid = $("#userid.userid").val();
+		location.href="${ pageContext.servletContext.contextPath }/deleteCal.do?userid="+userid+"&date="+sedate;
+	}
 </script>
 <style TYPE="text/css">
 body {
@@ -176,7 +167,7 @@ A:hover {
 }
 
 .calendar_body .today {
-width: 50%;
+	width: 100px;
 	border: 2px solid black;
 	height: 120px;
 	background-color: #c9c9c9;
@@ -185,7 +176,7 @@ width: 50%;
 }
 
 .calendar_body .date {
-width: 50%;
+	width: 100px;
 	font-weight: bold;
 	font-size: 15px;
 	padding-left: 3px;
@@ -193,7 +184,7 @@ width: 50%;
 }
 
 .calendar_body .sat_day {
-width: 50%;
+	width: 50%;
 	border: 2px solid black;
 	height: 120px;
 	text-align: left;
@@ -217,7 +208,6 @@ width: 50%;
 }
 
 .calendar_body .sun_day .sun {
-	color: red;
 	font-weight: bold;
 	font-size: 15px;
 	padding-left: 3px;
@@ -263,6 +253,7 @@ width: 50%;
 </head>
 <body>
 	<c:import url="/WEB-INF/views/common/menubar.jsp" />
+	<jsp:include page="./modal.jsp"></jsp:include>
 	<form name="calendarFrm" id="calendarFrm" action="" method="GET">
 		<div class="calendar">
 			<!--날짜 네비게이션  -->
@@ -287,7 +278,7 @@ width: 50%;
 						after <!-- 다음달 -->
 					</a>
 				</button>
-				
+
 				<a class="before_after_year"
 					href="./mycalendar.do?year=${today_info.search_year+1}&month=${today_info.search_month-1}">
 					<!-- 다음해 --> &gt;&gt;
@@ -302,11 +293,10 @@ width: 50%;
 			</div>
 			<!-- 글쓰기용 버튼 -->
 			<div class="today_button_div" style="display: inline-block;">
-				<button type="button" class="write_btn" onclick="write-btn"
+				<button type="button" class="write_btn" onclick="showWriteForm('${sessionScope.loginMember.userid}');"
 					style="height: 30ps; width: 80px; font-weight: bold;">write</button>
 			</div>
-			<table class="calendar_body">
-
+			<table class="calendar_body" align="center">
 				<thead>
 					<tr style="border: 2px solid black;">
 						<td class="day sun">일</td>
@@ -320,59 +310,64 @@ width: 50%;
 				</thead>
 				<tbody>
 					<tr>
-						<c:forEach var="dateList" items="${dateList}"
-							varStatus="date_status">
+						<c:forEach var="dateList" items="${dateList}" varStatus="date_status">
 							<c:choose>
 								<c:when test="${dateList.value=='today'}">
 									<td class="today">
 										<div class="date">
-												<a  data-toggle="modal" data-target="#myModal" onclick="modalOpen2('${ dateList.schedule_detail }', '${ dateList.imgName }');">${ dateList.date }</a>
+											<c:if test="${ !empty dateList.schedule_detail }">
+												<a data-toggle="modal" data-target="#myModal" onclick="modalOpen2('${ dateList.date }' , '${ dateList.schedule_detail }', '${ dateList.imgName }');">${ dateList.date }</a>
+											</c:if>
+											<c:if test="${ empty dateList.schedule_detail }">
+												${ dateList.date }
+											</c:if>
 										</div>
-										<div></div>
+										<div>평일 이미지?</div>
 									</td>
 								</c:when>
 								<c:when test="${date_status.index%7==6}">
 									<td class="sat_day">
-										<div class="sat">${dateList.date}]</div>
-										<div></div>
+										<div class="sat">${dateList.date}</div>
+										<div>토요일 이미지?</div>
 									</td>
 								</c:when>
 								<c:when test="${date_status.index%7==0}">
 					</tr>
 					<tr>
 						<td class="sun_day">
-							<div class="sun">${dateList.date}]</div>
-							<div></div>
+							<div class="sun">
+								<c:if test="${ empty dateList.schedule_detail }">
+									${dateList.date}
+								</c:if>
+								<c:if test="${ !empty dateList.schedule_detail }">
+									<div class="modal-dialog">
+										<a data-toggle="modal" data-target="#myModal" onclick="modalOpen2('${ dateList.date }' , '${ dateList.schedule_detail }', '${ dateList.imgName }');">${ dateList.date }</a>
+									</div>
+								</c:if>
+							</div>
+							<div>일요일 이미지?</div>
 						</td>
-						</c:when>
+					</c:when>
 						<c:otherwise>
 							<td class="normal_day">
 								<div class="date">
-									
-									<c:if test="${ !empty dateList.schedule_detail }">
-									${dateList.date} 
-										<%-- <a href="main.do" style="font-size: 20px;"> <c:url
-												var="cal" value="/main.do">
-												<c:param name="Y" value="${ dateList.year }"></c:param>
-												<c:param name="M" value="${ dateList.month }"></c:param>
-												<c:param name="D" value="${ dateList.date }"></c:param>
-											</c:url> <a href="${ cal }" style="font-size: 20px;">
-												</a>
-										</a> --%>
+									<c:if test="${ empty dateList.schedule_detail }">
+									<div>${ dateList.date }</div>
 									</c:if>
 									<c:if test="${ !empty dateList.schedule_detail }">
 										<div class="modal-dialog">
-											<jsp:include page="./modal.jsp"></jsp:include>
-											<a data-toggle="modal" data-target="#myModal" onclick="modalOpen2('${ dateList.schedule_detail }', '${ dateList.imgName }');">${ dateList.date }</a>
+											<a data-toggle="modal" data-target="#myModal"
+												onclick="modalOpen2('${ dateList.date }' , '${ dateList.schedule_detail }', '${ dateList.imgName }');">${ dateList.date }</a>
 										</div>
 									</c:if>
+									
 								</div>
-								<div></div>
+								<div>노말_데이?</div>
 							</td>
 						</c:otherwise>
 						</c:choose>
 						</c:forEach>
-						</tr>
+					</tr>
 				</tbody>
 
 			</table>

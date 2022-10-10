@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.sql.Date;
 
 public class Notice implements Serializable {
-	private static final long serialVersionUID = 1365978153616705231L;
+	private static final long serialVersionUID = 4334893905730615136L;
 	
 	private int notice_no;
 	private String userid;
@@ -14,11 +14,12 @@ public class Notice implements Serializable {
 	private int notice_readcount;
 	private String notice_upfile;
 	private String notice_refile;
+	private int importance;
 	
 	public Notice() {}
-	
+
 	public Notice(int notice_no, String userid, String notice_title, Date notice_date, String notice_content,
-			int notice_readcount, String notice_upfile, String notice_refile) {
+			int notice_readcount, String notice_upfile, String notice_refile, int importance) {
 		super();
 		this.notice_no = notice_no;
 		this.userid = userid;
@@ -28,6 +29,7 @@ public class Notice implements Serializable {
 		this.notice_readcount = notice_readcount;
 		this.notice_upfile = notice_upfile;
 		this.notice_refile = notice_refile;
+		this.importance = importance;
 	}
 
 	public int getNotice_no() {
@@ -94,14 +96,19 @@ public class Notice implements Serializable {
 		this.notice_refile = notice_refile;
 	}
 
+	public int getImportance() {
+		return importance;
+	}
+
+	public void setImportance(int importance) {
+		this.importance = importance;
+	}
 
 	@Override
 	public String toString() {
 		return "Notice [notice_no=" + notice_no + ", userid=" + userid + ", notice_title=" + notice_title
 				+ ", notice_date=" + notice_date + ", notice_content=" + notice_content + ", notice_readcount="
-				+ notice_readcount + ", notice_upfile=" + notice_upfile + ", notice_refile=" + notice_refile + "]";
+				+ notice_readcount + ", notice_upfile=" + notice_upfile + ", notice_refile=" + notice_refile
+				+ ", importance=" + importance + "]";
 	}
-
-	
-	
 }

@@ -1,16 +1,12 @@
 package com.am.mygallery.notice.controller;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,6 +23,7 @@ import com.am.mygallery.common.SearchDate;
 import com.am.mygallery.member.model.vo.Member;
 import com.am.mygallery.notice.model.service.NoticeService;
 import com.am.mygallery.notice.model.vo.Notice;
+import com.am.mygallery.common.SearchPaging;
 
 @Controller
 public class NoticeController {
@@ -63,56 +59,181 @@ public class NoticeController {
 
 	// 공지사항 전체 목록보기 요청 처리용
 	@RequestMapping("nlist.do")
-	public String noticeListMethod(Model model) {
-
-		ArrayList<Notice> list = noticeService.selectAll();
-
-		if (list.size() > 0) {
-			model.addAttribute("list", list);
-			return "notice/noticeListView";
-		} else {
-			model.addAttribute("message", "등록된 공지사항 정보가 없습니다.");
-			return "common/error";
+	public ModelAndView noticeListMethod(
+			@RequestParam(name="page", required=false) String page,
+			ModelAndView mv) {
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = Integer.parseInt(page);
+			
+			
+			
 		}
+		
+		//한 페이지에 게시글 10개씩 출력되게 하는 경우
+		//페이징 계산 처리 -- 별도의 클래스로 작성해도 됨 ---------------
+		//별도의 클래스의 메소드에서 Paging 을 리턴하면 됨
+		int limit = 10;  //한 페이지에 출력할 목록 갯수
+		//전체 페이지 갯수 계산을 위해 총 목록 갯수 조회해 옴
+		int listCount = noticeService.selectListCount();
+		//페이지 수 계산
+		//주의 : 목록이 11개이면 페이지 수는 2페이지가 됨
+		// 나머지 목록 1개도 1페이지가 필요함
+		int maxPage = (int)((double)listCount / limit + 0.9);
+		//현재 페이지가 포함된 페이지 그룹의 시작값 지정
+		// => 뷰 아래쪽에 표시할 페이지 수를 10개로 하는 경우
+		int startPage = (currentPage / 10) * 10 + 1;
+		//현재 페이지가 포함된 페이지 그룹의 끝값 지정
+		int endPage = startPage + 10 - 1;
+		
+		if(maxPage < endPage) {
+			endPage = maxPage;
+		}
+		
+		//쿼리문에 전달할 현재 페이지에 적용할 목록의 시작행과 끝행 계산
+		int startRow = (currentPage - 1) * limit + 1;
+		int endRow = startRow + limit - 1;
+		Paging paging = new Paging(startRow, endRow);
+		
+		//페이징 계산 처리 끝 ---------------------------------------
+		
+		ArrayList<Notice> list = noticeService.selectList(paging);
+		
+		if(list != null && list.size() > 0) {
+			mv.addObject("list", list);
+			mv.addObject("listCount", listCount);
+			mv.addObject("maxPage", maxPage);
+			mv.addObject("currentPage", currentPage);
+			mv.addObject("startPage", startPage);
+			mv.addObject("endPage", endPage);
+			mv.addObject("limit", limit);
+			
+			mv.setViewName("notice/noticeListView");
+		}else {
+			mv.addObject("message", 
+					currentPage + " 페이지 목록 조회 실패.");
+			mv.setViewName("common/error");
+		}
+		
+		return mv;
 	}
+
+
+
+
+
 
 	// 공지글 제목 검색용
-	@RequestMapping(value = "nsearchTitle.do", method = RequestMethod.POST)
-	public String noticeSearchTitleMethod(@RequestParam("keyword") String keyword, Model model) {
-		ArrayList<Notice> list = noticeService.selectSearchTitle(keyword);
-
-		if (list.size() > 0) {
-			model.addAttribute("list", list);
-			return "notice/noticeListView";
-		} else {
-			model.addAttribute("message", keyword + "로 검색된 공지글 정보가 없습니다.");
-			return "common/error";
+	@RequestMapping(value="nsearchTitle.do", method=RequestMethod.GET)
+	public String noticeSearchTitleMethod(
+			@RequestParam("keyword") String keyword, 
+			@RequestParam(name="page", required=false) String page,
+			Model model) {
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = Integer.parseInt(page);
 		}
-	}
-
-	// 공지글 작성자 검색용
-	@RequestMapping(value = "nsearchWriter.do", method = RequestMethod.POST)
-	public String noticeSearchWriterMethod(@RequestParam("keyword") String keyword, Model model) {
-		ArrayList<Notice> list = noticeService.selectSearchWriter(keyword);
-
-		if (list.size() > 0) {
+		
+		//한 페이지에 게시글 10개씩 출력되게 하는 경우
+		//페이징 계산 처리 -- 별도의 클래스로 작성해도 됨 ---------------
+		//별도의 클래스의 메소드에서 Paging 을 리턴하면 됨
+		int limit = 10;  //한 페이지에 출력할 목록 갯수
+		//전체 검색 키워드 갯수 계산을 위해 총 목록 갯수 조회해 옴
+		int listCount = noticeService.selectSearchTListCount(keyword);
+		//페이지 수 계산
+		//주의 : 목록이 11개이면 페이지 수는 2페이지가 됨
+		// 나머지 목록 1개도 1페이지가 필요함
+		int maxPage = (int)((double)listCount / limit + 0.9);
+		//현재 페이지가 포함된 페이지 그룹의 시작값 지정
+		// => 뷰 아래쪽에 표시할 페이지 수를 10개로 하는 경우
+		int startPage = (currentPage / 10) * 10 + 1;
+		//현재 페이지가 포함된 페이지 그룹의 끝값 지정
+		int endPage = startPage + 10 - 1;
+		
+		if(maxPage < endPage) {
+			endPage = maxPage;
+		}
+		
+		//쿼리문에 전달할 현재 페이지에 적용할 목록의 시작행과 끝행 계산
+		int startRow = (currentPage - 1) * limit + 1;
+		int endRow = startRow + limit - 1;
+		
+		//페이징 계산 처리 끝 ---------------------------------------
+		SearchPaging searchpaging = new SearchPaging(keyword, startRow, endRow);
+		
+		ArrayList<Notice> list = noticeService.selectSearchTitle(searchpaging);
+		
+		if(list.size() > 0) {
 			model.addAttribute("list", list);
+			model.addAttribute("listCount", listCount);
+			model.addAttribute("maxPage", maxPage);
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("startPage", startPage);
+			model.addAttribute("endPage", endPage);
+			model.addAttribute("limit", limit);
+			model.addAttribute("action", "title");
+			model.addAttribute("keyword", keyword);
 			return "notice/noticeListView";
-		} else {
-			model.addAttribute("message", keyword + "로 검색된 공지글 정보가 없습니다.");
+		}else {
+			model.addAttribute("message", 
+					keyword + "로 검색된 공지글 정보가 없습니다.");
 			return "common/error";
 		}
 	}
 
 	// 공지글 등록날짜 검색용
-	@RequestMapping(value = "nsearchDate.do", method = RequestMethod.POST)
-	public String noticeSearchDateMethod(SearchDate date, Model model) {
-		ArrayList<Notice> list = noticeService.selectSearchDate(date);
-
-		if (list.size() > 0) {
+	@RequestMapping(value="nsearchDate.do", method=RequestMethod.GET)
+	public String noticeSearchDateMethod(SearchDate date, 
+			@RequestParam(name="page", required=false) String page,
+			Model model) {
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = Integer.parseInt(page);
+		}
+		
+		//한 페이지에 게시글 10개씩 출력되게 하는 경우
+		//페이징 계산 처리 -- 별도의 클래스로 작성해도 됨 ---------------
+		//별도의 클래스의 메소드에서 Paging 을 리턴하면 됨
+		int limit = 10;  //한 페이지에 출력할 목록 갯수
+		//전체 페이지 갯수 계산을 위해 총 목록 갯수 조회해 옴
+		int listCount = noticeService.selectSearchDListCount(date);
+		//페이지 수 계산
+		//주의 : 목록이 11개이면 페이지 수는 2페이지가 됨
+		// 나머지 목록 1개도 1페이지가 필요함
+		int maxPage = (int)((double)listCount / limit + 0.9);
+		//현재 페이지가 포함된 페이지 그룹의 시작값 지정
+		// => 뷰 아래쪽에 표시할 페이지 수를 10개로 하는 경우
+		int startPage = (currentPage / 10) * 10 + 1;
+		//현재 페이지가 포함된 페이지 그룹의 끝값 지정
+		int endPage = startPage + 10 - 1;
+		
+		if(maxPage < endPage) {
+			endPage = maxPage;
+		}
+		
+		//쿼리문에 전달할 현재 페이지에 적용할 목록의 시작행과 끝행 계산
+		int startRow = (currentPage - 1) * limit + 1;
+		int endRow = startRow + limit - 1;
+		
+		
+		//페이징 계산 처리 끝 ---------------------------------------
+		SearchPaging searchpaging = new SearchPaging(date.getBegin(), date.getEnd(), startRow, endRow);
+		ArrayList<Notice> list = noticeService.selectSearchDate(searchpaging);
+		
+		if(list.size() > 0) {
 			model.addAttribute("list", list);
+			model.addAttribute("listCount", listCount);
+			model.addAttribute("maxPage", maxPage);
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("startPage", startPage);
+			model.addAttribute("endPage", endPage);
+			model.addAttribute("limit", limit);
+			model.addAttribute("action", "date");
+			model.addAttribute("begin", date.getBegin());
+			model.addAttribute("end", date.getEnd());
 			return "notice/noticeListView";
-		} else {
+		}else {
 			model.addAttribute("message", "해당 날짜에 등록된 공지사항 정보가 없습니다.");
 			return "common/error";
 		}
@@ -246,10 +367,11 @@ public class NoticeController {
 	}
 
 	// 공지글 수정 요청 처리용
-	@RequestMapping(value = "nupdate.do", method = RequestMethod.POST)
+	@RequestMapping(value = "nupdate.do")
 	public String noticeUpdateMethod(Notice notice, Model model,
 			@RequestParam(name = "delFlag", required = false) String delFlag,
-			@RequestParam(name = "upfile", required = false) MultipartFile mfile, HttpServletRequest request) {
+			@RequestParam(name = "upfile", required = false) MultipartFile mfile, 
+			HttpServletRequest request) {
 
 		// 공지사항 첨부파일 저장 폴더 경로 지정
 		String savePath = request.getSession().getServletContext().getRealPath("resources/notice_upfiles");

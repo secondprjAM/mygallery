@@ -14,13 +14,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.am.mygallery.common.Paging;
+import com.am.mygallery.member.model.service.MailSendService;
 import com.am.mygallery.member.model.service.MemberService;
 import com.am.mygallery.member.model.vo.Member;
 
@@ -36,6 +39,9 @@ public class MemberController {
 	private MemberService memberService;
 	
 	@Autowired
+	private MailSendService mailService;
+	
+	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	//뷰 페이지 이동 처리용 ----------------------------------------------
@@ -49,7 +55,35 @@ public class MemberController {
 		return "member/loginPage";
 	}
 	
+	// 아이디 찾기 페이지 이동
+	@RequestMapping("findIDPage.do")
+	public String findIDPage() {
+		return "member/findIDPage";
+	}
+	
+	// 비밀번호 찾기 페이지 이동
+	@RequestMapping("pw_find.do")
+	public String pw_find() {
+		return "member/pw_find";
+	}
+	
+	// 회원정보 변경을 위한 본인 인증 페이지로 이동
 	@RequestMapping("moveup.do")
+	public String checkselfPage(
+			@RequestParam("userid") String userid, 
+			Model model) {
+		Member member = memberService.selectMember(userid);
+		if(member != null) {
+			model.addAttribute("member", member);
+			return "member/checkself";
+		}else {
+			model.addAttribute("message", userid + " : 회원 조회 실패!");
+			return "common/error";
+		}
+	}
+	
+	// 본인 인증 후 회원 정보 수정 페이지로 이동
+	@RequestMapping("updatePage.do")
 	public String moveUpdatePage(
 			@RequestParam("userid") String userid, 
 			Model model) {
@@ -135,6 +169,14 @@ public class MemberController {
 		//암호화된 패스워드와 전달된 글자타입 패스워드를 비교함
 		//matches(글자타입패스워드, 암호화된패스워드)
 		String viewName = null;
+		String tempPWD = (String) loginSession.getAttribute("tempPWD");
+		if(loginMember != null && tempPWD != null) {
+			if(userpassword.equals(tempPWD)) {
+				model.addAttribute("member", loginMember);
+				return "member/pw_new";
+			}
+		}
+		
 		if(loginMember != null && 
 				this.bcryptPasswordEncoder.matches(
 					userpassword, loginMember.getUserpassword())
@@ -179,6 +221,33 @@ public class MemberController {
 		}
 	}
 	
+	// 이메일 인증
+	@GetMapping("mailCheck.do")
+	@ResponseBody
+	public String mailCheck(String email) {
+		System.out.println("이메일 인증 요청이 들어옴!");
+		System.out.println("이메일 인증 이메일 : " + email);
+		return mailService.joinEmail(email);
+		
+	}
+	
+	// 비밀번호 이메일 인증
+	@RequestMapping("PWDmailCheck.do")
+	public String pwdmailCheck(@RequestParam("useremail") String email, HttpSession session, Model model) {
+		System.out.println("이메일 인증 요청이 들어옴!");
+		System.out.println("이메일 인증 이메일 : " + email);
+		String tempPWD = mailService.pwdEmail(email);
+		logger.info("tempPWD", tempPWD);
+		if(tempPWD != null) {
+			session.setAttribute("tempPWD", tempPWD);
+			model.addAttribute("message", "임시 비밀번호로 사용 가능한 이메일을 전송하였습니다 이메일을 확인해주세요.");
+			return "member/loginPage";
+		}else {
+			model.addAttribute("message", 
+					"비밀번호 찾기 메일 전송 실패.");
+			return "common/error";
+		}
+	}
 	//리턴 타입으로 String, ModelAndView 를 사용할 수 있음
 	@RequestMapping("myinfo.do")
 	//public String myinfoMethod() {  return "폴더명/뷰파일명"; }
@@ -199,7 +268,122 @@ public class MemberController {
 		return mv;		
 	}
 	
-//Admin Info 보기
+	//아이디 찾기 
+	@RequestMapping(value = "find_id.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String find_id(Member member) {
+		String result = memberService.find_id(member);
+	return result;
+	}
+
+	//회원 정보 수정용 : 수정 성공시 myinfoPage.jsp 로 이동함
+	@RequestMapping(value="mupdate.do", method=RequestMethod.POST)
+	public String memberUpdateMethod(Member member, Model model, 
+			@RequestParam("origin_userpassword") String originUserpassword, HttpServletRequest request) {
+		logger.info("mupdate.do : " + member);
+		logger.info("origin_userpassword : " + originUserpassword);
+		
+		//새로운 암호가 전송이 왔다면, 패스워드 암호화 처리함
+		String userpwd = member.getUserpassword().trim();
+		if(userpwd != null && userpwd.length() > 0) {
+			//기존 암호와 다른 값이면
+			if(!this.bcryptPasswordEncoder.matches(userpwd, originUserpassword)) {
+				//member 에 새로운 패스워드를 암호화해서 기록함
+				member.setUserpassword(this.bcryptPasswordEncoder.encode(userpwd));
+			}
+		}else {
+			//새로운 패스워드 값이 없다면, member 에 원래 패스워드 기록
+			member.setUserpassword(originUserpassword);
+		}
+		
+		logger.info("after : " + member);
+		
+		if(memberService.updateMember(member) > 0) {
+			//수정이 성공했다면, 컨트롤러의 메소드를 직접 호출할 수도 있음
+			//즉, 컨트롤러 안에서 다른 컨트롤러를 실행할 수도 있음
+			//내정보보기 페이지에 수정된 회원정보를 다시 조회해서 내보냄
+			//쿼리스트링 : ?이름=값&이름=값
+			HttpSession session = request.getSession(false);
+			session.invalidate(); //세션 객체를 없앰
+			System.out.println("세션 삭제됨");
+			return "redirect:main.do";
+		}else {
+			model.addAttribute("message", 
+					member.getUserid() + " : 회원 정보 수정 실패!");
+			return "common/error";
+		}
+		
+	}
+	
+	//회원 탈퇴 처리용 : 회원 정보 삭제함
+	//삭제되면 자동 로그아웃함
+	@RequestMapping("mdel.do")
+	public String memberDeleteMethod(
+			@RequestParam("userid") String userid, Model model) {
+		logger.info(userid);
+		if(memberService.deleteMember(userid) > 0) {
+			return "redirect:logout.do";
+		}else {
+			model.addAttribute("message", userid + " : 회원 삭제 실패!");
+			return "common/error";
+		}
+	}
+	
+	// 임시 로그인 후 새로운 비밀번호 설정
+	@RequestMapping(value="resetpwd.do", method=RequestMethod.POST)
+	public String resetpwdMethod(Member member, Model model, HttpServletRequest request){
+		logger.info("resetpwd.do : " + member);
+		
+		//새로운 암호가 전송이 왔다면, 패스워드 암호화 처리함
+		String userpwd = member.getUserpassword().trim();
+		if(userpwd != null && userpwd.length() > 0) {
+			//member 에 새로운 패스워드를 암호화해서 기록함
+			member.setUserpassword(this.bcryptPasswordEncoder.encode(userpwd));
+			logger.info("userpwd : " + userpwd);
+		}
+		
+		if(memberService.pwUpdate(member) > 0) {
+			//수정이 성공했다면, 컨트롤러의 메소드를 직접 호출할 수도 있음
+			//즉, 컨트롤러 안에서 다른 컨트롤러를 실행할 수도 있음
+			//내정보보기 페이지에 수정된 회원정보를 다시 조회해서 내보냄
+			//쿼리스트링 : ?이름=값&이름=값
+			HttpSession session = request.getSession(false);
+			session.invalidate(); //세션 객체를 없앰
+			return "redirect:main.do";
+		}else {
+			model.addAttribute("message", 
+					member.getUserid() + " : 회원 정보 수정 실패!");
+			return "common/error";
+		}
+		
+	}
+	
+	// 비밀번호 변경 전 본인 확인
+	@RequestMapping(value="checkself.do", method=RequestMethod.POST)
+	public String checkself(Member member, @RequestParam("userid") String userid, Model model) {
+		System.out.println(member.getUserid());
+		Member loginMember = memberService.selectMember(userid);
+		logger.info("member.pass " + member.getUserpassword());
+		logger.info("loginmember.pass " + loginMember.getUserpassword());
+		
+		String viewName = null;
+		if(loginMember != null && 
+				this.bcryptPasswordEncoder.matches(member.getUserpassword(), loginMember.getUserpassword())) {
+			//로그인 상태 관리 방법 (상태 관리 매커니즘) : 기본 세션 사용
+			//logger.info("sessionID : " + loginSession.getId());
+			
+			//로그인 성공시 내보낼 뷰파일명 지정
+			viewName = "redirect:updatePage.do?userid=" + userid;
+		}else {  //로그인 실패
+			model.addAttribute("message", 
+					"본인 인증 실패 : 암호를 확인하세요.");
+			viewName = "common/error";
+		}
+		
+		return viewName;
+	}
+	
+	//Admin Info 보기
 	@RequestMapping("admininfo.do")
 	//public String myinfoMethod() {  return "폴더명/뷰파일명"; }
 	public ModelAndView admininfoMethod(
@@ -218,11 +402,11 @@ public class MemberController {
 		return mv;		
 	}
 	
-//게시글 페이지 단위로 목록보기 요청 처리용
-@RequestMapping("mlist.do")
-public ModelAndView memberListMethod(
-		@RequestParam(name="page", required=false) String page,
-		ModelAndView mv) {
+	//게시글 페이지 단위로 목록보기 요청 처리용
+	@RequestMapping("mlist.do")
+	public ModelAndView memberListMethod(
+			@RequestParam(name="page", required=false) String page,
+			ModelAndView mv) {
 	
 	int currentPage = 1;
 	if(page != null) {
@@ -321,5 +505,4 @@ public String memberSearchMethod(
 		return "member/memberListView";
 	}
 }
-
 } //controller 끝
