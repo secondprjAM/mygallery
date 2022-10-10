@@ -19,27 +19,51 @@
 		order by notice_no asc
 	</select>
 	
-	<select id="searchTitle" resultMap="resultNotice" parameterType="string">
-		select * from notice
-		where notice_title like '%' || #{ keyword } || '%'
-		order by notice_no asc
-	</select>
 	
-	<!-- <select id="getListCount" resultType="Paging" resultMap="resultNotice">
+	<select id="getListCount" resultType="_int" >
 		select count(*) from notice
-	</select> -->
-	
-	
-	<select id="searchWriter" resultMap="resultNotice" parameterType="string">
-		select * from notice
-		where userid like '%' || #{ keyword } || '%'
-		order by notice_no asc
 	</select>
 	
-	<select id="searchDate" resultMap="resultNotice" parameterType="SearchDate">
-		select * from notice
+	<select id="getSearchTListCount" resultType="_int" parameterType="string">
+		select count(*) from notice
+		where notice_title like '%' || #{ keyword } || '%'
+	</select>
+	
+	<select id="getSearchDListCount" resultType="_int" parameterType="SearchDate">
+		select count(*) from notice
 		where notice_date between #{ begin } and #{ end }
-		order by notice_no asc
+	</select>
+	
+	<select id="searchTitle" resultMap="resultNotice" parameterType="SearchPaging">
+		<![CDATA[
+			SELECT *  
+			FROM (SELECT ROWNUM RNUM, NOTICE_NO, NOTICE_TITLE, 
+						  NOTICE_DATE, USERID, 
+						  NOTICE_CONTENT,  
+			               NOTICE_UPFILE, NOTICE_REFILE, 
+			               NOTICE_READCOUNT, IMPORTANCE
+			       FROM (SELECT * FROM NOTICE
+			       		  where notice_title like '%' || #{ keyword } || '%'
+			               ORDER BY NOTICE_NO ASC
+			                        )) 
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+	</select>
+	
+	<select id="searchDate" resultMap="resultNotice" parameterType="SearchPaging">
+		<![CDATA[
+			SELECT *  
+			FROM (SELECT ROWNUM RNUM, NOTICE_NO, NOTICE_TITLE, 
+						  NOTICE_DATE, USERID, 
+						  NOTICE_CONTENT,  
+			               NOTICE_UPFILE, NOTICE_REFILE, 
+			               NOTICE_READCOUNT, IMPORTANCE
+			       FROM (SELECT * FROM NOTICE
+			       		   where notice_date between #{ begin } and #{ end }
+			               ORDER BY NOTICE_NO ASC
+			                        )) 
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
 	</select>
 	
 	<select id="selectNotice" parameterType="_int" resultMap="resultNotice">
@@ -54,12 +78,18 @@
 	
 	<insert id="insertNotice" parameterType="Notice">
 		insert into notice (NOTICE_NO, NOTICE_TITLE, USERID, 
-		NOTICE_DATE, NOTICE_UPFILE, NOTICE_REFILE, NOTICE_CONTENT, NOTICE_READCOUNT) 
+		NOTICE_DATE, NOTICE_UPFILE, NOTICE_REFILE, NOTICE_CONTENT, NOTICE_READCOUNT, IMPORTANCE) 
 		values ((select max(notice_no) + 1 from notice), 
 				#{ notice_title }, #{ userid }, sysdate, 
 				#{ notice_upfile, jdbcType=VARCHAR }, 
 				#{ notice_refile, jdbcType=VARCHAR }, 
-				#{ notice_content }, default )
+				#{ notice_content }, default ,
+				<if test="importance != 0">
+				#{ importance }
+				</if>
+				<if test="importance == 0">
+				default
+				</if>)
 	</insert>
 	
 	<update id="updateNotice" parameterType="Notice">
@@ -74,6 +104,14 @@
 			, notice_upfile = null
 			, notice_refile = null
 			</if>
+			
+			<if test="importance != 0">
+			, importance = #{ importance }
+			</if>
+			<if test="importance == 0">
+			, importance = default
+			</if>
+			
 		where notice_no = #{ notice_no }
 	</update>
 	
@@ -82,5 +120,22 @@
 		set notice_readcount = notice_readcount + 1
 		where notice_no = #{ notice_no }
 	</update>
+	
+	<select id="selectList" parameterType="Paging" resultMap="resultNotice">
+		<![CDATA[
+			SELECT *  
+			FROM (SELECT ROWNUM RNUM, NOTICE_NO, NOTICE_TITLE, 
+						  NOTICE_DATE, USERID, 
+						  NOTICE_CONTENT,  
+			               NOTICE_UPFILE, NOTICE_REFILE, 
+			               NOTICE_READCOUNT, IMPORTANCE
+			       FROM (SELECT * FROM NOTICE 
+			              ORDER BY IMPORTANCE ASC, 
+			              			NOTICE_NO ASC
+			                        )) 
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+	</select>
+	
 	
 </mapper>

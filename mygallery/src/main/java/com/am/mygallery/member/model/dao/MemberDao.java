@@ -32,6 +32,22 @@ public class MemberDao {
 	public Member selectLogin(Member member) {
 		return session.selectOne("memberMapper.selectLogin", member);
 	}
+	
+	public String find_id(Member member) {
+		return session.selectOne("memberMapper.findId",member);
+	}
+
+	public int updateMember(Member member) {
+		return session.update("memberMapper.updateMember", member);
+	}
+
+	public int deleteMember(String userid) {
+		return session.delete("memberMapper.deleteMember", userid);
+	}
+
+	public int pwUpdate(Member member) {
+		return session.update("memberMapper.pwUpdate", member);
+	}
 
 	public ArrayList<Member> selectList() {
 		List<Member> list = session.selectList("memberMapper.selectList");

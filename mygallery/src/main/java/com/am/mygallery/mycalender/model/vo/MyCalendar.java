@@ -18,6 +18,7 @@ public class MyCalendar  implements Serializable {
    String schedule = "";
    String schedule_detail="";		//content 내용 저장할 곳
    String imgName = "";			//이미지 파일명 저장할 곳
+   
    private Date calendar_date;
    private String userid;
    private String filename;

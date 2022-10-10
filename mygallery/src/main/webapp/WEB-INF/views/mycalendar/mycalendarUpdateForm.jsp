@@ -6,40 +6,37 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" >
-function readURL(input) {
-	  if (input.files && input.files[0]) {
-	    var reader = new FileReader();
-	    reader.onload = function(e) {
-	      document.getElementById('preview').src = e.target.result;
-	    };
-	    reader.readAsDataURL(input.files[0]);
-	  } else {
-	    document.getElementById('preview').src = "";
-	  }
-	}
+function onDisplay(){
+	console.log("ㅇㅇ");
+	$(".nonTr").show();
+}
 </script>
 </head>
 <body>
 	<c:import url="/WEB-INF/views/common/menubar.jsp" />
 <hr>
-<%-- <h2 align="center">${ mycalendar.calendar_no}번 마이캘린더 수정 페이지</h2>
+<h2 align="center">수정 페이지</h2>
 
-<form action="nupdate.do"  method="post"  enctype="multipart/form-data">
+<form action="calupdate.do"  method="post" >
 	<table align="center"  width="500"  border="1"  cellspacing="0"  cellpadding="10"  style="margin-top:200px;">
-		<tr><th>날짜</th><td><input type="date" name="begin" value="${ mycalendar.calendar_date  }"></td></tr>
+		<tr><th>날짜</th><td><input type="date" name="calendar_date" readonly value="${ mycalendar.calendar_date  }"></td></tr>
 		<tr><th>내용</th><td><input type="textarea" name="calendar_content" value="${ mycalendar.calendar_content  }"></td></tr>
-		<tr><th>작성자</th><td><input type="text"  name="userid" 	 readonly value="${sessionScope.loginMember.userid}" ></td></tr>
+		<tr><th>작성자</th><td><input type="text"  name="userid" 	 readonly value="${ mycalendar.userid }" ></td></tr>
 		<tr><th>이미지</th><td><img id="preview"></td></tr>
-		<tr><th></th>
-			<td>
-				<input type="file"  onchange="readURL(this);" name="upfile"> 
-				<c:if test="${ !empty notice.original_filepath }">
-				${ notice.original_filepath } &nbsp; 
-				<input type="checkbox" name="delFlag" value="yes"> 파일삭제 <br>
-			</c:if>
+		<tr><th><img src="resources/gallery/faceImages/${ mycalendar.filename }"  width="150" height="150"></td></tr>
+		
+		<tr><th><input type="button" onclick="onDisplay()" value= "이미지 수정"></th></tr>
+		<tr class="nonTr" style="display: none;"><th>
+		<c:forEach var="imgList" items="${ imgList }">
+			<td id="full-img">
+			<input type="radio" id="filename" class="checkbox" name="filename" value="${ imgList.img_rename }">
+			<img src="resources/gallery/faceImages/${ imgList.img_rename }"  width="150" height="150">
 			</td>
-		</tr>
+		</c:forEach>
+		</th></tr>
+		
 		<tr><th colspan="2">
 			<input type="submit" value="수정하기"> &nbsp; 
 			<input type="reset" value="수정취소"> &nbsp; 

@@ -26,7 +26,7 @@
 	<h3 align= "center">${ message }</h3>
 </c:if>
 <c:url var = "movemain" value = "/main.do"/>
-<h3 align="center"><a href = "${movemain}" }>시작페이지로 이동</a></h3>
+<h3 align="center"><a href = "#"  onclick= "javascript:history.go(-1);"}>이젠페이지로 이동</a></h3>
 <c:import url="/WEB-INF/views/common/footer.jsp"/>
 </body>
 </html>

@@ -42,8 +42,34 @@
 		where userid = #{ userid } and userpassword = #{ userpassword }
 		and userloginok = 'Y'
 	</select>
+	
+	<!-- 이름, 이메일로 아이디 찾기 -->
+	<select id = "findId" parameterType="Member" resultType="string">
+		select userid from member
+		where username = #{ username } and useremail = #{ useremail }
+	</select>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="updateMember" parameterType="Member">
+		update member
+		set userpassword = #{ userpassword }
+		where userid = #{ userid }
+	</update>
+	
+	<!-- 회원 탈퇴 -->
+	<delete id="deleteMember" parameterType="string">
+		delete from member
+		where userid = #{ uid }
+	</delete>
+	
+	<!-- 비밀번호 찾기 변경 -->
+	<update id = "pwUpdate" parameterType="Member">
+		update member
+		set userpassword = #{ userpassword }
+		where userid = #{ userid }
+	</update>
 
-<!-- 회원 전체 조회용 -->
+	<!-- 회원 전체 조회용 -->
 	<select id="selectList" resultMap="resultList">
 		select * from member
 		order by userid asc

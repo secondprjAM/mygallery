@@ -21,24 +21,28 @@ function dupCheckId(){
 	//입력된 아이디가 중복되지 않았는지 확인 : jQuery.ajax() 사용
 	//jQuery 는 $ 로 줄일 수 있음
 	//jQuery.ajax(); => $.ajax();
-	$.ajax({
-		url: "idchk.do",
-		type: "post",
-		data: { userid: $("#userid").val() },
-		success: function(data){
-			console.log("success : " + data);
-			if(data == "ok"){
-				alert("사용 가능한 아이디입니다.");
-				$("#upwd1").focus();
-			}else{
-				alert("이미 사용중인 아이디입니다.\n다시 입력하세요.");
-				$("#userid").select();
+	if($("#userid").val() == ''){
+		alert('아이디를 작성해주세요')
+	}else{
+		$.ajax({
+			url: "idchk.do",
+			type: "post",
+			data: { userid: $("#userid").val() },
+			success: function(data){
+				console.log("success : " + data);
+				if(data == "ok"){
+					alert("사용 가능한 아이디입니다.");
+					$("#upwd1").focus();
+				}else{
+					alert("이미 사용중인 아이디입니다.\n다시 입력하세요.");
+					$("#userid").select();
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+				console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
 			}
-		},
-		error: function(jqXHR, textStatus, errorThrown){
-			console.log("error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
-		}
-	});
+		});
+	}
 	
 	return false;  //클릭 이벤트 전달을 막음
 }
@@ -59,6 +63,53 @@ function validate(){
 	
 	return true; //전송함
 }
+function emailCK(){
+	// const eamil = $('#useremail').val() + $('#userEmail2').val(); // 이메일 주소값 얻어오기!
+	// console.log('완성된 이메일 : ' + eamil); // 이메일 오는지 확인
+	console.log('완성된 이메일 : ' + $('#useremail').val()); // 이메일 오는지 확인
+	const checkInput = $('.mail-check-input'); // 인증번호 입력하는곳 
+
+	
+	if ($('#useremail').val() != null){
+		$.ajax({
+			type : 'get',
+			//url : '<c:url value ="/MemberController/mailCheck?email="/>'+eamil, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
+			url : '<c:url value ="/mailCheck.do?email=' + $('#useremail').val() +'"/>',
+			success : function (data) {
+				console.log("data : " +  data);
+				checkInput.attr('disabled',false);
+				code =data;
+				alert('인증번호가 전송되었습니다.')
+			}		
+		}); // end ajax
+	}else{
+		alert('이메일을 작성해주세요.')
+	}
+	
+	$('.mail-check-input').blur(function () {
+		const inputCode = $(this).val();
+		const $resultMsg = $('#mail-check-warn');
+		
+		if(inputCode === code){
+			$resultMsg.html('인증번호가 일치합니다.');
+			$resultMsg.css('color','green');
+			$('#mail-Check-Btn').attr('disabled',true);
+			$('#enrolldo').attr('disabled',false);
+		//	$('#userEamil1').attr('readonly',true);
+		//	$('#userEamil').attr('readonly',true);
+		//	$('#userEamil2').attr('readonly',true);
+		//	$('#userEmail2').attr('onFocus', 'this.initialSelect = this.selectedIndex');
+		//	$('#userEmail').attr('onFocus', 'this.initialSelect = this.selectedIndex');
+	    //	$('#userEmail2').attr('onChange', 'this.selectedIndex = this.initialSelect');
+	    //	$('#userEmail').attr('onChange', 'this.selectedIndex = this.initialSelect');
+	    	return true;  //전송 함
+		}else{
+			$resultMsg.html('인증번호가 불일치 합니다. 다시 확인해주세요!.');
+			$resultMsg.css('color','red');
+			return false;  //전송 안 함
+		}
+	});
+}
 </script>
 </head>
 <body>
@@ -71,22 +122,22 @@ function validate(){
 	</th></tr>
 	<tr>
 		<th width="120">* 이 름</th>
-		<td><input type="text" name="username" required></td>
+		<td><input type="text" name="username" placeholder="이름" required></td>
 	</tr>
 	<tr>
 		<th width="120">* 아이디</th>
-		<td><input type="text" name="userid" id="userid" required>
-			&nbsp; &nbsp; 
+		<td><input type="text" name="userid" id="userid" placeholder="아이디" required>
+			&nbsp;
 			<input type="button" value="중복체크" onclick="return dupCheckId();">
 		</td>
 	</tr>
 	<tr>
 		<th width="120">* 암 호</th>
-		<td><input type="password" name="userpassword" id="upwd1" required></td>
+		<td><input type="password" name="userpassword" id="upwd1" placeholder="비밀번호" required></td>
 	</tr>
 	<tr>
 		<th width="120">* 암호확인</th>
-		<td><input type="password" id="upwd2"></td>
+		<td><input type="password" id="upwd2" placeholder="비밀번호재확인" required></td>
 	</tr>
 	<tr>
 		<th width="120">* 성 별</th>
@@ -94,12 +145,27 @@ function validate(){
 		<input type="radio" name="usergender" value="F"> 여자</td>
 	</tr>
 	<tr>
-		<th width="120">* 이메일</th>
-		<td><input type="email" name="useremail" required></td>
+		 <th for="email">이메일</th>
+		 <td class="input-group">
+				<input type="email" class="form-control" name="useremail" id="useremail" placeholder="이메일" required>
+		</td>
 	</tr>
 	<tr>
+		<th width="120">본인인증</th>
+		<td class="input-group-addon">
+			<input type="button" class="btn btn-primary" id="mail-Check-Btn"  onclick="emailCK(); return false;" required>본인인증</button>
+		</td>
+		<td class="mail-check-box">
+			<input class="form-control mail-check-input" placeholder="인증번호 6자리를 입력해주세요!" disabled="disabled" maxlength="6" required>
+			&nbsp;
+			<span id="mail-check-warn"></span>
+		</td>
+	</tr>
+	<div>
+	</div>
+	<tr>
 		<th colspan="2">
-			<input type="submit" value="가입하기"> &nbsp; 
+			<input type="submit" value="가입하기" disabled="disabled" name="enrolldo" id="enrolldo"> &nbsp; 
 			<input type="reset" value="작성취소"> &nbsp; 
 			<a href="main.do">시작페이지로 이동</a>
 		</th>		

@@ -3,6 +3,7 @@ package com.am.mygallery.notice.model.service;
 import java.util.ArrayList;
 
 import com.am.mygallery.notice.model.vo.Notice;
+import com.am.mygallery.common.SearchPaging;
 import com.am.mygallery.common.Paging;
 import com.am.mygallery.common.SearchDate;
 
@@ -13,11 +14,12 @@ public interface NoticeService {
 	int updateNotice(Notice notice);
 	int deleteNotice(int notice_no);
 	int updateAddReadcount(int notice_no);
-	ArrayList<Notice> selectSearchTitle(String keyword);
-	ArrayList<Notice> selectSearchWriter(String keyword);
-	ArrayList<Notice> selectSearchDate(SearchDate date);
+	ArrayList<Notice> selectSearchTitle(SearchPaging searchpaging);
+	ArrayList<Notice> selectSearchDate(SearchPaging searchpaging);
 	int selectListCount();
 	ArrayList<Notice> selectList(Paging page);
-	
+	int selectSearchTListCount(String keyword);
+	int selectSearchDListCount(SearchDate date);
+
 	
 }

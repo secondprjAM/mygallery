@@ -11,6 +11,54 @@
 <meta charset="UTF-8">
 <title></title>
 <style type="text/css">
+btable {
+	width: 900px;
+	background-color: #fff;
+	border-collapse: collapse;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+.btable caption {
+	font-size: 20px;
+	margin-bottom: 30px;
+}
+
+.btable tr {
+	border-bottom: 1px solid #eee;
+}
+
+.btable tr:last-child {
+	border: none;
+}
+
+.btable tr:nth-child(odd) {
+	background-color: #ddd;
+}
+
+.btable th, .btable td {
+	padding: 12px;
+	text-align: center;
+}
+
+.btable tr th {
+	background-color: #FF8080;
+	color: #fff;
+}
+
+.btable tr th:first-child {
+	border-radius: 5px 0 0 0;
+}
+
+.wrap {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+
 .button {
   width: 140px;
   height: 45px;
@@ -48,7 +96,7 @@
 <h2 align="center">${ breport.b_no } 번 게시글 상세보기</h2>
 </c:if>
 <br>
-<table align="center" width="500" border="1" cellspacing="0" 
+<table class="btable" align="center" width="500" border="0" cellspacing="1" 
 cellpadding="5">
 	<tr><th>제 목</th><td>${ breport.b_title }</td></tr>
 	<tr><th>작성자</th><td>${ breport.userid }</td></tr>
@@ -72,16 +120,16 @@ cellpadding="5">
 		</td>
 	</tr>
 	<tr><th>내 용</th><td>${ breport.b_content }</td></tr>
-	<tr><th colspan="2">
-		<button onclick="javascript:location.href='blist.do?page=${currentPage}';">목록</button>
-		&nbsp;
+</table>
+<br>
+<div align="center">
 		<!-- 글 작성자가 아닌 로그인 관리자만 댓글달기 기능 제공 -->
 		<c:if test="${ !empty requestScope.breport.userid and sessionScope.loginMember.useradmin eq 'Y' and breport.b_lev<2}">
 			<c:url var="brf" value="/breplyform.do">
 				<c:param name="b_no" value="${ breport.b_no }" />
 				<c:param name="page" value="${ currentPage }" />
 			</c:url>
-			<a href="${ brf }">[댓글달기]</a>
+			<button class="button"><a href="${ brf }">댓글달기</a></button>
 		</c:if>
 		<!-- 본인이 등록한 게시글일 때는 수정과 삭제 기능 제공 -->
 		<c:if test="${ requestScope.breport.userid eq sessionScope.loginMember.userid }">
@@ -89,7 +137,7 @@ cellpadding="5">
 				<c:param name="b_no" value="${ breport.b_no }" />
 				<c:param name="page" value="${ currentPage }" />
 			</c:url>
-			<a href="${ bup }">[수정페이지로 이동]</a> &nbsp;
+			<a href="${ bup }">수정페이지로 이동</a> &nbsp;
 			<c:url var="bdl" value="/bdel.do">
 				<c:param name="b_no" value="${ breport.b_no }" />
 				<c:param name="b_lev" value="${ breport.b_lev }" />
@@ -97,11 +145,15 @@ cellpadding="5">
 			</c:url>
 			<a href="${ bdl }">[글삭제]</a>
 		</c:if>
-	
-	</th></tr>
-</table>
+&nbsp;
+<button class="button" onclick="javascript:location.href='blist.do?page=${currentPage}';">목록</button>
+
+</div>
+
 <br>
-<hr>
+
+
+
 <c:import url="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>

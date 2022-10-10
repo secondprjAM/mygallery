@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.am.mygallery.common.Paging;
 import com.am.mygallery.common.SearchDate;
 import com.am.mygallery.notice.model.vo.Notice;
+import com.am.mygallery.common.SearchPaging;
 
 @Repository("noticeDao")
 public class NoticeDao {
@@ -23,18 +24,13 @@ public class NoticeDao {
 		return (ArrayList<Notice>)list;
 	}
 	
-	public ArrayList<Notice> selectSearchTitle(String keyword){
-		List<Notice> list = session.selectList("noticeMapper.searchTitle", keyword);
+	public ArrayList<Notice> selectSearchTitle(SearchPaging searchpaging){
+		List<Notice> list = session.selectList("noticeMapper.searchTitle", searchpaging);
 		return (ArrayList<Notice>)list;
 	}
-	
-	public ArrayList<Notice> selectSearchWriter(String keyword){
-		List<Notice> list = session.selectList("noticeMapper.searchWriter", keyword);
-		return (ArrayList<Notice>)list;
-	}
-	
-	public ArrayList<Notice> selectSearchDate(SearchDate date){
-		List<Notice> list = session.selectList("noticeMapper.searchDate", date);
+		
+	public ArrayList<Notice> selectSearchDate(SearchPaging searchpaging){
+		List<Notice> list = session.selectList("noticeMapper.searchDate", searchpaging);
 		return (ArrayList<Notice>)list;
 	}
 	
@@ -70,6 +66,14 @@ public class NoticeDao {
 	public ArrayList<Notice> selectList(Paging page) {
 		List<Notice> list = session.selectList("noticeMapper.selectList", page);
 		return (ArrayList<Notice>)list;
+	}
+
+	public int selectSearchTListCount(String keyword) {
+		return session.selectOne("noticeMapper.searchTitle", keyword);
+	}
+
+	public int selectSearchWListCount(SearchDate date) {
+		return session.selectOne("noticeMapper.searchWriter", date);
 	}
 }
 

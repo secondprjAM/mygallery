@@ -9,6 +9,7 @@ import com.am.mygallery.breport.model.dao.BreportDao;
 import com.am.mygallery.breport.model.vo.Breport;
 import com.am.mygallery.common.Paging;
 import com.am.mygallery.common.SearchDate;
+import com.am.mygallery.common.SearchPaging;
 
 @Service("breportService")
 public class BreportServiceImpl implements BreportService{
@@ -67,13 +68,13 @@ public class BreportServiceImpl implements BreportService{
 	}
 
 	@Override
-	public ArrayList<Breport> selectSearchTitle(String keyword) {
-		return breportDao.selectSearchTitle(keyword);
+	public ArrayList<Breport> selectSearchTitle(SearchPaging searchpaging) {
+		return breportDao.selectSearchTitle(searchpaging);
 	}
 
 	@Override
-	public ArrayList<Breport> selectSearchDate(SearchDate date) {
-		return breportDao.selectSearchDate(date);
+	public ArrayList<Breport> selectSearchDate(SearchPaging searchpaging) {
+		return breportDao.selectSearchDate(searchpaging);
 	}
 	
 }

@@ -14,6 +14,10 @@
 	<h1 align="center">MyGallery</h1>
 	<form action="login.do" method="post" align="center">
 		<table align="center" id="logtable" >
+			<c:if test="${ !empty massage }">
+				<div>${ message }
+				</div>
+			</c:if>
 			<tr>
 				<td><font size="4">아  이  디 : &nbsp;</font></td>
 				<td><input width="300px" height ="10px" type="text" name="userid" class="pos"></td>

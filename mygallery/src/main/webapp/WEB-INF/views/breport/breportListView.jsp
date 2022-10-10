@@ -57,42 +57,52 @@ btable {
 }
 
 .wrap {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .button {
-  width: 140px;
-  height: 45px;
-  font-family: 'Roboto', sans-serif;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 2.5px;
-  font-weight: 500;
-  color: #000;
-  background-color: #FFA7A7;
-  border: none;
-  border-radius: 45px;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease 0s;
-  cursor: pointer;
-  outline: none;
-  }
-
-.button:hover {
-  background-color: #2EE59D;
-  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
-  color: #fff;
-  transform: translateY(-7px);
+	width: 140px;
+	height: 45px;
+	font-family: 'Roboto', sans-serif;
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 2.5px;
+	font-weight: 500;
+	color: #000;
+	background-color: #FFA7A7;
+	border: none;
+	border-radius: 45px;
+	box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+	transition: all 0.3s ease 0s;
+	cursor: pointer;
+	outline: none;
 }
 
-
+.button:hover {
+	background-color: #2EE59D;
+	box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+	color: #fff;
+	transform: trabslateY(-7px);
+}
 </style>
 <script type="text/javascript"
 	src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript">
+function Change(){
+	var key = test.value
+	 if(key==1){
+		 document.all["d1"].style.display="block";
+		 document.all["d2"].style.display="none";
+		 }
+	 if(key==2){
+		 document.all["d1"].style.display="none";
+		 document.all["d2"].style.display="block";
+		 }
+}
+
 	$(function() {
 		showDiv();
 
@@ -127,16 +137,19 @@ btable {
 	<!-- jstl 에서 절대경로 표기 : /WEB-INF/views/common/menubar.jsp -->
 	<hr>
 	<h2 align="left">버그리포트</h2>
-	
+
 	<!-- 목록 출력 영역 -->
 	<!-- => 로그인한 회원만 게시글 등록(쓰기) 버튼이 보이게 함 -->
 	<br>
 	<div class="wrap" align="right">
-	<button class="button" onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/blist.do';">전체 목록 보기</button>
-	<c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.useradmin ne 'Y' }">
-		<hr>
-		<button class="button" onclick="showWriteForm();">글등록</button>
-	</c:if>
+		<button class="button"
+			onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/blist.do';">전체
+			목록 보기</button>
+		<c:if
+			test="${ !empty sessionScope.loginMember and sessionScope.loginMember.useradmin ne 'Y' }">
+			<hr>
+			<button class="button" onclick="showWriteForm();">글등록</button>
+		</c:if>
 	</div>
 	<br>
 	<table class="btable" align="center" width="1000">
@@ -178,40 +191,42 @@ btable {
 			</tr>
 		</c:forEach>
 	</table>
-<br>
-	<!-- 검색 항목 영역 -->
-<select align="center">
-			<div >
-			<option value="title"> 제목 </option>
-			<oprion value="date"> 날짜 </oprion>
-		</div>
-		<div id="titleDiv">
-			<form action="bsearchTitle.do" method="post">
-				<label>검색할 제목을 입력 : <input type="search" name="keyword">
-				</label> <input type="submit" value="검색">
-			</form>
-		</div>
-		<div id="dateDiv">
-			<form action="bsearchDate.do" method="post">
-				<label>검색할 등록날짜를 선택 : <input type="date" name="begin">
-					~ <input type="date" name="end">
-				</label> <input type="submit" value="검색">
-			</form>
-		</div>
-</select>
 	<br>
+	<!-- 검색 항목 영역 -->
+	<div align="center">
+		<select id="test" onchange="Change()">
+			<option value="1">제목</option>
+			<option value="2">날짜</option>
+		</select>
+		<div id="d1" style="display:block">
+			<form action="bsearchTitle.do" method="get">
+				<input type="search" name="keyword"> 
+				<input type="submit" value="검색">
+			</form>
+		</div>
+		<div id="d2" style="display:none">
+			<form action="bsearchDate.do" method="get">
+				<input type="date" name="begin"> 
+				<input type="date" name="end"> 
+				<input type="submit" value="검색">
+			</form>
+		</div>
+	</div>
+	<br>
+	
+<c:if test="${ empty action }">
 	<!-- 페이징 처리 -->
-	<div class="paging" style="text-align: center;">
+	<div style="text-align: center;">
 		<!-- 페이지 표시 영역 -->
 		<!-- 1페이지로 이동 처리 -->
 		<c:if test="${ currentPage eq 1 }">
-		[<] &nbsp;
+		[맨처음] &nbsp;
 	</c:if>
 		<c:if test="${ currentPage > 1 }">
 			<c:url var="bl" value="/blist.do">
 				<c:param name="page" value="1" />
 			</c:url>
-			<a href="${ bl }">[<]</a> &nbsp;
+			<a href="${ bl }">[맨처음]</a> &nbsp;
 	</c:if>
 		<!-- 이전 페이지그룹으로 이동 처리 -->
 		<c:if
@@ -219,22 +234,22 @@ btable {
 			<c:url var="bl2" value="/blist.do">
 				<c:param name="page" value="${ startPage - 10 }" />
 			</c:url>
-			<a href="${ bl2 }">[이전]</a> &nbsp;
+			<a href="${ bl2 }">[이전그룹]</a> &nbsp;
 	</c:if>
 		<c:if
 			test="${ !((currentPage - 10) < startPage and (currentPage - 10) > 1) }">
-		[이전] &nbsp;
+		[이전그룹] &nbsp;
 	</c:if>
 		<!-- 현재 페이지가 속한 페이지 그룹 페이지 숫자 출력 -->
 		<c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1">
 			<c:if test="${ p eq currentPage }">
-				<font size="4" color="red"><b>[${ p }]</b></font>
+				<font size="3" color="black"><b>[${ p }]</b></font>
 			</c:if>
 			<c:if test="${ p ne currentPage }">
 				<c:url var="bl3" value="/blist.do">
 					<c:param name="page" value="${ p }" />
 				</c:url>
-				<a href="${ bl3 }">${ p }</a>
+				<a href="${ bl3 }">${ p }</a> &nbsp;
 			</c:if>
 		</c:forEach>
 		<!-- 다음 페이지그룹으로 이동 처리 -->
@@ -243,23 +258,150 @@ btable {
 			<c:url var="bl4" value="/blist.do">
 				<c:param name="page" value="${ endPage + 10 }" />
 			</c:url>
-			<a href="${ bl4 }">[다음]</a> &nbsp;
+			<a href="${ bl4 }">[다음그룹]</a> &nbsp;
 	</c:if>
 		<c:if
 			test="${ !((currentPage + 10) > endPage and (currentPage + 10) < maxPage) }">
-		[다음] &nbsp;
+		[다음그룹] &nbsp;
 	</c:if>
 		<!-- 끝페이지로 이동 처리 -->
 		<c:if test="${ currentPage eq maxPage }">
-		[>] &nbsp; 
+		[맨끝] &nbsp; 
 	</c:if>
 		<c:if test="${ currentPage < maxPage }">
 			<c:url var="bl5" value="/blist.do">
 				<c:param name="page" value="${ maxPage }" />
 			</c:url>
-			<a href="${ bl5 }">[>]</a> &nbsp;
+			<a href="${ bl5 }">[맨끝]</a> &nbsp;
 	</c:if>
 	</div>
+</c:if>
+	<!-- 검색 항목 별 페이징 처리 -->
+
+
+
+	<c:if test="${ !empty action }">
+		<!-- 검색 목록 페이징 처리 -->
+
+
+		<div style="text-align: center;">
+			<!-- 페이지 표시 영역 -->
+			<!-- 1페이지로 이동 처리 -->
+			<c:if test="${ currentPage eq 1 }">
+		 [맨처음] &nbsp;
+	</c:if>
+			<c:if test="${ currentPage > 1 }">
+				<c:if test="${ action eq 'title' }">
+					<c:url var="bsl" value="nsearchTitle.do">
+						<c:param name="keyword" value="${ keyword }" />
+						<c:param name="page" value="1" />
+					</c:url>
+				</c:if>
+
+
+				<c:if test="${ action eq 'date' }">
+					<c:url var="bsl" value="bsearchDate.do">
+						<c:param name="begin" value="${ begin }" />
+						<c:param name="end" value="${ end }" />
+						<c:param name="page" value="1" />
+					</c:url>
+				</c:if>
+				<a href="${ bsl }">[맨처음]</a> &nbsp;
+	</c:if>
+			<!-- 이전 페이지그룹으로 이동 처리 -->
+			<c:if
+				test="${ (currentPage - 10) < startPage and (currentPage - 10) > 1 }">
+				<c:if test="${ action eq 'title' }">
+					<c:url var="bsl" value="bsearchTitle.do">
+						<c:param name="keyword" value="${ keyword }" />
+						<c:param name="page" value="${ startPage - 10 }" />
+					</c:url>
+				</c:if>
+
+				<c:if test="${ action eq 'date' }">
+					<c:url var="bsl" value="bsearchDate.do">
+						<c:param name="begin" value="${ begin }" />
+						<c:param name="end" value="${ end }" />
+						<c:param name="page" value="${ startPage - 10 }" />
+					</c:url>
+				</c:if>
+				<a href="${ bsl }">[이전그룹]</a> &nbsp;
+	</c:if>
+			<c:if
+				test="${ !((currentPage - 10) < startPage and (currentPage - 10) > 1) }">
+		[이전그룹] &nbsp;
+	</c:if>
+			<!-- 현재 페이지가 속한 페이지 그룹 페이지 숫자 출력 -->
+			<c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1">
+				<c:if test="${ p eq currentPage }">
+					<font size="4" color="red"><b>[${ p }]</b></font>
+				</c:if>
+				<c:if test="${ p ne currentPage }">
+					<c:if test="${ action eq 'title' }">
+						<c:url var="bsl" value="bsearchTitle.do">
+							<c:param name="keyword" value="${ keyword }" />
+							<c:param name="page" value="${ p }" />
+						</c:url>
+					</c:if>
+
+					<c:if test="${ action eq 'date' }">
+						<c:url var="bsl" value="bsearchDate.do">
+							<c:param name="begin" value="${ begin }" />
+							<c:param name="end" value="${ end }" />
+							<c:param name="page" value="${ p }" />
+						</c:url>
+					</c:if>
+					<a href="${ bsl }">${ p }</a>
+				</c:if>
+			</c:forEach>
+			<!-- 다음 페이지그룹으로 이동 처리 -->
+			<c:if
+				test="${ (currentPage + 10) > endPage and (currentPage + 10) < maxPage }">
+				<c:if test="${ action eq 'title' }">
+					<c:url var="bsl" value="bsearchTitle.do">
+						<c:param name="keyword" value="${ keyword }" />
+						<c:param name="page" value="${ endPage + 10 }" />
+					</c:url>
+				</c:if>
+
+
+				<c:if test="${ action eq 'date' }">
+					<c:url var="bsl" value="bsearchDate.do">
+						<c:param name="begin" value="${ begin }" />
+						<c:param name="end" value="${ end }" />
+						<c:param name="page" value="${ endPage + 10 }" />
+					</c:url>
+				</c:if>
+				<a href="${ bsl }">[다음그룹]</a> &nbsp;
+	</c:if>
+			<c:if
+				test="${ !((currentPage + 10) > endPage and (currentPage + 10) < maxPage) }">
+		[다음그룹] &nbsp;
+	</c:if>
+			<!-- 끝페이지로 이동 처리 -->
+			<c:if test="${ currentPage eq maxPage }">
+		[맨끝] &nbsp; 
+	</c:if>
+			<c:if test="${ currentPage < maxPage }">
+				<c:if test="${ action eq 'title' }">
+					<c:url var="bsl" value="bsearchTitle.do">
+						<c:param name="keyword" value="${ keyword }" />
+						<c:param name="page" value="${ maxPage }" />
+					</c:url>
+				</c:if>
+
+				<c:if test="${ action eq 'date' }">
+					<c:url var="bsl" value="bsearchDate.do">
+						<c:param name="begin" value="${ begin }" />
+						<c:param name="end" value="${ end }" />
+						<c:param name="page" value="${ maxPage }" />
+					</c:url>
+				</c:if>
+				<a href="${ bsl }">[맨끝]</a> &nbsp;
+	</c:if>
+		</div>
+	</c:if>
+
 	<hr>
 	<c:import url="/WEB-INF/views/common/footer.jsp" />
 </body>

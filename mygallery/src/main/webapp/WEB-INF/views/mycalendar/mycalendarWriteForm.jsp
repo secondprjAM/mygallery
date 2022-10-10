@@ -19,6 +19,9 @@ function readURL(input) {
 	  }
 	}
 </script>
+<style type="text/css">
+
+</style>
 </head>
 <body>
 <form action="minsert.do" method="post"  enctype="multipart/form-data" >
@@ -26,13 +29,20 @@ function readURL(input) {
 cellpadding="10"  style="margin-top:200px;">
 	<tr><th>날짜</th><td><input type="date" name="calendar_date"></td></tr>
 
-	<tr><th>내용</th><td><input type="textarea" name="calendar_content" ></td></tr>
+	<tr><th>내용</th><td><input type="textarea" name="calendar_content" value = " "></td></tr>
 	<tr><th>작성자</th><td><input type="text"  name="userid" 	 readonly value="${sessionScope.loginMember.userid}" }></td></tr>
-	
-	<tr><th>내 용</th><td><img id="preview"></td></tr>
+	<tr>
+		<th>등록 가능한 이미지</th>
+	</tr>
+	<tr>
+	<c:forEach var="imgList" items="${ imgList }">
+		<td id="full-img">
+		<input type="radio" id="filename" class="checkbox" name="filename" value="${ imgList.img_rename }">
+		<img src="resources/gallery/faceImages/${ imgList.img_rename }"  width="150" height="150">
+		</td>
+	</c:forEach>
+	</tr>
 	<tr><th colspan="2">
-		
-		<!-- <input type="file"  onchange="readURL(this);" name="upfile"> &nbsp; -->
 		<input type="submit" value="캘린더 등록"> &nbsp; 
 		<a href="./mycalendar.do">이전화면</a> &nbsp; 		<!-- 오류나면 여기 history -->
 	</th></tr>

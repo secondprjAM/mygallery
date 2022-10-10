@@ -69,13 +69,12 @@ section div {
 			<ul id = "menubar">
 				<li style="float: left"><a class="active" href="main.do">MyGallery</a></li>
 				<li><a href="loginPage.do">로그인</a></li>
-				<li><a href="#">아이디찾기</a></li>
-				<li><a href="#">비밀번호찾기</a></li>
+				<li><a href="pw_find.do">비밀번호찾기</a></li>
+				<li><a href="findIDPage.do">아이디찾기</a></li>
 				<li><a href="enrollPage.do">회원가입</a></li>
 				<li><a href=" ${pageContext.servletContext.contextPath }/nlist.do">공지사항</a></li>
 			</ul>
 		</c:if>
-		<!-- 로그인 한 경우 : 관리자인 경우 -->
 		<!-- 로그인 한 경우 : 관리자인 경우 -->
 		<c:if
 			test="${ !empty sessionScope.loginMember and sessionScope.loginMember.useradmin eq 'Y' }">

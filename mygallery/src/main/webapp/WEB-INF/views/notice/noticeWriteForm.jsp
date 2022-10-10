@@ -22,7 +22,8 @@
 cellpadding="5">
 	<tr><th>제 목</th><td><input type="text" name="notice_title"></td></tr>
 	<tr><th>작성자</th>
-	<td><input type="text" name="userid" readonly value="${ sessionScope.loginMember.userid }"></td></tr>
+	<td><input type="text" name="userid" readonly value="${ sessionScope.loginMember.userid }">
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="importance" value="2"> 중요도</td></tr>
 	<tr><th>첨부파일</th><td><input type="file" name="upfile"></td></tr>
 	<tr><th>내 용</th><td><textarea rows="5" cols="50" name="notice_content"></textarea></td></tr>
 	<tr><th colspan="2">

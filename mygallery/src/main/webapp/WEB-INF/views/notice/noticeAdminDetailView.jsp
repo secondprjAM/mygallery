@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title></title>
 </head>
 <body>
 <!-- 절대경로로 대상 파일의 위치를 지정한 경우 -->
@@ -19,6 +19,10 @@ cellpadding="5">
 	<tr><th>작성자</th><td>${ notice.userid }</td></tr>
 	<tr><th>날 짜</th><td>${ notice.notice_date }</td></tr>
 	<tr><th>조회수</th><td>${notice.notice_readcount}</td></tr>
+	<tr><th>중요도</th>
+	<td><c:if test="${ notice.importance eq 1 }">일반</c:if>
+		<c:if test="${ notice.importance eq 2 }">중요</c:if>
+	</td></tr>
 	<tr><th>첨부파일</th>
 		<td>
 			<!-- 첨부파일이 있다면, 파일명 클릭시 다운로드 실행되게 함 -->
@@ -38,14 +42,15 @@ cellpadding="5">
 	<tr><th>내 용</th><td>${ notice.notice_content }</td></tr>
 	<tr><th colspan="2">
 		<button onclick="javascript:history.go(-1);">목록</button>
+		
 		<!-- 수정페이지로 이동 버튼 -->
 		<c:url var="movenup" value="/nmoveup.do">
-			<c:param name="noticeno" value="${ notice.notice_no }" />			
+			<c:param name="notice_no" value="${ notice.notice_no }" />			
 		</c:url>
-		<button onclick="javascript:location.href='${ movenup }';">수정페이지로 이동</button>
+		<button onclick="javascript:location.href='${ movenup }';">수정</button>
 		<!-- 삭제하기 버튼 -->
 		<c:url var="ndel" value="/ndel.do">
-			<c:param name="noticeno" value="${ notice.notice_no }" />
+			<c:param name="notice_no" value="${ notice.notice_no }" />
 			<c:param name="rfile" value="${ notice.notice_refile }" />
 		</c:url>
 		<button onclick="javascript:location.href='${ ndel }';">글삭제</button>

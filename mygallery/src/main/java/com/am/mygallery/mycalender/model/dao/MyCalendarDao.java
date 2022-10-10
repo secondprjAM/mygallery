@@ -24,6 +24,19 @@ public class MyCalendarDao {
 	public int insertMyCalendar(MyCalendar mycalendar) {
 		return session.insert("mycalendarMapper.insertMyCalendar", mycalendar);
 	}
+
+	public MyCalendar serchMyCalendar(SearchCalendar mycalendar) {
+		
+		return session.selectOne("mycalendarMapper.serchMyCalendar",mycalendar);
+	}
+
+	public int deleteCalendar(SearchCalendar mycalendar) {
+		return session.delete("mycalendarMapper.deleteCalendar",mycalendar);
+	}
+
+	public int updateCalendar(MyCalendar mycalendar) {
+		return session.update("mycalendarMapper.updateCalendar",mycalendar);
+	}
 }
 
 

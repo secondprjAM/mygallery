@@ -43,7 +43,7 @@ cellpadding="0" border="1">
             <c:param name="userid" value="${ member.userid }"/>
          </c:url>
          <a href="${ moveup }">수정페이지로 이동</a> &nbsp; 
-         <c:url var="mdel" value="#">
+         <c:url var="mdel" value="mdel.do">
             <c:param name="userid" value="${ member.userid }"/>
          </c:url>
          <a href="${ mdel }">탈퇴하기</a> &nbsp; 

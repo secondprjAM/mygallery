@@ -36,9 +36,34 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectLogin(member);
 	}
 	
+	// 아이디 찾기
+	@Override
+	public String find_id(Member member) {
+		String result = "";
+		try {
+		 result= memberDao.find_id(member);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result ;
+	}
 	@Override
 	public int selectListCount() {
 		return memberDao.selectListCount();
+	}
+	@Override
+	public int updateMember(Member member) {
+		return memberDao.updateMember(member);
+	}
+
+	@Override
+	public int deleteMember(String userid) {
+		return memberDao.deleteMember(userid);
+	}
+	
+	@Override
+	public int pwUpdate(Member member) {
+		return memberDao.pwUpdate(member);
 	}
 
 	@Override
