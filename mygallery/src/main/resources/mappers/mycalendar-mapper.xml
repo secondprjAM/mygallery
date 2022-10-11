@@ -11,24 +11,13 @@
 		<result column="calendar_content"  property="calendar_content"/>
 	</resultMap>
 	
-	<select id="allList"  resultMap="resultMyCalendar">
-		select * from mycalendar   
-	</select>
 	
+	<!-- 캘린더에 데이터 저장 -->
 	<insert id="insertMyCalendar"  parameterType="MyCalendar">
 		insert into mycalendar (calendar_date, userid, filename, calendar_content)
 		values(#{ calendar_date }, #{userid}, #{filename}, #{calendar_content})
 	</insert>
 	
-	
-	
-	<update id="updateMyCalendar"  parameterType="date">
-		update mycalendar
-		set calendar_date = #{calendar_date},
-		userid = #{userid},
-		user_snum = #{user_snum},
-		calendar_content = #{calendar_content}
-	</update>
 	
 	<!-- 선택된 날짜 데이터 제거 -->
 	<delete id="deleteCalendar"  parameterType="SearchCalendar">
@@ -52,9 +41,11 @@
 	
 	<!-- 월 단위 전체 목록 조회 -->
 	<select id ="searchMonth" parameterType="SearchCalendar" resultMap="resultMyCalendar">
+	<![CDATA[
 	select * from mycalendar
-	where to_char(calendar_date,'YYYYMMDD')>#{ dateFormat } and userid=#{id}
+	where to_char(calendar_date,'YYYYMMDD')>#{ dateFormat } and to_char(calendar_date,'YYYYMMDD')<=#{ endDate } and userid=#{id}
 	order by calendar_date
+	]]>
 	</select>
 
 </mapper>

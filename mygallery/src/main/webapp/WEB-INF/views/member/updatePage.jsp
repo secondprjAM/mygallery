@@ -7,8 +7,6 @@
 <meta charset="UTF-8">
 <title></title>
 <style type="text/css">
-table th { background-color: #99ffff; }
-table#outer { border: 2px solid navy; }
 </style>
 <script type="text/javascript">
 
@@ -26,14 +24,74 @@ function validate(){
 	}
 }
 </script>
+<link rel="stylesheet" href="<c:url value="/resources/css/common.css" />">
+<style type="text/css">
+th {
+	font-size: 10pt;
+	margin: 0;
+	align: left;
+	margin-top: 10px;
+}
+
+td{
+	margin: 100px;
+}
+
+.input-group-addon {
+	margin-left: -20px;
+}
+
+table{
+	background-color: #f8f9fa;
+	padding: 40px;
+	border-spacing: 0 20px;
+}
+
+form {
+    margin-top: 50px;
+    align: center;
+    width: 100%;
+    height: 100%;
+}
+
+.from-button{
+	width: 7rem;
+	height: 1.5rem;
+	border: 0px;
+	background-color: #f8f9fa;
+	cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}
+
+.startPage:link {
+  color : black;
+}
+.startPage:visited {
+  color : black;
+}
+.startPage:hover {
+  color : black;
+}
+.startPage:active {
+  color : black;
+}
+</style>
 </head>
 <body>
-<h1 align="center">회원 정보 수정 페이지</h1>
+<c:import url="/WEB-INF/views/common/menubar.jsp" />
+<br><br>
+<h1 align="center">MyGallery</h1>
+<h2 align="center">회원 정보 수정 페이지기</h2>
 <br>
 <form action="mupdate.do" method="post">
 	<input type="hidden" name="origin_userpassword" value="${ member.userpassword }">
 <table id="outer" align="center" width="500" cellspacing="5" cellpadding="0">
-	
+	<th>
+		<td>비밀번호만이 변경이 가능합니다.</td>
+	</th>
 	<tr>
 		<th width="120">이 름</th>
 		<td><input type="text" name="username" value="${ member.username }" readonly></td>
@@ -45,22 +103,22 @@ function validate(){
 	</tr>
 	<tr>
 		<th width="120">암 호</th>
-		<td><input type="password" name="userpassword" id="upwd1" value=""></td>
+		<td><input type="password" name="userpassword" id="upwd1" placeholder="새로운 암호" value=""></td>
 	</tr>
 	<tr>
 		<th width="120">암호확인</th>
-		<td><input type="password" id="upwd2" onblur="validate();"></td>
+		<td><input type="password" id="upwd2" placeholder="새로운 암호 확인" onblur="validate();"></td>
 	</tr>
 	<tr>
 		<th width="120">성 별</th>
 		<td readonly>
 		<c:if test="${ member.usergender eq 'M' }">
-			<input type="radio" name="usergender" value="M" checked> 남자 &nbsp;
-			<input type="radio" name="usergender" value="F"> 여자
+			<input type="radio" name="usergender" value="M" checked onclick="return false"> 남자 &nbsp;
+			<input type="radio" name="usergender" value="F" onclick="return false"> 여자
 		</c:if>
 		<c:if test="${ member.usergender eq 'F' }">
-			<input type="radio" name="usergender" value="M" > 남자 &nbsp;
-			<input type="radio" name="usergender" value="F" checked> 여자
+			<input type="radio" name="usergender" value="M" onclick="return false"> 남자 &nbsp;
+			<input type="radio" name="usergender" value="F" checked onclick="return false"> 여자
 		</c:if>
 		</td>
 	</tr>
@@ -70,16 +128,14 @@ function validate(){
 	</tr>
 	<tr>
 		<th colspan="2">
-			<input type="submit" value="수정하기"> &nbsp; 
-			<input type="reset" value="수정취소"> &nbsp; 
-			<a href="javascript:history.go(-1);">이전 페이지로 이동</a> &nbsp; 
-			<a href="main.do">시작페이지로 이동</a>
+			<input type="submit" class="from-button" value="수정하기">
+			<input type="reset" class="from-button" value="수정취소">
+			<a class="from-button" href="main.do">시작페이지로 이동</a>
 		</th>		
 	</tr>
 </table>
 </form>
 
-<hr style="clear:both;">
 <c:import url="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>

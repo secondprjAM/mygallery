@@ -27,7 +27,6 @@ import com.am.mygallery.mycalender.model.vo.MyCalendar;
 
 @Controller
 public class MyCalendarController {
-	private String g_userid="";
 	private static final Logger logger = LoggerFactory.getLogger(MyCalendarController.class);
 	@Autowired
 	private MyCalendarService mycalendarService;
@@ -37,7 +36,7 @@ public class MyCalendarController {
 
 	@RequestMapping(value = "mycalendar.do", method = RequestMethod.GET)
 	public String calendar(Model model, HttpServletRequest request, MyCalendar dateData){
-
+		String g_userid="";
 		Calendar cal = Calendar.getInstance();
 		MyCalendar calendarData = null;
 		//검색 날짜
@@ -45,24 +44,21 @@ public class MyCalendarController {
 			dateData = new MyCalendar(String.valueOf(cal.get(Calendar.YEAR)),String.valueOf(cal.get(Calendar.MONTH)),String.valueOf(cal.get(Calendar.DATE)),null);
 		}
 		//검색 날짜 end
-
 		Map<String, Integer> today_info =  dateData.today_info(dateData);
 		List<MyCalendar> dateList = new ArrayList<MyCalendar>();
-		///테스트 구간
+		
+		//DB 검색
 		if(request.getParameter("userid")!=null){
-			this.g_userid = request.getParameter("userid");
+			g_userid = request.getParameter("userid");
 		}
-		String dateFormat = String.valueOf(today_info.get("search_year"))+String.valueOf(today_info.get("search_month"))+"01";
-		SearchCalendar searchAllCalendar = new SearchCalendar(dateFormat,this.g_userid);
+		String dateFormat = String.valueOf(today_info.get("search_year"))+String.valueOf(today_info.get("search_month"))+"00";
+		String endDate = String.valueOf(today_info.get("search_year"))+String.valueOf(today_info.get("search_month"))+today_info.get("endDay");
+		System.out.println("endDate : " + endDate);
+		SearchCalendar searchAllCalendar = new SearchCalendar(dateFormat,g_userid,endDate);
 		ArrayList<MyCalendar>list = mycalendarService.searchMonth(searchAllCalendar);
 		int list_size = list.size();
 		int dateNum=0;
-		if(list.size()>0)
-		{
-			for (MyCalendar myCalendar : list) {
-				String da = myCalendar.getCalendar_date().toString();
-			}
-		}
+
 
 		for(int i=1; i<today_info.get("start"); i++){
 			calendarData= new MyCalendar(null, null, null, null,0);
@@ -73,7 +69,8 @@ public class MyCalendarController {
 			if(dateNum<list_size && i ==Integer.parseInt(list.get(dateNum).getCalendar_date().toString().substring(list.get(dateNum).getCalendar_date().toString().length()-2, list.get(dateNum).getCalendar_date().toString().length())) ) {
 
 				String d = list.get(dateNum).getCalendar_date().toString();
-				list.get(dateNum).setDate(d);
+				list.get(dateNum).setDate(i+"");
+				list.get(dateNum).setSchedule_date(d);
 				list.get(dateNum).setCalendar_date(null);
 				list.get(dateNum).setSchedule_detail(list.get(dateNum).getCalendar_content());
 				list.get(dateNum).setImgName(list.get(dateNum).getFilename());
@@ -136,7 +133,7 @@ public class MyCalendarController {
 		if(list == null) {
 			System.out.println(mycalendar);
 			if(mycalendarService.insertMyCalendar(mycalendar) > 0) {
-				return "redirect:mycalendar.do";
+				return "redirect:mycalendar.do?userid="+mycalendar.getUserid();
 			}else {
 				model.addAttribute("message", "새 캘린더 등록 실패");
 				return "common/error";

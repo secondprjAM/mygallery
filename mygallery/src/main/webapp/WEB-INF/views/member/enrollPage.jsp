@@ -6,9 +6,60 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+<link rel="stylesheet" href="<c:url value="/resources/css/common.css" />">
 <style type="text/css">
-table th { background-color: #99ffff; }
-table#outer { border: 2px solid navy; }
+th {
+	font-size: 10pt;
+	margin: 0;
+	align: left;
+	margin-top: 10px;
+}
+
+td{
+	margin: 100px;
+}
+
+.input-group-addon {
+	margin-left: -30px;
+}
+
+table{
+	background-color: #f8f9fa;
+	padding: 20px;
+	border-spacing: 0 20px;
+}
+
+form {
+    margin-top: -200px;
+    align: center;
+    width: 100%;
+    height: 100%;
+}
+
+.from-button{
+	width: 5rem;
+	height: 1.5rem;
+	border: 0px;
+	background-color: #f8f9fa;
+	cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}
+
+.startPage:link {
+  color : black;
+}
+.startPage:visited {
+  color : black;
+}
+.startPage:hover {
+  color : black;
+}
+.startPage:active {
+  color : black;
+}
 </style>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript">
@@ -113,67 +164,69 @@ function emailCK(){
 </script>
 </head>
 <body>
-<h1 align="center">회원 가입 페이지</h1>
-<br>
-<form action="enroll.do" method="post" onsubmit="return validate();">
-<table id="outer" align="center" width="500" cellspacing="5" cellpadding="0">
-	<tr><th colspan="2">회원 정보를 입력해 주세요.
-		(* 표시는 필수입력 항목입니다.)
-	</th></tr>
+	<c:import url="/WEB-INF/views/common/menubar.jsp" />
+	<br><br>
+	<h1 align="center">MyGallery</h1>
+	<h2 align="center">회원가입</h2>
+<form action="enroll.do" method="post">
+<table id="outer" align="center">
 	<tr>
-		<th width="120">* 이 름</th>
-		<td><input type="text" name="username" placeholder="이름" required></td>
+		<th>이 름 :</th>
+		<td>
+			<input type="text" name="username" placeholder="이름" required style="magin: 100px;"></td>
 	</tr>
 	<tr>
-		<th width="120">* 아이디</th>
-		<td><input type="text" name="userid" id="userid" placeholder="아이디" required>
+		<th width="120">아이디 :</th>
+		<td>
+			<input type="text" name="userid" id="userid" placeholder="아이디" required>
 			&nbsp;
-			<input type="button" value="중복체크" onclick="return dupCheckId();">
+			<input type="button" class="from-button" value="중복 체크" onclick="return dupCheckId();">
 		</td>
 	</tr>
 	<tr>
-		<th width="120">* 암 호</th>
+		<th width="120">암 호 :</th>
 		<td><input type="password" name="userpassword" id="upwd1" placeholder="비밀번호" required></td>
 	</tr>
 	<tr>
-		<th width="120">* 암호확인</th>
-		<td><input type="password" id="upwd2" placeholder="비밀번호재확인" required></td>
+		<th width="120">암호확인 :</th>
+		<td><input type="password" id="upwd2" placeholder="비밀번호재확인" onblur="validate();" required></td>
 	</tr>
 	<tr>
-		<th width="120">* 성 별</th>
-		<td><input type="radio" name="usergender" value="M"> 남자 &nbsp;
-		<input type="radio" name="usergender" value="F"> 여자</td>
-	</tr>
-	<tr>
-		 <th for="email">이메일</th>
-		 <td class="input-group">
-				<input type="email" class="form-control" name="useremail" id="useremail" placeholder="이메일" required>
+		<th for="email">이메일 :</th>
+		<td class="input-group">
+			<input type="email" class="form-control" name="useremail" id="useremail" placeholder="이메일" required>
+			&nbsp;
+			<input type="button" class="from-button" value="파일업로드" onclick="#">
 		</td>
 	</tr>
 	<tr>
-		<th width="120">본인인증</th>
-		<td class="input-group-addon">
-			<input type="button" class="btn btn-primary" id="mail-Check-Btn"  onclick="emailCK(); return false;" required>본인인증</button>
-		</td>
+		<th width="120">본인인증 :</th>
 		<td class="mail-check-box">
 			<input class="form-control mail-check-input" placeholder="인증번호 6자리를 입력해주세요!" disabled="disabled" maxlength="6" required>
 			&nbsp;
-			<span id="mail-check-warn"></span>
+			<span id="mail-check-warn"/>
+			<input type="button" class="from-button btn btn-primary" id="mail-Check-Btn" value="본인 인증" onclick="emailCK(); return false" required></button>
+		</td>
+	</tr>
+	<tr>
+		<th width="120">성 별 :</th>
+		<td>
+			<input type="radio" name="usergender" value="M" required> 남자 &nbsp;
+			<input type="radio" name="usergender" value="F" required> 여자
 		</td>
 	</tr>
 	<div>
 	</div>
 	<tr>
 		<th colspan="2">
-			<input type="submit" value="가입하기" disabled="disabled" name="enrolldo" id="enrolldo"> &nbsp; 
-			<input type="reset" value="작성취소"> &nbsp; 
-			<a href="main.do">시작페이지로 이동</a>
+			<input type="submit" class="from-button" value="가입하기"  disabled="disabled" name="enrolldo" id="enrolldo"> &nbsp; 
+			<input type="reset" class="from-button" value="작성취소"> &nbsp; 
+			<a class="startPage" href="main.do">시작페이지로 이동</a>
 		</th>		
 	</tr>
 </table>
 </form>
 
-<hr style="clear:both;">
 <c:import url="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>
