@@ -22,5 +22,7 @@ public interface BreportService {
 	int updateOrigin(Breport breport);  //원글 수정용
 	int updateReply(Breport reply);  //댓글 수정용
 	int deleteBreport(Breport breport);  //게시글 삭제용
+	int selectSearchTListCount(String keyword);
+	int selectSearchDListCount(SearchDate date);
 	
 }

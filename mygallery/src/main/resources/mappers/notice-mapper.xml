@@ -23,6 +23,7 @@
 	
 	<select id="getListCount" resultType="_int" >
 		select count(*) from notice
+		order by notice_no asc
 	</select>
 	
 	<select id="getSearchTListCount" resultType="_int" parameterType="string">
@@ -131,7 +132,7 @@
 			               NOTICE_UPFILE, NOTICE_REFILE, 
 			               NOTICE_READCOUNT, IMPORTANCE
 			       FROM (SELECT * FROM NOTICE 
-			              ORDER BY IMPORTANCE ASC, 
+			              ORDER BY IMPORTANCE DESC, 
 			              			NOTICE_NO ASC
 			                        )) 
 			where rnum >= #{startRow} and rnum <= #{endRow}

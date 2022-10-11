@@ -151,6 +151,7 @@ table {
 					<!-- 공지제목 클릭시 해당 글의 상세보기로 넘어가게 처리 -->
 					<c:url var="ndt" value="/ndetail.do">
 						<c:param name="notice_no" value="${ n.notice_no }" />
+						<c:param name="page" value="${ currentPage }" />
 					</c:url>
 					<td><a href="${ ndt }">${ n.notice_title }</a></td>
 					<td><fmt:formatDate value="${ n.notice_date }"
@@ -164,8 +165,8 @@ table {
 		</table>
 	</div>
 
-	<center>
-		<br>
+<center>
+<br>
 <c:if test="${ empty action }">
 <!-- 전체 목록 페이징 처리 -->
 
