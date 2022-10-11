@@ -38,6 +38,19 @@
 			where rnum >= #{startRow} and rnum <= #{endRow}
 		]]>
 	</select>
+	
+	<select id="getSearchTListCount" resultType="_int" parameterType="string">
+		select count(*) from breport
+		where b_title like '%' || #{ keyword } || '%'
+	</select>
+	
+	<select id="getSearchDListCount" resultType="_int" parameterType="SearchDate">
+		select count(*) from breport
+		where b_date between #{ begin } and #{ end }
+	</select>
+	
+	
+	
 
 	<select id="searchTitle" resultMap="resultBreport" parameterType="SearchPaging">
 		<![CDATA[

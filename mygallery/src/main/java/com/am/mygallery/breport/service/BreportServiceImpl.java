@@ -76,5 +76,15 @@ public class BreportServiceImpl implements BreportService{
 	public ArrayList<Breport> selectSearchDate(SearchPaging searchpaging) {
 		return breportDao.selectSearchDate(searchpaging);
 	}
+
+	@Override
+	public int selectSearchTListCount(String keyword) {
+		return breportDao.selectSearchTListCount(keyword);
+	}
+
+	@Override
+	public int selectSearchDListCount(SearchDate date) {
+		return breportDao.selectSearchDListCount(date);
+	}
 	
 }

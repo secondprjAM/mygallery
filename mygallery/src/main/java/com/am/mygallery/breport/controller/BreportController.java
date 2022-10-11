@@ -105,7 +105,7 @@ public class BreportController {
 	
 			int limit = 10;  
 			
-			int listCount = breportService.selectListCount();
+			int listCount = breportService.selectSearchTListCount(keyword);
 			
 			int maxPage = (int)((double)listCount / limit + 0.9);
 			
@@ -156,7 +156,7 @@ public class BreportController {
 	
 			int limit = 10;  
 			
-			int listCount = breportService.selectListCount();
+			int listCount = breportService.selectSearchDListCount(date);
 			
 			int maxPage = (int)((double)listCount / limit + 0.9);
 			
@@ -465,7 +465,7 @@ public class BreportController {
 						return "common/error";
 					} 
 					
-					//board 객체에 첨부파일명 기록 저장하기
+
 					breport.setB_upfile(fileName);
 					breport.setB_refile(renameFileName);
 				}  //이름바꾸기해서 저장 처리

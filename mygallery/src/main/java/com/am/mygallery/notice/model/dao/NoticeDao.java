@@ -56,7 +56,7 @@ public class NoticeDao {
 
 
 	public int updateAddReadcount(int notice_no) {
-		return session.update("noticeMapper.selectNotice", notice_no);
+		return session.update("noticeMapper.addReadCount", notice_no);
 	}
 
 	public int selectListCount() {

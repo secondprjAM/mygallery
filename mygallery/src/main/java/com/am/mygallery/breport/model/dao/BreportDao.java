@@ -88,6 +88,14 @@ public class BreportDao {
 		return (ArrayList<Breport>)list;
 	}
 
+	public int selectSearchTListCount(String keyword) {
+		return session.selectOne("breportMapper.getSearchTListCount", keyword);
+	}
+
+	public int selectSearchDListCount(SearchDate date) {
+		return session.selectOne("breportMapper.getSearchDListCount", date);
+	}
+
 	
 
 	
