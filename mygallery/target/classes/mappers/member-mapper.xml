@@ -14,14 +14,14 @@
 		<result property="useremail" column="useremail" />
 		<result property="username" column="username" />
 		<result property="usergender" column="usergender" />
-		<result property="userloginok" column="userlogin_ok" />
+		<result property="userloginok" column="userloginok" />
 		<result property="useradmin" column="useradmin" />
 	</resultMap>
 
 		<!-- 회원 아이디(userid)로 회원정보 조회 -->
 	<select id="selectMember" parameterType="string" resultType="Member">
 		select * from member
-		where userid = #{ userid }
+		where userid = #{ userid } 
 	</select>
 
 	<!-- 회원 가입 -->
@@ -42,5 +42,68 @@
 		where userid = #{ userid } and userpassword = #{ userpassword }
 		and userloginok = 'Y'
 	</select>
+	
+	<!-- 이름, 이메일로 아이디 찾기 -->
+	<select id = "findId" parameterType="Member" resultType="string">
+		select userid from member
+		where username = #{ username } and useremail = #{ useremail }
+	</select>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="updateMember" parameterType="Member">
+		update member
+		set userpassword = #{ userpassword }
+		where userid = #{ userid }
+	</update>
+	
+	<!-- 회원 탈퇴 -->
+	<delete id="deleteMember" parameterType="string">
+		delete from member
+		where userid = #{ uid }
+	</delete>
+	
+	<!-- 비밀번호 찾기 변경 -->
+	<update id = "pwUpdate" parameterType="Member">
+		update member
+		set userpassword = #{ userpassword }
+		where userid = #{ userid }
+	</update>
 
+	<!-- 회원 전체 조회용 -->
+	<select id="selectList" resultMap="resultList">
+		select * from member
+		order by userid asc
+	</select>
+	
+	<select id="getListCount" resultType="_int">
+		select count(*) from member
+	</select>
+	
+	<!-- loginok 값 변경용 -->
+	<update id="updateLoginOK" parameterType="Member">
+		update member
+		set userloginok = #{ userloginok }
+		where userid = #{ userid }
+		</update>
+	
+	<!-- 회원 검색 처리용 쿼리문 -->
+	<select id="selectSearchUserid" parameterType="string" resultMap="resultList">
+		select * from member
+		where userid like '%' || #{ keyword } || '%' 
+		order by userid asc
+	</select>
+	
+	<select id="selectSearchLoginOK" parameterType="string" resultMap="resultList">
+		select * from member
+		where userloginok = #{ keyword } 
+		order by userid asc
+	</select>
+	
+	<!-- 관리자 제외한 회원 조회용 -->
+	<select id="selectList2" resultMap="resultList">
+		select * from member
+		where userid not like '%admin%'
+		order by userid asc
+	</select>
+	
 </mapper>

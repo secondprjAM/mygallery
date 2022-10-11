@@ -69,11 +69,11 @@ public class NoticeDao {
 	}
 
 	public int selectSearchTListCount(String keyword) {
-		return session.selectOne("noticeMapper.searchTitle", keyword);
+		return session.selectOne("noticeMapper.getSearchTListCount", keyword);
 	}
 
 	public int selectSearchWListCount(SearchDate date) {
-		return session.selectOne("noticeMapper.searchWriter", date);
+		return session.selectOne("noticeMapper.getSearchDListCount", date);
 	}
 }
 

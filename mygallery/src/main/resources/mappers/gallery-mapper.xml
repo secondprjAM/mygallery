@@ -44,11 +44,11 @@
 	</insert>
 
 	<select id="selectImgAll" parameterType="String" resultMap="resultGallery">
-		select * from gallery where userid = #{userid}
+		select * from gallery where userid = #{userid} or userid= 'admin'
 	</select>
 	
 	<select id="selectStickerAll" parameterType="String" resultMap="resultSticker">
-		select * from sticker where userid = #{userid}
+		select * from sticker where userid = #{userid} or userid= 'admin'
 	</select>
 	
 	<delete id="deleteImg" parameterType="_int">

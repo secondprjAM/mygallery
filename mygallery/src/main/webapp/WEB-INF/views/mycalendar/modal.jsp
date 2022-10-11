@@ -16,15 +16,15 @@
 			<div class="modal-body">
 				<table class="table">
 					<tr> 
-						<td>날짜 <input type="text" class ="body-date" id="date" name ="date" value ="??"></td>
+						<td>날짜 <input type="text" class ="body-date" id="date" name ="date" value ="??" readonly></td>
 						
 					</tr>
 					<tr>
-						<td>내용 <input type="text" class="body-contents" id="contents" name="contents"></td>
+						<td>내용 <input type="text" class="body-contents" id="contents" name="contents" readonly></td>
 						
 					</tr>
 					<tr>
-						<td>유저 아이디 <input type="text" class="userid" id = "userid" name="userid" value ="${ sessionScope.loginMember.userid }"></td>
+						<td>유저 아이디 <input type="text" class="userid" id = "userid" name="userid" value ="${ sessionScope.loginMember.userid }" readonly></td>
 					</tr>
 					<tr>
 					<td>이미지<br><p id = "imgBox"></p></td>
