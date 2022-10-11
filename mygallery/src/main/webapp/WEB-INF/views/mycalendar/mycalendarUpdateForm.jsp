@@ -43,8 +43,8 @@ function onDisplay(){
 			<a href="./mycalendar.do">이전화면</a> &nbsp; 
 		</th></tr>
 </table>
-</form> --%>
-<br>
+</form> 
+<br><br><br><br><br><br>
 <hr>
 <c:import url="/WEB-INF/views/common/footer.jsp" />
 </body>

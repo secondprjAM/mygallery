@@ -5,11 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript">
+
 /* 아이디 찾기 */ 
-//아이디 & 스토어 값 저장하기 위한 변수
-	// 아이디 값 받고 출력하는 ajax
 function findId_click(){
 	var username=$('#username').val()
 	var useremail=$('#useremail').val()
@@ -24,17 +24,8 @@ function findId_click(){
 			success:function(data){
 				if(data == 0){
 					alert("이름 혹은 이메일 정보가 정확하지 않습니다 재입력 해주세요.");
-					//$('#id_value').text("회원 정보를 확인해주세요!");
-					//$('#username').val('');
-					//$('#useremail').val('');
-					//$('#id_value').text("회원 정보를 확인해주세요!");
 				} else {
-					alert("그 외의 경우");
 					alert("아이디는 : " + data + "입니다.");
-					//$('#id_value').text(data);
-					//$('#username').val('');
-					//$('#useremail').val('');
-					
 				}
 			},
 			 error:function(){
@@ -45,91 +36,91 @@ function findId_click(){
 };
 
 </script>
-<style>
- #modal.modal-overlay {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            left: 0;
-            top: 0;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            backdrop-filter: blur(1.5px);
-            -webkit-backdrop-filter: blur(1.5px);
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-        }
-        #modal .modal-window {
-            background: rgba( 0, 0, 0, 0.70 ); // 69, 139, 197
-            box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-            backdrop-filter: blur( 13.5px );
-            -webkit-backdrop-filter: blur( 13.5px );
-            border-radius: 10px;
-            border: 1px solid rgba( 255, 255, 255, 0.18 );
-            width: 400px;
-            height: 300px;
-            position: relative;
-            top: -100px;
-            padding: 10px;
-        }
-        #modal .title {
-            padding-left: 10px;
-            display: inline;
-            text-shadow: 1px 1px 2px gray;
-            color: white;
-            
-        }
-        #modal .title h2 {
-            display: inline;
-        }
-        #modal .close-area {
-            display: inline;
-            float: right;
-            padding-right: 10px;
-            cursor: pointer;
-            text-shadow: 1px 1px 2px gray;
-            color: white;
-        }
-        
-        #modal .content {
-            margin-top: 20px;
-            padding: 0px 10px;
-            text-shadow: 1px 1px 2px gray;
-            color: white;
-        }
+<link rel="stylesheet" href="<c:url value="/resources/css/common.css" />">
+<style type="text/css">
+th {
+	font-size: 10pt;
+	margin: 0;
+	align: left;
+	margin-top: 10px;
+}
+
+td{
+	margin: 100px;
+}
+
+.input-group-addon {
+	margin-left: -30px;
+}
+
+table{
+	background-color: #f8f9fa;
+	padding: 20px;
+	border-spacing: 0 20px;
+}
+
+form {
+    margin-top: -200px;
+    align: center;
+    width: 100%;
+    height: 100%;
+}
+
+.from-button{
+	width: 7rem;
+	height: 1.5rem;
+	border: 0px;
+	background-color: #f8f9fa;
+	cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}
+
+.startPage:link {
+  color : black;
+}
+.startPage:visited {
+  color : black;
+}
+.startPage:hover {
+  color : black;
+}
+.startPage:active {
+  color : black;
+}
 </style>
 </head>
 <body>
-	<div class="w3-content w3-container w3-margin-top">
-		<div class="w3-container w3-card-4">
-			
-				<div class="w3-center w3-large w3-margin-top">
-					<h3>아이디 찾기</h3>
-				</div>
-				<div>
-					<p>
-						<label>이름</label>
-						<input class="w3-input" type="text" id="username" name="username" placeholder="이름을 입력해주세요." required>
-					</p>
-					
-					<p>
-						<label>이메일</label>
-						<input class="w3-input" type="email" id="useremail" name="useremail" placeholder="이메일을 입력해주세요." required>
-					</p>
-					
-					<p class="w3-center">
-						<button type="button" id='find_id' onclick="findId_click()">아이디 찾기</button>
-						<button type="button" onclick="history.go(-1);" class=>돌아가기</button>
-					</p>
-				</div>
-			
-		</div>
-	</div>
-<hr style="clear:both;">
+<c:import url="/WEB-INF/views/common/menubar.jsp" />
+<div height = "150"></div>
+	<h1 align="center">MyGallery</h1>
+	<h2 align="center">아이디 찾기</h2>
+	<table  style="width: 20%; height: 100px; margin: auto; text-align: center;">
+			<tr>
+				<th width="120">이름 :
+				</th>
+				<td>
+					<input type="text" id="username" name="username" placeholder="이름을 입력해주세요." required>
+				</td>
+			</tr>
+			<tr>
+				<th width="120">이메일 : 
+				</th>
+					<td>
+					<input type="email" id="useremail" name="useremail" placeholder="이메일을 입력해주세요." required>
+					</td>
+			</tr>
+			<tr>
+				<th>
+					<button type="button" class="from-button" id='find_id' onclick="findId_click()">아이디 찾기</button>
+				</th>
+				<td>
+				<a class="startPage" href="main.do">시작페이지로 이동</a>
+				</td>
+			</tr>
+	</table>
 <c:import url="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>

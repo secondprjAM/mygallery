@@ -15,7 +15,7 @@ public class MyCalendar  implements Serializable {
    String month = "";
    String date = "";
    String value = "";
-   String schedule = "";
+   String schedule_date = "";
    String schedule_detail="";		//content 내용 저장할 곳
    String imgName = "";			//이미지 파일명 저장할 곳
    
@@ -113,12 +113,12 @@ public class MyCalendar  implements Serializable {
       this.value = value;
    }
 
-   public String getSchedule() {
-      return schedule;
+   public String getSchedule_date() {
+      return schedule_date;
    }
 
-   public void setSchedule(String schedule) {
-      this.schedule = schedule;
+   public void setSchedule_date(String schedule) {
+      this.schedule_date = schedule;
    }
 
    public String getSchedule_detail() {

@@ -8,23 +8,23 @@
 <title></title>
 <style type ="text/css">
         footer{
+           position : absolute;
+         bottom : 0;
+         width:100%;
             margin-top: 205px;
+            padding-top: 50px;
             background-color: #333;
-            height: 150px;
+            height: 100px;
             text-align: center;
             color: white;
             font-weight: 200;
         }
 
-        footer div {
-          padding-top: 35px;
-        }
 </style>
 <body>
 <footer>
  Copyright ©AM: Project By MyGallery. <br><br>
         팀장:문창기, 강처치, 김영재, 권혜영, 서보경, 선도원
-        </div>
 </footer>
 </body>
 </html>

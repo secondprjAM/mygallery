@@ -8,7 +8,7 @@ h1 {
 div {
 	width: 500px;
 	height: 200px;
-	position: relative; /* 본래 표시될 위치기준 상대적 위치로 지정 */
+	position: relative; 
 }
 table{
 	border-collapse: separate;

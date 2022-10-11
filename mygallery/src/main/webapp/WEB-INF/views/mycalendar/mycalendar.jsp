@@ -38,7 +38,7 @@
 		if(filename==""){
 			content= '<input witdh = "50px" type="text" value="등록된 이미지가 없습니다." readonly>';
 		}else{
-			content = '<img src="resources/gallery/faceImages/' + filename +'">';
+			content = '<img width = "90%" height="auto" src="resources/gallery/faceImages/' + filename +'">';
 		}
 		$("#imgBox").html(content);
 	}
@@ -163,18 +163,19 @@ A:hover {
 }
 
 .calendar_body {
-	width: 50%;
+	width: 100%;
+	height: 850px;
 	background-color: #FFFFFF;
-	border: 1px solid white;
+	/* border: 1px solid white; */
 	margin-bottom: 50px;
 	border-collapse: collapse;
 }
 
 .calendar_body .today {
 	width: 100px;
-	border: 2px solid black;
 	height: 120px;
-	background-color: #c9c9c9;
+	border: 2px solid #80808047;
+	background-color: #fa80726e;
 	text-align: left;
 	vertical-align: top;
 }
@@ -189,13 +190,14 @@ A:hover {
 
 .calendar_body .sat_day {
 	width: 100px;
-	border: 2px solid black;
 	height: 120px;
+	border: 2px solid #80808047;
 	text-align: left;
 	vertical-align: top;
 }
 
 .calendar_body .sat_day .sat {
+	width: 100px;
 	color: #529dbc;
 	font-weight: bold;
 	font-size: 15px;
@@ -205,15 +207,15 @@ A:hover {
 
 .calendar_body .sun_day {
 	width: 100px;
-	border: 2px solid black;
-	height: 120px;
+	
+	border: 2px solid #80808047;
 	background-color: white;
 	text-align: left;
 	vertical-align: top;
 }
 
 .calendar_body .sun_day .sun {
-width: 100px;
+	width: 100px;
 	font-weight: bold;
 	font-size: 15px;
 	padding-left: 3px;
@@ -222,7 +224,7 @@ width: 100px;
 
 .calendar_body .normal_day {
 width: 100px;
-	border: 2px solid black;
+	border: 2px solid #80808047;
 	height: 120px;
 	vertical-align: top;
 	text-align: left;
@@ -230,7 +232,18 @@ width: 100px;
 
 .before_after_month {
 	margin: 10px;
+	padding:10px;
 	font-weight: bold;
+	color: #333;
+	padding: 10px 7px;
+	transition: 0.6s;
+	border-radius: 45%;
+	border: none
+}
+
+.before_after_month:hover {
+	color: white;
+	background-color: salmon;
 }
 
 .before_after_year {
@@ -254,6 +267,20 @@ width: 100px;
 	color: white;
 	background-color: salmon;
 }
+
+        footer{
+           /* position : absolute;
+         bottom : 0; */
+         width:100%;
+            margin-top: 100px;
+            padding-top: 50px;
+            background-color: #333;
+            height: 150px;
+            text-align: center;
+            color: white;
+            font-weight: 200;
+        }
+
 </style>
 
 
@@ -261,33 +288,32 @@ width: 100px;
 <body>
 	<c:import url="/WEB-INF/views/common/menubar.jsp" />
 	<jsp:include page="./modal.jsp"></jsp:include>
-	<form name="calendarFrm" id="calendarFrm" action="" method="GET">
+	<form name="calendarFrm" id="calendarFrm" action="" method="GET" >
 		<div class="calendar">
 			<!--날짜 네비게이션  -->
 			<div class="navigation">
 				<a class="before_after_year"
-					href="./mycalendar.do?year=${today_info.search_year-1}&month=${today_info.search_month-1}">
+					href="./mycalendar.do?year=${today_info.search_year-1}&month=${today_info.search_month-1}&userid=${sessionScope.loginMember.userid}">
 					&lt;&lt; <!-- 이전해 -->
 				</a>
-				<button class="month">
+				
 					<a class="before_after_month"
-						href="./mycalendar.do?year=${today_info.before_year}&month=${today_info.before_month}">
+						href="./mycalendar.do?year=${today_info.before_year}&month=${today_info.before_month}&userid=${sessionScope.loginMember.userid}">
 						before <!-- 이전달 -->
 					</a>
-				</button>
 				<span class="this_month"> &nbsp;${today_info.search_year}. <c:if
 						test="${today_info.search_month<10}">0</c:if>${today_info.search_month}
 					<!-- 이번달 -->
 				</span>
-				<button class="month">
+				
 					<a class="before_after_month"
-						href="./mycalendar.do?year=${today_info.after_year}&month=${today_info.after_month}">
+						href="./mycalendar.do?year=${today_info.after_year}&month=${today_info.after_month}&userid=${sessionScope.loginMember.userid}">
 						after <!-- 다음달 -->
 					</a>
-				</button>
+				
 
 				<a class="before_after_year"
-					href="./mycalendar.do?year=${today_info.search_year+1}&month=${today_info.search_month-1}">
+					href="./mycalendar.do?year=${today_info.search_year+1}&month=${today_info.search_month-1}&userid=${sessionScope.loginMember.userid}">
 					<!-- 다음해 --> &gt;&gt;
 				</a>
 			</div>
@@ -295,7 +321,7 @@ width: 100px;
 			<!-- 현재 날짜로 돌아가기 버튼 생성 완료 -->
 			<div class="today_button_div">
 				<button type="button" class="month"
-					onclick="location.href='mycalendar.do'"
+					onclick="location.href='mycalendar.do?userid=${sessionScope.loginMember.userid}'"
 					style="height: 30ps; width: 80px; font-weight: bold;">today</button>
 			</div>
 			<!-- 글쓰기용 버튼 -->
@@ -305,7 +331,7 @@ width: 100px;
 			</div>
 			<table class="calendar_body" align="center">
 				<thead>
-					<tr style="border: 2px solid black;">
+					<tr style="border: 2px solid #80808047;">
 						<td class="day sun">일</td>
 						<td class="day">월</td>
 						<td class="day">화</td>
@@ -316,30 +342,38 @@ width: 100px;
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
+					
 						<c:forEach var="dateList" items="${dateList}" varStatus="date_status">
 							<c:choose>
 								<c:when test="${dateList.value=='today'}">
 									<td class="today">
 										<div class="date">
+											${ dateList.date }
 											<c:if test="${ !empty dateList.schedule_detail }">
-												<a data-toggle="modal" data-target="#myModal" onclick="modalOpen2('${ dateList.date }' , '${ dateList.schedule_detail }', '${ dateList.imgName }');">${ dateList.date }</a>
+												<div style="padding-left: 50px;">
+													<a data-toggle="modal" data-target="#myModal"
+													onclick="modalOpen2('${ dateList.schedule_date }' , '${ dateList.schedule_detail }', '${ dateList.imgName }');">
+														<img height="120" width="100" src="resources/gallery/faceImages/${ dateList.imgName }">
+													</a>
+												</div>
 											</c:if>
-											<c:if test="${ empty dateList.schedule_detail }">
-												${ dateList.date }
-											</c:if>
+											
 										</div>
-										<div>평일 이미지?</div>
 									</td>
 								</c:when>
 								<c:when test="${date_status.index%7==6}">
 									<td class="sat_day">
 										<div class="sat">
+										${ dateList.date }
 										<c:if test="${ !empty dateList.schedule_detail }">
-												<a data-toggle="modal" data-target="#myModal" onclick="modalOpen2('${ dateList.date }' , '${ dateList.schedule_detail }', '${ dateList.imgName }');">${ dateList.date }</a>
+												<div style="padding-left: 50px;">
+													<a data-toggle="modal" data-target="#myModal"
+															onclick="modalOpen2('${ dateList.schedule_date }' , '${ dateList.schedule_detail }', '${ dateList.imgName }');">
+															<img height="120" width="100" src="resources/gallery/faceImages/${ dateList.imgName }">
+													</a>
+												</div>
 										</c:if>
 										</div>
-										<div>토요일 이미지?</div>
 									</td>
 								</c:when>
 								<c:when test="${date_status.index%7==0}">
@@ -347,42 +381,51 @@ width: 100px;
 					<tr>
 						<td class="sun_day">
 							<div class="sun">
-								<c:if test="${ empty dateList.schedule_detail }">
-									${dateList.date}
-								</c:if>
+								${dateList.date}
 								<c:if test="${ !empty dateList.schedule_detail }">
 									<div class="modal-dialog">
-										<a data-toggle="modal" data-target="#myModal" onclick="modalOpen2('${ dateList.date }' , '${ dateList.schedule_detail }', '${ dateList.imgName }');">${ dateList.date }</a>
+									</div>
+									<div style="padding-left: 50px;">
+										<a data-toggle="modal" data-target="#myModal"
+												onclick="modalOpen2('${ dateList.schedule_date }' , '${ dateList.schedule_detail }', '${ dateList.imgName }');">
+												<img height="120" width="100" src="resources/gallery/faceImages/${ dateList.imgName }">
+										</a>
 									</div>
 								</c:if>
 							</div>
-							<div>일요일 이미지?</div>
+							<div></div>
 						</td>
 					</c:when>
 						<c:otherwise>
 							<td class="normal_day">
 								<div class="date">
-									<c:if test="${ empty dateList.schedule_detail }">
-									<div>${ dateList.date }</div>
-									</c:if>
+									${dateList.date}
 									<c:if test="${ !empty dateList.schedule_detail }">
 										<div class="modal-dialog">
-											<a data-toggle="modal" data-target="#myModal"
-												onclick="modalOpen2('${ dateList.date }' , '${ dateList.schedule_detail }', '${ dateList.imgName }');">${ dateList.date }</a>
+										</div>
+										<div style="padding-left: 50px;">
+										<a data-toggle="modal" data-target="#myModal"
+												onclick="modalOpen2('${ dateList.schedule_date }' , '${ dateList.schedule_detail }', '${ dateList.imgName }');">
+												<img height="120" width="100" src="resources/gallery/faceImages/${ dateList.imgName }">
+										</a>
 										</div>
 									</c:if>
-									
 								</div>
-								<div>노말_데이?</div>
+								<div></div>
 							</td>
 						</c:otherwise>
 						</c:choose>
 						</c:forEach>
-					</tr>
+				
 				</tbody>
 
 			</table>
 		</div>
 	</form>
+<%-- <c:import url="/WEB-INF/views/common/footer.jsp" /> --%>
+<footer>
+ Copyright ©AM: Project By MyGallery. <br><br>
+        팀장:문창기, 강처치, 김영재, 권혜영, 서보경, 선도원
+</footer>
 </body>
 </html>

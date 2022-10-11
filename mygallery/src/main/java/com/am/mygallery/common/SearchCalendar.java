@@ -10,15 +10,25 @@ public class SearchCalendar implements Serializable{
 	
 	private String dateFormat;
 	private String id;
+	private String endDate="";
 	
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
 	public SearchCalendar() {
 		super();
 	}
 	
-	public SearchCalendar(String dateFormat, String id) {
+	public SearchCalendar(String dateFormat, String id, String endDate) {
 		super();
 		this.dateFormat = dateFormat;
 		this.id = id;
+		this.endDate = endDate;
 	}
 
 	public String getDateFormat() {
@@ -39,7 +49,6 @@ public class SearchCalendar implements Serializable{
 
 	@Override
 	public String toString() {
-		return "SearchCalendar [dateFormat=" + dateFormat + ", id=" + id + "]";
+		return "SearchCalendar [dateFormat=" + dateFormat + ", id=" + id + ", endDate=" + endDate + "]";
 	}
-	
 }
