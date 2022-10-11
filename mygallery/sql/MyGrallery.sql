@@ -1,16 +1,16 @@
----------------------í…Œì´ë¸” ì œê±°
+---------------------Å×ÀÌºí Á¦°Å
 DROP TABLE MEMBER cascade constraints;
 DROP TABLE NOTICE cascade constraints;
 DROP TABLE BREPORT cascade constraints;
 DROP TABLE STICKER cascade constraints;
 DROP TABLE GALLERY cascade constraints;
 DROP TABLE MYCALENDAR cascade constraints;
----------------------ì‹œí€€ìŠ¤ ì œê±°
+---------------------½ÃÄö½º Á¦°Å
 DROP SEQUENCE notice_seq;
 DROP SEQUENCE bug_seq;
 DROP SEQUENCE gallery_seq;
 DROP SEQUENCE sticker_seq;
----------------------ì‹œí€€ìŠ¤ ìƒì„±
+---------------------½ÃÄö½º »ý¼º
 CREATE SEQUENCE notice_seq
        INCREMENT BY 1
        START WITH 1
@@ -57,13 +57,13 @@ CREATE TABLE MEMBER (
 	USERLOGINOK	    char(1)	DEFAULT 'Y'	NOT NULL
 );
 
-COMMENT ON COLUMN "MEMBER"."USERID" IS 'ìœ ì €ì•„ì´ë””';
-COMMENT ON COLUMN "MEMBER"."USERPASSWORD" IS 'ë¹„ë°€ë²ˆí˜¸';
-COMMENT ON COLUMN "MEMBER"."USEREMAIL" IS 'ì´ë©”ì¼';
-COMMENT ON COLUMN "MEMBER"."USERNAME" IS 'ìœ ì €ì´ë¦„';
-COMMENT ON COLUMN "MEMBER"."USERGENDER" IS 'ì„±ë³„';
-COMMENT ON COLUMN "MEMBER"."USERADMIN" IS 'ê´€ë¦¬ìžì—¬ë¶€';
-COMMENT ON COLUMN "MEMBER"."USERLOGINOK" IS 'ë¡œê·¸ì¸ê°€ëŠ¥ì—¬ë¶€';
+COMMENT ON COLUMN "MEMBER"."USERID" IS 'À¯Àú¾ÆÀÌµð';
+COMMENT ON COLUMN "MEMBER"."USERPASSWORD" IS 'ºñ¹Ð¹øÈ£';
+COMMENT ON COLUMN "MEMBER"."USEREMAIL" IS 'ÀÌ¸ÞÀÏ';
+COMMENT ON COLUMN "MEMBER"."USERNAME" IS 'À¯ÀúÀÌ¸§';
+COMMENT ON COLUMN "MEMBER"."USERGENDER" IS '¼ºº°';
+COMMENT ON COLUMN "MEMBER"."USERADMIN" IS '°ü¸®ÀÚ¿©ºÎ';
+COMMENT ON COLUMN "MEMBER"."USERLOGINOK" IS '·Î±×ÀÎ°¡´É¿©ºÎ';
 
 
 CREATE TABLE NOTICE (
@@ -78,15 +78,15 @@ CREATE TABLE NOTICE (
 	IMPORTANCE          number default 1
 );
 
-COMMENT ON COLUMN "NOTICE"."NOTICE_NO" IS 'ê³µì§€ë²ˆí˜¸';
-COMMENT ON COLUMN "NOTICE"."USERID" IS 'ìœ ì €ì•„ì´ë””';
-COMMENT ON COLUMN "NOTICE"."NOTICE_TITLE" IS 'ê³µì§€ì œëª©';
-COMMENT ON COLUMN "NOTICE"."NOTICE_DATE" IS 'ë“±ë¡ë‚ ì§œ';
-COMMENT ON COLUMN "NOTICE"."NOTICE_CONTENT" IS 'ê³µì§€ë‚´ìš©';
-COMMENT ON COLUMN "NOTICE"."NOTICE_READCOUNT" IS 'ì¡°íšŒìˆ˜';
-COMMENT ON COLUMN "NOTICE"."NOTICE_UPFILE" IS 'ì²¨ë¶€íŒŒì¼';
-COMMENT ON COLUMN "NOTICE"."NOTICE_REFILE" IS 'ì²¨ë¶€íŒŒì¼ìˆ˜ì •';
-COMMENT ON COLUMN NOTICE.IMPORTANCE IS 'ì¤‘ìš”ë„';
+COMMENT ON COLUMN "NOTICE"."NOTICE_NO" IS '°øÁö¹øÈ£';
+COMMENT ON COLUMN "NOTICE"."USERID" IS 'À¯Àú¾ÆÀÌµð';
+COMMENT ON COLUMN "NOTICE"."NOTICE_TITLE" IS '°øÁöÁ¦¸ñ';
+COMMENT ON COLUMN "NOTICE"."NOTICE_DATE" IS 'µî·Ï³¯Â¥';
+COMMENT ON COLUMN "NOTICE"."NOTICE_CONTENT" IS '°øÁö³»¿ë';
+COMMENT ON COLUMN "NOTICE"."NOTICE_READCOUNT" IS 'Á¶È¸¼ö';
+COMMENT ON COLUMN "NOTICE"."NOTICE_UPFILE" IS 'Ã·ºÎÆÄÀÏ';
+COMMENT ON COLUMN "NOTICE"."NOTICE_REFILE" IS 'Ã·ºÎÆÄÀÏ¼öÁ¤';
+COMMENT ON COLUMN NOTICE.IMPORTANCE IS 'Áß¿äµµ';
 
 CREATE TABLE BREPORT (
 	B_NO	        number NOT NULL,
@@ -103,18 +103,18 @@ CREATE TABLE BREPORT (
     B_REPLY_SEQ NUMBER DEFAULT 1
 );
 
-COMMENT ON COLUMN "BREPORT"."B_NO" IS 'ê¸€ ë²ˆí˜¸';
-COMMENT ON COLUMN "BREPORT"."USERID" IS 'ìœ ì €ì•„ì´ë””';
-COMMENT ON COLUMN "BREPORT"."B_TITLE" IS 'ê¸€ ì œëª©';
-COMMENT ON COLUMN "BREPORT"."B_DATE" IS 'ë“±ë¡ë‚ ì§œ';
-COMMENT ON COLUMN "BREPORT"."B_CONTENT" IS 'ê¸€ ë‚´ìš©';
-COMMENT ON COLUMN "BREPORT"."B_READCOUNT" IS 'ì¡°íšŒìˆ˜';
-COMMENT ON COLUMN "BREPORT"."B_UPFILE" IS 'ì²¨ë¶€íŒŒì¼';
-COMMENT ON COLUMN "BREPORT"."B_REFILE" IS 'ì²¨ë¶€íŒŒì¼ìˆ˜ì •';
-COMMENT ON COLUMN "BREPORT"."B_LEV" IS 'ë‹µê¸€ë‹¨ê³„';
-COMMENT ON COLUMN "BREPORT"."B_REF" IS 'ì›ê¸€ë²ˆí˜¸';  -- ì›ê¸€ë²ˆí˜¸
-COMMENT ON COLUMN "BREPORT"."B_REPLY_REF" IS 'ì°¸ì¡°ë‹µê¸€ë²ˆí˜¸';  -- ì›ê¸€ : 0, ì›ê¸€ì˜ ë‹µê¸€ : ìžê¸°ë²ˆí˜¸, ë‹µê¸€ì˜ ë‹µê¸€ : ì°¸ì¡°ë‹µê¸€ë²ˆí˜¸
-COMMENT ON COLUMN "BREPORT"."B_REPLY_SEQ" IS 'ë‹µê¸€ìˆœë²ˆ'; -- ì›ê¸€ : 0, ê°™ì€ ì›ê¸€ì˜ ë‹µê¸€ì¼ ë•Œ : 1 ....... ìˆœì°¨ì²˜ë¦¬
+COMMENT ON COLUMN "BREPORT"."B_NO" IS '±Û ¹øÈ£';
+COMMENT ON COLUMN "BREPORT"."USERID" IS 'À¯Àú¾ÆÀÌµð';
+COMMENT ON COLUMN "BREPORT"."B_TITLE" IS '±Û Á¦¸ñ';
+COMMENT ON COLUMN "BREPORT"."B_DATE" IS 'µî·Ï³¯Â¥';
+COMMENT ON COLUMN "BREPORT"."B_CONTENT" IS '±Û ³»¿ë';
+COMMENT ON COLUMN "BREPORT"."B_READCOUNT" IS 'Á¶È¸¼ö';
+COMMENT ON COLUMN "BREPORT"."B_UPFILE" IS 'Ã·ºÎÆÄÀÏ';
+COMMENT ON COLUMN "BREPORT"."B_REFILE" IS 'Ã·ºÎÆÄÀÏ¼öÁ¤';
+COMMENT ON COLUMN "BREPORT"."B_LEV" IS '´ä±Û´Ü°è';
+COMMENT ON COLUMN "BREPORT"."B_REF" IS '¿ø±Û¹øÈ£';  -- ¿ø±Û¹øÈ£
+COMMENT ON COLUMN "BREPORT"."B_REPLY_REF" IS 'ÂüÁ¶´ä±Û¹øÈ£';  -- ¿ø±Û : 0, ¿ø±ÛÀÇ ´ä±Û : ÀÚ±â¹øÈ£, ´ä±ÛÀÇ ´ä±Û : ÂüÁ¶´ä±Û¹øÈ£
+COMMENT ON COLUMN "BREPORT"."B_REPLY_SEQ" IS '´ä±Û¼ø¹ø'; -- ¿ø±Û : 0, °°Àº ¿ø±ÛÀÇ ´ä±ÛÀÏ ¶§ : 1 ....... ¼øÂ÷Ã³¸®
 
 CREATE TABLE STICKER(
 	SNUM	number	NOT NULL,
@@ -125,12 +125,12 @@ CREATE TABLE STICKER(
     CATEGORY		varchar2(4) not null
 );
 
-COMMENT ON COLUMN "STICKER"."SNUM" IS 'ìŠ¤í‹°ì»¤ë“±ë¡ë²ˆí˜¸';
-COMMENT ON COLUMN "STICKER"."USERID" IS 'ìœ ì €ì•„ì´ë””';
-COMMENT ON COLUMN "STICKER"."S_ORI_NAME" IS 'ì›ë³¸íŒŒì¼ëª…';
-COMMENT ON COLUMN "STICKER"."S_RENAME" IS 'ë°”ë€íŒŒì¼ëª…';
-COMMENT ON COLUMN "STICKER"."S_DATE" IS 'ìŠ¤í‹°ì»¤ë“±ë¡ë‚ ì§œ';
-COMMENT ON COLUMN "STICKER"."CATEGORY" IS 'ìŠ¤í‹°ì»¤ì¹´í…Œê³ ë¦¬';
+COMMENT ON COLUMN "STICKER"."SNUM" IS '½ºÆ¼Ä¿µî·Ï¹øÈ£';
+COMMENT ON COLUMN "STICKER"."USERID" IS 'À¯Àú¾ÆÀÌµð';
+COMMENT ON COLUMN "STICKER"."S_ORI_NAME" IS '¿øº»ÆÄÀÏ¸í';
+COMMENT ON COLUMN "STICKER"."S_RENAME" IS '¹Ù²ïÆÄÀÏ¸í';
+COMMENT ON COLUMN "STICKER"."S_DATE" IS '½ºÆ¼Ä¿µî·Ï³¯Â¥';
+COMMENT ON COLUMN "STICKER"."CATEGORY" IS '½ºÆ¼Ä¿Ä«Å×°í¸®';
 
 CREATE TABLE GALLERY (
     IMG_NUM            number             NOT NULL,
@@ -140,11 +140,11 @@ CREATE TABLE GALLERY (
     IMAGE_DATE	    date	DEFAULT sysdate	NOT NULL
 );
 
-COMMENT ON COLUMN "GALLERY"."IMG_NUM" IS 'ì´ë¯¸ì§€ë“±ë¡ë²ˆí˜¸';
-COMMENT ON COLUMN "GALLERY"."IMG_ORI_NAME" IS 'ì›ë³¸íŒŒì¼ëª…';
-COMMENT ON COLUMN "GALLERY"."IMG_RENAME" IS 'ë°”ë€íŒŒì¼ëª…';
-COMMENT ON COLUMN "GALLERY"."USERID" IS 'ìœ ì €ì•„ì´ë””';
-COMMENT ON COLUMN "GALLERY"."IMAGE_DATE" IS 'ë“±ë¡ë‚ ì§œ';
+COMMENT ON COLUMN "GALLERY"."IMG_NUM" IS 'ÀÌ¹ÌÁöµî·Ï¹øÈ£';
+COMMENT ON COLUMN "GALLERY"."IMG_ORI_NAME" IS '¿øº»ÆÄÀÏ¸í';
+COMMENT ON COLUMN "GALLERY"."IMG_RENAME" IS '¹Ù²ïÆÄÀÏ¸í';
+COMMENT ON COLUMN "GALLERY"."USERID" IS 'À¯Àú¾ÆÀÌµð';
+COMMENT ON COLUMN "GALLERY"."IMAGE_DATE" IS 'µî·Ï³¯Â¥';
 
 
 CREATE TABLE MYCALENDAR (
@@ -154,19 +154,19 @@ CREATE TABLE MYCALENDAR (
 	CALENDAR_CONTENT	varchar2(100)		NOT NULL
 );
 
-COMMENT ON COLUMN "MYCALENDAR"."CALENDAR_DATE" IS 'ë“±ë¡ë‚ ì§œ';
-COMMENT ON COLUMN "MYCALENDAR"."USERID" IS 'ìœ ì €ì•„ì´ë””';
-COMMENT ON COLUMN "MYCALENDAR"."FILENAME" IS 'ë“±ë¡ëœ ì´ë¯¸ì§€ ì´ë¦„';
-COMMENT ON COLUMN "MYCALENDAR"."CALENDAR_CONTENT" IS 'ìº˜ë¦°ë” ë‚´ìš©';
+COMMENT ON COLUMN "MYCALENDAR"."CALENDAR_DATE" IS 'µî·Ï³¯Â¥';
+COMMENT ON COLUMN "MYCALENDAR"."USERID" IS 'À¯Àú¾ÆÀÌµð';
+COMMENT ON COLUMN "MYCALENDAR"."FILENAME" IS 'µî·ÏµÈ ÀÌ¹ÌÁö ÀÌ¸§';
+COMMENT ON COLUMN "MYCALENDAR"."CALENDAR_CONTENT" IS 'Ä¶¸°´õ ³»¿ë';
 
--------------------------PK ì„¤ì •
+-------------------------PK ¼³Á¤
 ALTER TABLE MEMBER ADD CONSTRAINT "PK_MEMBER" PRIMARY KEY ("USERID");
 ALTER TABLE NOTICE ADD CONSTRAINT "PK_NOTICE" PRIMARY KEY ("NOTICE_NO");
 ALTER TABLE BREPORT ADD CONSTRAINT "PK_BREPORT" PRIMARY KEY ("B_NO");
 ALTER TABLE STICKER ADD CONSTRAINT "PK_STICKER" PRIMARY KEY ("SNUM");
 ALTER TABLE GALLERY ADD CONSTRAINT "PK_GALLERY" PRIMARY KEY ("IMG_NUM");
 ALTER TABLE MYCALENDAR ADD CONSTRAINT "PK_CALENDAR" PRIMARY KEY ("CALENDAR_DATE");
--------------------------FK ì„¤ì •
+-------------------------FK ¼³Á¤
 ALTER TABLE NOTICE ADD CONSTRAINT "FK_MEMBER_TO_NOTICE_1" FOREIGN KEY ("USERID")
 REFERENCES MEMBER (	"USERID");
 ALTER TABLE BREPORT ADD CONSTRAINT "FK_MEMBER_TO_BREPORT_1" FOREIGN KEY ("USERID")
@@ -178,11 +178,9 @@ REFERENCES MEMBER ("USERID");
 ALTER TABLE MYCALENDAR ADD CONSTRAINT "FK_MEMBER_TO_CALENDAR_1" FOREIGN KEY ("USERID")
 REFERENCES MEMBER (	"USERID");
 
--------------------------------check ì¡°ê±´
+-------------------------------check Á¶°Ç
 ALTER TABLE MEMBER
 ADD CONSTRAINT CHK_MEM_LOK CHECK (USERLOGINOK IN ('Y', 'N'));
-ALTER TABLE STICKER
-ADD CONSTRAINT CHK_CATEGORY CHECK (CATEGORY IN ('ear', 'nose'));
 
 -------------------------------
 update notice
@@ -190,19 +188,33 @@ set importance = 1
 where importance = 0;
 -------------------------------
 
+insert into member values('admin','$2a$10$DS4ynMypwGsVbJip6QwC6ub1JnfgJb9KRZgS/mAh616t91By93FDG', 'mcg8031@naver.com','°ü¸®ÀÚ','M','Y','Y');
+insert into member values('user01','$2a$10$DS4ynMypwGsVbJip6QwC6ub1JnfgJb9KRZgS/mAh616t91By93FDG', 'mcg8031@naver.com','À¯Àú1','M','N','Y');
+
+---------------------------------------°øÁö±Û 2°³ µî·Ï
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','°øÁö1¹ø',sysdate,'Ã¹¹øÂ° °øÁö±ÛÀÔ´Ï´Ù.',default,default,default,default);
+
+INSERT INTO "NOTICE" VALUES (notice_seq.nextval, 'admin','°øÁö2¹ø',sysdate,'µÎ¹øÂ° °øÁö±ÛÀÔ´Ï´Ù.',default,default,default,default);
+---------------------------------------°øÁö±Û 2°³ µî·Ï
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','°øÁö1¹ø',sysdate,'Ã¹¹øÂ° °øÁö±ÛÀÔ´Ï´Ù.',default,default,default,default);
+
+INSERT INTO "NOTICE" VALUES (notice_seq.nextval, 'admin','°øÁö2¹ø',sysdate,'µÎ¹øÂ° °øÁö±ÛÀÔ´Ï´Ù.',default,default,default,default);
 
 
----------------------------------------ê³µì§€ê¸€ 2ê°œ ë“±ë¡
-INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','ê³µì§€1ë²ˆ',sysdate,'ì²«ë²ˆì§¸ ê³µì§€ê¸€ìž…ë‹ˆë‹¤.',default,default,default,default);
-
-INSERT INTO "NOTICE" VALUES (notice_seq.nextval, 'admin','ê³µì§€2ë²ˆ',sysdate,'ë‘ë²ˆì§¸ ê³µì§€ê¸€ìž…ë‹ˆë‹¤.',default,default,default,default);
-
----------------------------------------ë²„ê·¸ë¦¬í¬íŠ¸ 2ê°œ ë“±ë¡
-INSERT INTO "BREPORT" VALUES (bug_seq.nextval, 'user01','ë¬¸ì œìžˆì–´ìš”',sysdate,'ë¬¸ì œê°€ìžˆë„¤ìš”',default,default,default,
+---------------------------------------¹ö±×¸®Æ÷Æ® 2°³ µî·Ï
+INSERT INTO "BREPORT" VALUES (bug_seq.nextval, 'user01','¹®Á¦ÀÖ¾î¿ä',sysdate,'¹®Á¦°¡ÀÖ³×¿ä',default,default,default,
 default,default,default,default);
-INSERT INTO "BREPORT" VALUES (bug_seq.nextval, 'user01','ë¬¸ì œì—†ì–´ìš”',sysdate,'ë¬¸ì œê°€ì—†ì–´ìš”',default,default,default,
+INSERT INTO "BREPORT" VALUES (bug_seq.nextval, 'user01','¹®Á¦¾ø¾î¿ä',sysdate,'¹®Á¦°¡¾ø¾î¿ä',default,default,default,
 default,default,default,default);
 
----------------------------------------ê°¤ëŸ¬ë¦¬ ìŠ¤í‹°ì»¤ ë“±ë¡
+---------------------------------------°¶·¯¸® µî·Ï
+insert into gallery values(gallery_seq.nextval, 'admin', '20200320510186.jpg', '20200320510186.jpg', sysdate);
+
+---------------------------------------½ºÆ¼Ä¿ µî·Ï
+insert into STICKER values(sticker_seq.nextval, 'admin', 'rabbit_nose.png', 'rabbit_nose.png', sysdate,'nose');
+
+insert into STICKER values(sticker_seq.nextval, 'admin', 'rabbit_right.png', 'rabbit_right.png', sysdate,'rig');
+
+insert into STICKER values(sticker_seq.nextval, 'admin', 'rabbit_left.png', 'rabbit_left.png', sysdate,'lef');
 
 commit;

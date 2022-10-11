@@ -132,6 +132,7 @@ public class MyCalendarController {
 		cal.setDateFormat(date);
 		cal.setId(mycalendar.getUserid());
 		MyCalendar list = mycalendarService.serchMyCalendar(cal);
+		
 		if(list == null) {
 			System.out.println(mycalendar);
 			if(mycalendarService.insertMyCalendar(mycalendar) > 0) {
@@ -142,6 +143,7 @@ public class MyCalendarController {
 			}
 		}
 		else {
+			model.addAttribute("titleMsg","등록 날짜 중복!");
 			model.addAttribute("message", "이미 등록된 데이터가 있습니다.");
 			return "common/error";
 		}

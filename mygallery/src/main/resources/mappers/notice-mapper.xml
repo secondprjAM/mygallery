@@ -12,6 +12,7 @@
 		<result column="notice_readcount" property="notice_readcount"/>
 		<result column="notice_upfile" property="notice_upfile" />
 		<result column="notice_refile" property="notice_refile" />
+		<result column="importance" property="importance" />
 	</resultMap>
 	
 	<select id="selectAll" resultMap="resultNotice">

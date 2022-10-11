@@ -35,7 +35,11 @@
 	function modalOpen2(date, schedule,filename) {
 		$("#date.body-date").val(date);
 		$("#contents.body-contents").val(schedule);
-		content = '<img src="resources/gallery/faceImages/' + filename +'">';
+		if(filename==""){
+			content= '<input witdh = "50px" type="text" value="등록된 이미지가 없습니다." readonly>';
+		}else{
+			content = '<img src="resources/gallery/faceImages/' + filename +'">';
+		}
 		$("#imgBox").html(content);
 	}
 	function showWriteForm(userid) {
@@ -184,7 +188,7 @@ A:hover {
 }
 
 .calendar_body .sat_day {
-	width: 50%;
+	width: 100px;
 	border: 2px solid black;
 	height: 120px;
 	text-align: left;
@@ -200,6 +204,7 @@ A:hover {
 }
 
 .calendar_body .sun_day {
+	width: 100px;
 	border: 2px solid black;
 	height: 120px;
 	background-color: white;
@@ -208,6 +213,7 @@ A:hover {
 }
 
 .calendar_body .sun_day .sun {
+width: 100px;
 	font-weight: bold;
 	font-size: 15px;
 	padding-left: 3px;
@@ -215,6 +221,7 @@ A:hover {
 }
 
 .calendar_body .normal_day {
+width: 100px;
 	border: 2px solid black;
 	height: 120px;
 	vertical-align: top;
@@ -327,7 +334,11 @@ A:hover {
 								</c:when>
 								<c:when test="${date_status.index%7==6}">
 									<td class="sat_day">
-										<div class="sat">${dateList.date}</div>
+										<div class="sat">
+										<c:if test="${ !empty dateList.schedule_detail }">
+												<a data-toggle="modal" data-target="#myModal" onclick="modalOpen2('${ dateList.date }' , '${ dateList.schedule_detail }', '${ dateList.imgName }');">${ dateList.date }</a>
+										</c:if>
+										</div>
 										<div>토요일 이미지?</div>
 									</td>
 								</c:when>
