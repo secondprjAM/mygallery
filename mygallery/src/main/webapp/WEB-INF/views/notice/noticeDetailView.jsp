@@ -7,18 +7,53 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+<style>
+	table {
+		margin-top:50px;
+	}
+	
+	th {
+		font-weight:normal;
+		font-size: 16px;
+	}
+	
+	td {
+		width: 25rem;
+		height:3rem; 
+		border:3px solid #f8f9fa; 
+		margin-bottom:20px;
+	}
+	.button {
+		width: 100px;
+		height: 45px;
+		 font-size: 16px;
+		letter-spacing: 2px;
+		color: #000;
+		background-color: #f1f3f5;
+		border: none;
+		border-radius: 45px;
+		cursor: pointer;
+		outline: none;
+		transition: 0.6s;
+	}
+	
+	.button:hover {
+		background-color:salmon;
+	}
+	
+</style>
 </head>
 <body>
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
-<hr>
+
 <br>
-<table align="center" width="500" border="1" cellspacing="0" cellpadding="5">
+<table align="center" width="500" cellspacing="0" cellpadding="5">
 	<tr><th>제 목</th><td>${notice.notice_title }</td></tr>
 	<tr><th>작성자</th><td>${notice.userid }</td></tr>
 	<tr><th>날 짜</th><td>${notice.notice_date }</td></tr>
 	<tr><th>조회수</th><td>${notice.notice_readcount }</td></tr>
 	<tr><th>내 용</th><td>${notice.notice_content}</td></tr>
-	<tr><th>첨부파일</th><td></td></tr>
+	<tr><th>첨부파일</th>
 		<td>
 			<!-- 첨부파일이 있다면, 파일명 클릭시 다운로드 실행되게 함 -->
 			<c:if test="${!empty notice.notice_upfile }">
@@ -34,11 +69,11 @@
 			</c:if>
 		</td>
 	<tr><th colspan="2">
-		<button onclick = "javascript:history.go(-1)">목록</button>
+		<button onclick = "javascript:history.go(-1)"  style="margin-top:50px;" class="button">목록</button>
 	</th></tr>
 </table>
 
-<hr>
+
 <c:import url="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>

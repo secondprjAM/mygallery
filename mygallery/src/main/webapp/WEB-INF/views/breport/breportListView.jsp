@@ -16,6 +16,10 @@
 <meta charset="UTF-8">
 <title></title>
 <style type="text/css">
+h2 {
+	font-weight:normal;
+	margin-top:40px;
+}
 btable {
 	width: 900px;
 	background-color: #fff;
@@ -48,9 +52,10 @@ btable {
 }
 
 .btable tr th {
-	background-color: #FF8080;
-	color: #fff;
-}
+	background-color: salmon;
+	color: #333;
+	font-weight:500;
+	}
 
 .btable tr th:first-child {
 	border-radius: 5px 0 0 0;
@@ -64,29 +69,31 @@ btable {
 }
 
 .button {
-	width: 140px;
-	height: 45px;
-	font-family: 'Roboto', sans-serif;
-	font-size: 11px;
-	text-transform: uppercase;
-	letter-spacing: 2.5px;
-	font-weight: 500;
-	color: #000;
-	background-color: #FFA7A7;
-	border: none;
-	border-radius: 45px;
-	box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-	transition: all 0.3s ease 0s;
-	cursor: pointer;
-	outline: none;
-}
-
-.button:hover {
-	background-color: #2EE59D;
-	box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
-	color: #fff;
-	transform: trabslateY(-7px);
-}
+		width: 160px;
+		height: 45px;
+		 font-size: 16px;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+		color: #000;
+		background-color: #f1f3f5;
+		border: none;
+		border-radius: 45px;
+		cursor: pointer;
+		outline: none;
+		transition: 0.6s;
+	}
+	
+	.button:hover {
+		background-color:salmon;
+	}
+	
+	a {
+		underline: none;
+	}
+	
+	.datedate:hover {
+	background-color:#f8f9fa;
+	}
 </style>
 <script type="text/javascript"
 	src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
@@ -134,16 +141,14 @@ function Change(){
 <body>
 	<!-- 상대경로로 대상 파일의 위치를 지정한 경우 -->
 	<c:import url="../common/menubar.jsp" />
-	<!-- jstl 에서 절대경로 표기 : /WEB-INF/views/common/menubar.jsp -->
-	<hr>
-	<h2 align="left">버그리포트</h2>
+	<h2 style="text-align:center;">버그리포트</h2>
 
 	<!-- 목록 출력 영역 -->
 	<!-- => 로그인한 회원만 게시글 등록(쓰기) 버튼이 보이게 함 -->
 	<br>
 	<div class="wrap" align="right">
 		<button class="button"
-			onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/blist.do';">전체
+			onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/blist.do';" class="button">전체
 			목록 보기</button>
 		<c:if
 			test="${ !empty sessionScope.loginMember and sessionScope.loginMember.useradmin ne 'Y' }">
@@ -176,7 +181,7 @@ function Change(){
 			 --> <c:if test="${ b.b_lev eq 2 }">&nbsp; &nbsp; ▶ </c:if> <c:if
 						test="${ b.b_lev eq 3 }">&nbsp; &nbsp; &nbsp; &nbsp; ▶▶ </c:if> <!-- 로그인한 회원만 상세보기 할 수 있게 한다면 -->
 					<c:if test="${ !empty sessionScope.loginMember }">
-						<a href="${ bdt }">${ b.b_title }</a>
+						<a href="${ bdt }" style="text-decoration:none;">${ b.b_title }</a>
 					</c:if> <c:if test="${ empty sessionScope.loginMember }">
 				${ b.b_title }
 			</c:if>
@@ -194,21 +199,21 @@ function Change(){
 	<br>
 	<!-- 검색 항목 영역 -->
 	<div align="center">
-		<select id="test" onchange="Change()">
+		<select id="test" onchange="Change()"  style="width: 4rem; height:3rem; border:3px solid  #f8f9fa;position:relative; top:50px;text-align:center; right:260px;">
 			<option value="1">제목</option>
 			<option value="2">날짜</option>
 		</select>
 		<div id="d1" style="display:block">
 			<form action="bsearchTitle.do" method="get">
-				<input type="search" name="keyword"> 
-				<input type="submit" value="검색">
+				<input type="search" name="keyword" id="d1_input"  style="width: 25rem;height:3rem; border:3px solid #f8f9fa;"> 
+				<input type="submit" value="검색"  style="width: 3rem;height:3rem;border:none; background-color:#f8f9fa; cursor:pointer;" class="btn">
 			</form>
 		</div>
 		<div id="d2" style="display:none">
 			<form action="bsearchDate.do" method="get">
-				<input type="date" name="begin"> 
-				<input type="date" name="end"> 
-				<input type="submit" value="검색">
+				<input type="date" name="begin" style="width: 12rem;height:2.5rem; border:3px solid #f8f9fa;" class="datedate"> 
+				<input type="date" name="end" style="width: 12rem;height:2.5rem; border:3px solid #f8f9fa;" class="datedate"> 
+				<input type="submit" value="검색" style="width: 3rem;height:3rem;border:none; background-color:#f8f9fa; cursor:pointer;" class="btn">
 			</form>
 		</div>
 	</div>
@@ -220,13 +225,13 @@ function Change(){
 		<!-- 페이지 표시 영역 -->
 		<!-- 1페이지로 이동 처리 -->
 		<c:if test="${ currentPage eq 1 }">
-		[맨처음] &nbsp;
+		&lt;&lt; &nbsp;
 	</c:if>
 		<c:if test="${ currentPage > 1 }">
 			<c:url var="bl" value="/blist.do">
 				<c:param name="page" value="1" />
 			</c:url>
-			<a href="${ bl }">[맨처음]</a> &nbsp;
+			<a href="${ bl }">&lt;&lt;</a> &nbsp;
 	</c:if>
 		<!-- 이전 페이지그룹으로 이동 처리 -->
 		<c:if
@@ -234,11 +239,11 @@ function Change(){
 			<c:url var="bl2" value="/blist.do">
 				<c:param name="page" value="${ startPage - 10 }" />
 			</c:url>
-			<a href="${ bl2 }">[이전그룹]</a> &nbsp;
+			<a href="${ bl2 }">&lt;</a> &nbsp;
 	</c:if>
 		<c:if
 			test="${ !((currentPage - 10) < startPage and (currentPage - 10) > 1) }">
-		[이전그룹] &nbsp;
+		&lt; &nbsp;
 	</c:if>
 		<!-- 현재 페이지가 속한 페이지 그룹 페이지 숫자 출력 -->
 		<c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1">
@@ -258,21 +263,21 @@ function Change(){
 			<c:url var="bl4" value="/blist.do">
 				<c:param name="page" value="${ endPage + 10 }" />
 			</c:url>
-			<a href="${ bl4 }">[다음그룹]</a> &nbsp;
+			<a href="${ bl4 }">&nbsp;&nbsp;&gt;</a> &nbsp;
 	</c:if>
 		<c:if
 			test="${ !((currentPage + 10) > endPage and (currentPage + 10) < maxPage) }">
-		[다음그룹] &nbsp;
+		&nbsp;&nbsp;&gt; &nbsp;
 	</c:if>
 		<!-- 끝페이지로 이동 처리 -->
 		<c:if test="${ currentPage eq maxPage }">
-		[맨끝] &nbsp; 
+		&gt;&gt; &nbsp; 
 	</c:if>
 		<c:if test="${ currentPage < maxPage }">
 			<c:url var="bl5" value="/blist.do">
 				<c:param name="page" value="${ maxPage }" />
 			</c:url>
-			<a href="${ bl5 }">[맨끝]</a> &nbsp;
+			<a href="${ bl5 }">&gt;&gt;</a> &nbsp;
 	</c:if>
 	</div>
 </c:if>
@@ -288,7 +293,7 @@ function Change(){
 			<!-- 페이지 표시 영역 -->
 			<!-- 1페이지로 이동 처리 -->
 			<c:if test="${ currentPage eq 1 }">
-		 [맨처음] &nbsp;
+		 &lt;&lt; &nbsp;
 	</c:if>
 			<c:if test="${ currentPage > 1 }">
 				<c:if test="${ action eq 'title' }">
@@ -306,7 +311,7 @@ function Change(){
 						<c:param name="page" value="1" />
 					</c:url>
 				</c:if>
-				<a href="${ bsl }">[맨처음]</a> &nbsp;
+				<a href="${ bsl }">&lt;&lt;</a> &nbsp;
 	</c:if>
 			<!-- 이전 페이지그룹으로 이동 처리 -->
 			<c:if
@@ -325,16 +330,16 @@ function Change(){
 						<c:param name="page" value="${ startPage - 10 }" />
 					</c:url>
 				</c:if>
-				<a href="${ bsl }">[이전그룹]</a> &nbsp;
+				<a href="${ bsl }">&lt;</a> &nbsp;
 	</c:if>
 			<c:if
 				test="${ !((currentPage - 10) < startPage and (currentPage - 10) > 1) }">
-		[이전그룹] &nbsp;
+		&lt; &nbsp;
 	</c:if>
 			<!-- 현재 페이지가 속한 페이지 그룹 페이지 숫자 출력 -->
 			<c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1">
 				<c:if test="${ p eq currentPage }">
-					<font size="4" color="red"><b>[${ p }]</b></font>
+					<font size="4" ><b>[${ p }]</b></font>
 				</c:if>
 				<c:if test="${ p ne currentPage }">
 					<c:if test="${ action eq 'title' }">
@@ -372,15 +377,15 @@ function Change(){
 						<c:param name="page" value="${ endPage + 10 }" />
 					</c:url>
 				</c:if>
-				<a href="${ bsl }">[다음그룹]</a> &nbsp;
+				<a href="${ bsl }">&nbsp;&gt;</a> &nbsp;
 	</c:if>
 			<c:if
 				test="${ !((currentPage + 10) > endPage and (currentPage + 10) < maxPage) }">
-		[다음그룹] &nbsp;
+		&nbsp;&nbsp;&gt; &nbsp;
 	</c:if>
 			<!-- 끝페이지로 이동 처리 -->
 			<c:if test="${ currentPage eq maxPage }">
-		[맨끝] &nbsp; 
+		&gt;&gt; &nbsp; 
 	</c:if>
 			<c:if test="${ currentPage < maxPage }">
 				<c:if test="${ action eq 'title' }">
@@ -397,12 +402,11 @@ function Change(){
 						<c:param name="page" value="${ maxPage }" />
 					</c:url>
 				</c:if>
-				<a href="${ bsl }">[맨끝]</a> &nbsp;
+				<a href="${ bsl }">&gt;&gt;</a> &nbsp;
 	</c:if>
 		</div>
 	</c:if>
 
-	<hr>
 	<c:import url="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>

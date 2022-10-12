@@ -24,8 +24,7 @@
 		<input type="hidden" name="notice_upfile" value="${ notice.notice_upfile }">
 		<input type="hidden" name="notice_refile" value="${ notice.notice_refile }">
 	</c:if>
-<table align="center" width="500" border="1" cellspacing="0" 
-cellpadding="5">
+<table align="center" width="500" border="1" cellspacing="0" cellpadding="5">
 	<tr><th>제 목</th><td><input type="text" name="notice_title" value="${ notice.notice_title }">
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<c:if test="${ notice.importance eq 2 }">

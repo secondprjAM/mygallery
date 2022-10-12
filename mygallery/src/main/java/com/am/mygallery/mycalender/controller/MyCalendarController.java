@@ -53,7 +53,6 @@ public class MyCalendarController {
 		}
 		String dateFormat = String.valueOf(today_info.get("search_year"))+String.valueOf(today_info.get("search_month"))+"00";
 		String endDate = String.valueOf(today_info.get("search_year"))+String.valueOf(today_info.get("search_month"))+today_info.get("endDay");
-		System.out.println("endDate : " + endDate);
 		SearchCalendar searchAllCalendar = new SearchCalendar(dateFormat,g_userid,endDate);
 		ArrayList<MyCalendar>list = mycalendarService.searchMonth(searchAllCalendar);
 		int list_size = list.size();
@@ -67,7 +66,6 @@ public class MyCalendarController {
 		//날짜 삽입
 		for (int i = today_info.get("startDay"); i <= today_info.get("endDay"); i++) {
 			if(dateNum<list_size && i ==Integer.parseInt(list.get(dateNum).getCalendar_date().toString().substring(list.get(dateNum).getCalendar_date().toString().length()-2, list.get(dateNum).getCalendar_date().toString().length())) ) {
-
 				String d = list.get(dateNum).getCalendar_date().toString();
 				list.get(dateNum).setDate(i+"");
 				list.get(dateNum).setSchedule_date(d);
