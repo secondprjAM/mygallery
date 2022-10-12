@@ -41,7 +41,7 @@
 			<!-- accept="image/*" -->
 			<tr>
 				<th colspan="2"><input type="submit" value="업로드">
-					&nbsp; <input type="reset" value="작성취소"> &nbsp;
+					&nbsp;
 					<button onclick="javascript:history.go(-1);">이전페이지</button></th>
 			</tr>
 		</table>

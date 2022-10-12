@@ -48,16 +48,91 @@ function changeLogin(element){
 	}
 } 
 </script>
+<style type="text/css">
+h2 {
+	font-weight:normal;
+	margin:50px 0 ;
+}
+
+form.sform {
+   display: none;  /* 안 보이게 설정 */
+}
+
+.table {
+   width: 900px;
+    background-color: #f1f3f5;
+   border-collapse: collapse;
+   border-radius: 5px;
+   overflow: hidden;
+   border:1px solid #f1f3f5;
+}
+.table caption {
+   font-size: 20px;
+   margin-bottom: 30px;
+}
+
+.table tr {
+   border-bottom: 1px solid #eee;
+   text-align:center;
+}
+
+
+.table tr:nth-child(odd) {
+   background-color: #f1f3f5; 
+}
+
+.table th, .btable td {
+   padding: 16px;
+   text-align: center;
+}
+
+.table tr th {
+   background-color: salmon; 
+   font-weight:500;
+}
+
+.table tr th:first-child {
+   border-radius: 5px 0 0 0;
+}
+
+.wrap {
+   height: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.button {
+		width: 150px;
+		height: 45px;
+		 font-size: 16px;
+		letter-spacing: 2px;
+		color: #000;
+		background-color: #f1f3f5; 
+		border: none;
+		border-radius: 45px;
+		cursor: pointer;
+		outline: none;
+		transition: 0.6s;
+	}
+	
+	.button:hover {
+		background-color:salmon; 
+	}
+	
+	.search {
+		background-color:white; 
+	}
+</style>
 </head>
 <body>
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
-<hr>
-<h1 align="center" >회원 조회</h1>
+<h2 align="center"  style="margin:50px 0 ;" >회원 조회</h2>
 <!-- 조회해 온 회원 리스트 정보 출력 처리 -->
 <div align="center">
- <button onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/mlist.do';" >전체 목록 조회</button> 
+ <button onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/mlist.do';"  class="button">전체 목록 조회</button> 
 <br><br>
-<table align="center" border="1" cellspacing="0" cellpadding="3">
+<table class="table" align="center" width="500" border="1" cellspacing="0" cellpadding="3">
 	<tr>
 		<th>아이디</th>
 		<th>회원 이름</th>
@@ -67,7 +142,7 @@ function changeLogin(element){
 	</tr>
 	<c:forEach items="${ requestScope.list }" var="m">
 	<tr>
-		<td>${ m.userid }</td>
+		<td  style="padding:8px 0;">${ m.userid }</td>
 		<td>${ m.username }</td>
 		<td>${ m.useremail }</td>
 		<td>${ m.usergender eq 'M'? "남" : "여" }</td>
@@ -105,7 +180,7 @@ function changeLogin(element){
 	<!-- 현재 페이지가 속한 페이지 그룹 페이지 숫자 출력 -->
 	<c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1">
 		<c:if test="${ p eq currentPage }">
-			<font size="4" color="grey"><b>[${ p }]</b></font>
+			<font size="4"><b>[${ p }]</b></font>
 		</c:if>
 		<c:if test="${ p ne currentPage }">
 			<c:url var="ml3" value="/mlist.do">
@@ -131,18 +206,18 @@ function changeLogin(element){
 	<!-- 항목별 검색 기능 추가 -->
 	<div class="container">
 		<div class="search">
-			<form method="post" name="search" action="msearch.do">
+			<form method="post" name="search" action="msearch.do" class="search">
 				<table class="pull-right">
 					<tr>
-						<td><select class="form-control" name="action">
+						<td><select class="form-control" name="action"  style="width: 10rem; height:3rem; border:3px solid  #f1f3f5; ">
 								<option value="0">검색 선택</option>
 								<option value="userid">아이디 검색(부분검색 허용)</option>
 								<option value="userloginok">로그인 제한 여부(대문자 Y, N)</option>
 						</select></td>
 						<td><input type="text" class="form-control"
-							placeholder="검색" name="keyword" maxlength="100"></td>
+							placeholder="검색" name="keyword" maxlength="100" style="width: 25rem;height:2.7rem; border:3px solid #f8f9fa;"></td>
 							
-						<td><input type="submit" class="btn btn-success"  value="검색"></td>
+						<td><input type="submit" class="btn btn-success"  value="검색" style="width: 4rem; height:3rem; border:3px solid  #f8f9fa; cursor:pointer;"></td>
 					</tr>
 				</table>
 			</form>
@@ -168,7 +243,6 @@ function changeLogin(element){
 </center>
 
 
-<hr>
 <c:import url="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>

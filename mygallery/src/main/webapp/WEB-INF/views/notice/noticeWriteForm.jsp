@@ -9,7 +9,6 @@
 <style>
 
 	h2 {
-		margin-top:50px;
 		font-weight:normal;
 	}
 	
@@ -58,6 +57,10 @@
 	.button:hover {
 		background-color:salmon;
 	}
+	
+	.table {
+		 margin:50px auto;
+}
 
 
 </style>
@@ -65,6 +68,7 @@
 <body>
 <!-- 절대경로로 대상 파일의 위치를 지정한 경우 -->
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
+<br><br>
 <h2 align="center">새 공지글 등록 페이지</h2>
 <!-- form 태그에서 입력된 값들(문자열)과 첨부파일을 같이 전송하려면,
 	반드시 enctype 속성을 form 태그에 추가해야 됨
@@ -73,12 +77,12 @@
  -->
 <form action="ninsert.do" method="post" enctype="multipart/form-data">
 <table align="center" width="500" cellspacing="0" 
-cellpadding="5">
+cellpadding="5" class="table">
 	<tr><th style="width: 80px;">제 목</th><td><input type="text" name="notice_title"  style="width: 25rem;height:3rem; border:3px solid #f8f9fa; margin-bottom:20px;"></td></tr>
 	<tr><th>작성자</th>
-	<td><input type="text" name="userid" readonly value="${ sessionScope.loginMember.userid }"   style="width: 25rem;height:3rem; border:3px solid #f8f9fa;"></td></tr>
+	<td><input type="text" name="userid" readonly value="${ sessionScope.loginMember.userid }"   style="width: 25rem;height:3rem; border:3px solid #f8f9fa;" class="write"></td></tr>
 	<tr><th>&nbsp;&nbsp;&nbsp;&nbsp;</th><td><input type="checkbox" name="importance" value="2"> 중요도</td></tr>
-	<tr><th>첨부파일</th><td><input type="file" name="upfile" style="width: 25rem;height:3rem; border:3px solid #f8f9fa; margin-bottom:20px;"></td></tr>
+	<tr><th>첨부파일</th><td><input type="file" name="upfile" style="width: 25rem;height:3rem; border:3px solid #f8f9fa; margin-bottom:20px;" class="upfile"></td></tr>
 	<tr><th>내 용</th><td><textarea rows="5" cols="50" name="notice_content" style="width: 25rem;height:4rem; border:3px solid #f8f9fa; margin-bottom:20px;"></textarea></td></tr>
 	<tr  align="center"><th colspan="2">
 		&nbsp;&nbsp;&nbsp;	<input type="submit" value="등록하기"  class="button" style="margin-left:30px;"> &nbsp; 

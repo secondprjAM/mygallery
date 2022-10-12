@@ -122,7 +122,7 @@ table {
 	<br>
 	<div align="center">
 		<button class="button"
-			onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/nlist.do';">전체
+			onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/nlist.do';" class="button">전체
 			목록 조회</button>
 			<c:if test="${ sessionScope.loginMember.useradmin eq 'Y' }">
 	<button class="button" onclick="javascript:location.href='movewrite.do';">

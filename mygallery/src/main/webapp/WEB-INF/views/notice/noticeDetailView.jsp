@@ -8,8 +8,8 @@
 <meta charset="UTF-8">
 <title></title>
 <style>
-	table {
-		margin-top:50px;
+		.table {
+		 margin:50px auto;
 	}
 	
 	th {
@@ -21,7 +21,7 @@
 		width: 25rem;
 		height:3rem; 
 		border:3px solid #f8f9fa; 
-		margin-bottom:20px;
+		margin:20px 0;
 	}
 	.button {
 		width: 100px;
@@ -47,7 +47,7 @@
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
 
 <br>
-<table align="center" width="500" cellspacing="0" cellpadding="5">
+<table align="center" width="500" cellspacing="0" cellpadding="5"  class="table">
 	<tr><th>제 목</th><td>${notice.notice_title }</td></tr>
 	<tr><th>작성자</th><td>${notice.userid }</td></tr>
 	<tr><th>날 짜</th><td>${notice.notice_date }</td></tr>

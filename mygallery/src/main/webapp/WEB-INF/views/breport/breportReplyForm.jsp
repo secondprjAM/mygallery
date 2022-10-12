@@ -11,76 +11,34 @@
 <meta charset="UTF-8">
 <title></title>
 <style type="text/css">
-btable {
-	width: 900px;
-	background-color: #fff;
-	border-collapse: collapse;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-	border-radius: 5px;
-	overflow: hidden;
+
+.h3 {
+	text-align:center;
+	font-weight:normal;
+	margin:50px auto;
+	margin-left:-100px;
 }
 
-.btable caption {
-	font-size: 20px;
-	margin-bottom: 30px;
+.table {
+	   margin:0 auto;
+	   padding-left:50px;
 }
-
-.btable tr {
-	border-bottom: 1px solid #eee;
-}
-
-.btable tr:last-child {
-	border: none;
-}
-
-.btable tr:nth-child(odd) {
-	background-color: #ddd;
-}
-
-.btable th, .btable td {
-	padding: 12px;
-	text-align: center;
-}
-
-.btable tr th {
-	background-color: #FF8080;
-	color: #fff;
-}
-
-.btable tr th:first-child {
-	border-radius: 5px 0 0 0;
-}
-
-.wrap {
-	height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
+	
+	th {
+		font-weight:normal;
+		font-size: 16px;
+	}
+	
+	td > input {
+		width: 25rem;
+		height:3rem; 
+		border:3px solid #f8f9fa; 
+		margin:10px 0;
+	}
+	
 .button {
-  width: 140px;
-  height: 45px;
-  font-family: 'Roboto', sans-serif;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 2.5px;
-  font-weight: 500;
-  color: #000;
-  background-color: #FFA7A7;
-  border: none;
-  border-radius: 45px;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease 0s;
-  cursor: pointer;
-  outline: none;
-  }
-
-.button:hover {
-  background-color: #2EE59D;
-  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
-  color: #fff;
-  transform: translateY(-7px);
+	width:180px;
+  
 }
 </style>
 
@@ -88,7 +46,6 @@ btable {
 <body>
 	<!-- 절대경로로 대상 파일의 위치를 지정한 경우 -->
 	<c:import url="/WEB-INF/views/common/menubar.jsp" />
-	<hr>
 	<h3 align="center">댓글 페이지</h3>
 
 	<form action="breply.do" method="post">
@@ -96,8 +53,7 @@ btable {
 		<input type="hidden" name="b_ref" value="${ b_no }"> <input
 			type="hidden" name="page" value="${ currentPage }">
 
-		<table class="btable" align="center" width="700" height="400" border="1"
-			cellspacing="0" cellpadding="5">
+		<table class="table" align="center" width="700" height="400" cellspacing="0" cellpadding="5">
 			<tr>
 				<th>제 목</th>
 				<td><input type="text" name="b_title"></td>
@@ -110,13 +66,13 @@ btable {
 
 			<tr>
 				<th>내 용</th>
-				<td><textarea rows="15" cols="70" name="b_content"></textarea></td>
+				<td><input type="textarea" rows="15" cols="70" name="b_content"></textarea></td>
 			</tr>
 			
 		</table>
 		<br>
-		<div align="center">
-			<button class="button"><input type="submit" value="댓글등록"></button> &nbsp;  
+		<div align="center" style="margin:0 auto;">
+			<button class="button" type="submit" value="댓글등록" style="margin-left:-100px;">댓글등록</button> &nbsp;  
 			<button class="button" onclick="javascript:history.go(-1);">이전페이지로 이동</button>
 		</div>
 	</form>

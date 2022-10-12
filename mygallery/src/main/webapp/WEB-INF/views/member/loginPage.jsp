@@ -19,9 +19,9 @@
 				</th>
 			</c:if>
 		</tr>
-		<table id="logtable" style="width: 20%; height: 100px; margin: auto; text-align: center;">
+		<table id="logtable" style="width: 300px ; height: 100px; margin: auto; text-align: center;">
 			<tr>
-				<td><font size="4">아  이  디 : &nbsp;</font></td>
+				<td ><font size="4">아  이  디 : &nbsp;</font></td>
 				<td><input width="300px" height ="10px" type="text" name="userid" class="pos"></td>
 				</th>
 			</tr>
