@@ -16,13 +16,32 @@
 <meta charset="UTF-8">
 <title></title>
 <style type="text/css">
+
+	.button {
+		width: 160px;
+		height: 45px;
+		 font-size: 16px;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+		color: #000;
+		background-color: #f1f3f5;
+		border: none;
+		border-radius: 45px;
+		cursor: pointer;
+		outline: none;
+		transition: 0.6s;
+	}
+	
+	.button:hover {
+		background-color:salmon;
+	}
 table {
 	width: 900px;
-	background-color: #fff;
+	background-color: gainsboro;
 	border-collapse: collapse;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 	border-radius: 5px;
 	overflow: hidden;
+	border:none;
 }
 
 .table caption {
@@ -34,22 +53,18 @@ table {
 	border-bottom: 1px solid #eee;
 }
 
-.table tr:last-child {
-	border: none;
-}
-
 .table tr:nth-child(odd) {
-	background-color: #ddd;
+	background-color: #f1f3f5;
 }
 
 .table th, .btable td {
-	padding: 12px;
+	padding: 16px;
 	text-align: center;
 }
 
 .table tr th {
-	background-color: #FF8080;
-	color: #fff;
+	background-color: salmon;
+	font-weight:500;
 }
 
 .table tr th:first-child {
@@ -63,29 +78,16 @@ table {
 	justify-content: center;
 }
 
-.button {
-	width: 140px;
-	height: 45px;
-	font-family: 'Roboto', sans-serif;
-	font-size: 11px;
-	text-transform: uppercase;
-	letter-spacing: 2.5px;
-	font-weight: 500;
-	color: #000;
-	background-color: #FFA7A7;
-	border: none;
-	border-radius: 45px;
-	box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-	transition: all 0.3s ease 0s;
-	cursor: pointer;
-	outline: none;
+#d1_input:hover {
+	background-color:#f8f9fa;
 }
 
-.button:hover {
-	background-color: #2EE59D;
-	box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
-	color: #fff;
-	transform: trabslateY(-7px);
+.datedate:hover {
+	background-color:#f8f9fa;
+}
+
+.btn:hover {
+	background-color:salomon;
 }
 </style>
 
@@ -115,7 +117,6 @@ table {
 	<!-- 상대경로로 대상 파일의 위치를 지정한 경우 -->
 	<c:import url="../common/menubar.jsp" />
 	<!-- jstl 에서 절대경로 표기 : /WEB-INF/views/common/menubar.jsp -->
-	<hr>
 	<br>
 	<!-- 목록 출력 영역 -->
 	<br>
@@ -153,12 +154,12 @@ table {
 						<c:param name="notice_no" value="${ n.notice_no }" />
 						<c:param name="page" value="${ currentPage }" />
 					</c:url>
-					<td><a href="${ ndt }">${ n.notice_title }</a></td>
+					<td><a href="${ ndt }" style="text-decoration:none;">${ n.notice_title }</a></td>
 					<td><fmt:formatDate value="${ n.notice_date }"
 							pattern="yyyy-MM-dd" /></td>
 					<td>${ n.userid }</td>
 					<td align="center">${ n.notice_readcount }</td>
-					<td><c:if test="${ !empty n.notice_upfile }">◎</c:if> <c:if
+					<td style="padding:8px;"><c:if test="${ !empty n.notice_upfile }">◎</c:if> <c:if
 							test="${ empty n.notice_upfile }">&nbsp;</c:if></td>
 				</tr>
 			</c:forEach>
@@ -173,28 +174,28 @@ table {
 <div style="text-align:center;"> <!-- 페이지 표시 영역 -->
 	<!-- 1페이지로 이동 처리 -->
 	<c:if test="${ currentPage eq 1 }">
-		[맨처음] &nbsp;
+		&lt;&lt; &nbsp;
 	</c:if>
 	<c:if test="${ currentPage > 1 }">
 		<c:url var="bl" value="/nlist.do">
 			<c:param name="page" value="1" />
 		</c:url>
-		<a href="${ bl }">[맨처음]</a> &nbsp;
+		<a href="${ bl }">&lt;&lt;</a> &nbsp;
 	</c:if>
 	<!-- 이전 페이지그룹으로 이동 처리 -->
 	<c:if test="${ (currentPage - 10) < startPage and (currentPage - 10) > 1 }">
 		<c:url var="bl2" value="/nlist.do">
 			<c:param name="page" value="${ startPage - 10 }" />
 		</c:url>
-		<a href="${ bl2 }">[이전그룹]</a> &nbsp;
+		<a href="${ bl2 }">&lt;</a> &nbsp;
 	</c:if>
 	<c:if test="${ !((currentPage - 10) < startPage and (currentPage - 10) > 1) }">
-		[이전그룹] &nbsp;
+		&lt; &nbsp;
 	</c:if>
 	<!-- 현재 페이지가 속한 페이지 그룹 페이지 숫자 출력 -->
 	<c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1">
 		<c:if test="${ p eq currentPage }">
-			<font size="4" color="red"><b>[${ p }]</b></font>
+			<font size="4" ><b>[${ p }]</b>&nbsp;&nbsp;</font>
 		</c:if>
 		<c:if test="${ p ne currentPage }">
 			<c:url var="bl3" value="/nlist.do">
@@ -208,20 +209,20 @@ table {
 		<c:url var="bl4" value="/nlist.do">
 			<c:param name="page" value="${ endPage + 10 }" />
 		</c:url>
-		<a href="${ bl4 }">[다음그룹]</a> &nbsp;
+		<a href="${ bl4 }">&gt;</a> &nbsp;
 	</c:if>
 	<c:if test="${ !((currentPage + 10) > endPage and (currentPage + 10) < maxPage) }">
-		[다음그룹] &nbsp;
+		&gt; &nbsp;
 	</c:if>
 	<!-- 끝페이지로 이동 처리 -->
 	<c:if test="${ currentPage eq maxPage }">
-		[맨끝] &nbsp; 
+		&gt;&gt; &nbsp; 
 	</c:if>
 	<c:if test="${ currentPage < maxPage }">
 		<c:url var="bl5" value="/nlist.do">
 			<c:param name="page" value="${ maxPage }" />
 		</c:url>
-		<a href="${ bl5 }">[맨끝]</a> &nbsp;
+		<a href="${ bl5 }">&gt;&gt;</a> &nbsp;
 	</c:if>
 </div>
 </c:if>
@@ -234,7 +235,7 @@ table {
 <div style="text-align:center;"> <!-- 페이지 표시 영역 -->
 	<!-- 1페이지로 이동 처리 -->
 	<c:if test="${ currentPage eq 1 }">
-		 [맨처음] &nbsp;
+		 &lt;&lt; &nbsp;
 	</c:if>
 	<c:if test="${ currentPage > 1 }">
 			<c:if test="${ action eq 'title' }">
@@ -252,7 +253,7 @@ table {
 					<c:param name="page" value="1" />
 				</c:url>
 			</c:if>
-		<a href="${ nsl }">[맨처음]</a> &nbsp;
+		<a href="${ nsl }">&lt;&lt;</a> &nbsp;
 	</c:if>
 	<!-- 이전 페이지그룹으로 이동 처리 -->
 	<c:if test="${ (currentPage - 10) < startPage and (currentPage - 10) > 1 }">
@@ -272,15 +273,15 @@ table {
 					<c:param name="page" value="${ startPage - 10 }" />
 				</c:url>
 			</c:if>
-		<a href="${ nsl }">[이전그룹]</a> &nbsp;
+		<a href="${ nsl }">&lt;</a> &nbsp;
 	</c:if>
 	<c:if test="${ !((currentPage - 10) < startPage and (currentPage - 10) > 1) }">
-		[이전그룹] &nbsp;
+		&lt; &nbsp;
 	</c:if>
 	<!-- 현재 페이지가 속한 페이지 그룹 페이지 숫자 출력 -->
 	<c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1">
 		<c:if test="${ p eq currentPage }">
-			<font size="4" color="red"><b>[${ p }]</b></font>
+			<font size="4" ><b>[${ p }]&nbsp;&nbsp;</b></font>
 		</c:if>
 		<c:if test="${ p ne currentPage }">
 			<c:if test="${ action eq 'title' }">
@@ -319,14 +320,14 @@ table {
 					<c:param name="page" value="${ endPage + 10 }" />
 				</c:url>
 			</c:if>
-		<a href="${ nsl }">[다음그룹]</a> &nbsp;
+		<a href="${ nsl }">&gt;</a> &nbsp;
 	</c:if>
 	<c:if test="${ !((currentPage + 10) > endPage and (currentPage + 10) < maxPage) }">
-		[다음그룹] &nbsp;
+		&gt; &nbsp;
 	</c:if>
 	<!-- 끝페이지로 이동 처리 -->
 	<c:if test="${ currentPage eq maxPage }">
-		[맨끝] &nbsp; 
+		&gt;&gt; &nbsp; 
 	</c:if>
 	<c:if test="${ currentPage < maxPage }">
 		<c:if test="${ action eq 'title' }">
@@ -344,7 +345,7 @@ table {
 					<c:param name="page" value="${ maxPage }" />
 				</c:url>
 			</c:if>
-		<a href="${ nsl }">[맨끝]</a> &nbsp;
+		<a href="${ nsl }">&gt;&gt;</a> &nbsp;
 	</c:if>
 </div>
 </c:if>	
@@ -353,20 +354,21 @@ table {
 	</center>
 	<!-- 항목별 검색 기능 추가 -->
 	<div align="center">
-		<select id="test" onchange="Change()">
+		<select id="test" onchange="Change()" style="width: 4rem; height:3rem; border:3px solid  #f8f9fa;position:relative; top:50px;text-align:center; right:260px;">
 			<option value="1">제목</option>
 			<option value="2">날짜</option>
 		</select>
 		<div id="d1" style="display: block">
 			<form action="nsearchTitle.do" method="get">
-				<input type="search" name="keyword"> <input type="submit"
-					value="검색">
+				<input type="search" name="keyword" id="d1_input"  style="width: 25rem;height:3rem; border:3px solid #f8f9fa;">
+				<input type="submit" value="검색"  style="width: 3rem;height:3rem;border:none; background-color:#f8f9fa; cursor:pointer;" class="btn">
 			</form>
 		</div>
 		<div id="d2" style="display: none">
 			<form action="nsearchDate.do" method="get">
-				<input type="date" name="begin"> <input type="date"
-					name="end"> <input type="submit" value="검색">
+				<input type="date" name="begin"  style="width: 12rem;height:2.5rem; border:3px solid #f8f9fa;" class="datedate">
+				<input type="date" name="end"  style="width: 12rem;height:2.5rem; border:3px solid #f8f9fa;" class="datedate">
+				<input type="submit" value="검색" style="width: 3rem;height:3rem;border:none; background-color:#f8f9fa; cursor:pointer;" class="btn">
 			</form>
 		</div>
 	</div>

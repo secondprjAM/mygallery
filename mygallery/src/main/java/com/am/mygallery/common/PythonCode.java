@@ -35,7 +35,6 @@ public class PythonCode {
 	@ResponseBody
 	public void pythonOpen(Model model, Gallery gallery, HttpServletRequest request)
 			throws IOException, InterruptedException {
-
 		String facePath = "C:\\framework_workspace\\AM\\mygallery\\mygallery\\src\\main\\webapp\\resources\\gallery\\faceImages\\";
 		String stickerPath = "C:\\framework_workspace\\AM\\mygallery\\mygallery\\src\\main\\webapp\\resources\\gallery\\stickers\\";
 
@@ -54,7 +53,7 @@ public class PythonCode {
 		System.out.println(s_rename);
 		System.out.println(rightName);
 		System.out.println(leftName);
-		ProcessBuilder processBuilder = new ProcessBuilder("python", "C:\\project\\ai_python\\myGallery.py",
+		ProcessBuilder processBuilder = new ProcessBuilder("python", "C:\\AIPROJECT\\myGallery.py",
 
 				facePath + img_rename, // 1 = 얼굴사진
 				stickerPath + s_rename, // 2 = 코 스티커

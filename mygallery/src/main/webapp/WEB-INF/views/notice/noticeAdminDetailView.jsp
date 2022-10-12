@@ -7,13 +7,49 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+<style>
+	table {
+		margin-top:50px;
+	}
+	
+	th {
+		font-weight:normal;
+		font-size: 16px;
+	}
+	
+	td {
+		width: 25rem;
+		height:3rem; 
+		border:3px solid #f8f9fa; 
+		margin-bottom:20px;
+	}
+	.button {
+		width: 100px;
+		height: 45px;
+		 font-size: 16px;
+		letter-spacing: 2px;
+		color: #000;
+		background-color: #f1f3f5;
+		border: none;
+		border-radius: 45px;
+		cursor: pointer;
+		outline: none;
+		transition: 0.6s;
+		margin-top:50px;
+		margin-left:10px;
+	}
+	
+	.button:hover {
+		background-color:salmon;
+	}
+</style>
 </head>
 <body>
 <!-- 절대경로로 대상 파일의 위치를 지정한 경우 -->
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
-<hr>
+
 <br>
-<table align="center" width="500" border="1" cellspacing="0" 
+<table align="center" width="500" cellspacing="0" 
 cellpadding="5">
 	<tr><th>제 목</th><td>${ notice.notice_title }</td></tr>
 	<tr><th>작성자</th><td>${ notice.userid }</td></tr>
@@ -41,23 +77,23 @@ cellpadding="5">
 	</tr>
 	<tr><th>내 용</th><td>${ notice.notice_content }</td></tr>
 	<tr><th colspan="2">
-		<button onclick="javascript:history.go(-1);">목록</button>
+		<button onclick="javascript:history.go(-1);" class="button">목록</button>
 		
 		<!-- 수정페이지로 이동 버튼 -->
 		<c:url var="movenup" value="/nmoveup.do">
 			<c:param name="notice_no" value="${ notice.notice_no }" />			
 		</c:url>
-		<button onclick="javascript:location.href='${ movenup }';">수정</button>
+		<button onclick="javascript:location.href='${ movenup }';" class="button">수정</button>
 		<!-- 삭제하기 버튼 -->
 		<c:url var="ndel" value="/ndel.do">
 			<c:param name="notice_no" value="${ notice.notice_no }" />
 			<c:param name="rfile" value="${ notice.notice_refile }" />
 		</c:url>
-		<button onclick="javascript:location.href='${ ndel }';">글삭제</button>
+		<button onclick="javascript:location.href='${ ndel }';" class="button">글삭제</button>
 	</th></tr>
 </table>
 <br>
-<hr>
+
 <c:import url="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>
