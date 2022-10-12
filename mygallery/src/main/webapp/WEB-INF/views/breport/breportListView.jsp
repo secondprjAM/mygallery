@@ -171,10 +171,6 @@ function Change(){
 					<c:param name="page" value="${ currentPage }" />
 				</c:url>
 				<td>
-					<!-- 제목 글자 앞에 댓글과 대댓글 표시 기호 붙임
-				들여쓰기 처리 : 원글과 구분지음
-			 --> <c:if test="${ b.b_lev eq 2 }">&nbsp; &nbsp; ▶ </c:if> <c:if
-						test="${ b.b_lev eq 3 }">&nbsp; &nbsp; &nbsp; &nbsp; ▶▶ </c:if> <!-- 로그인한 회원만 상세보기 할 수 있게 한다면 -->
 					<c:if test="${ !empty sessionScope.loginMember }">
 						<a href="${ bdt }">${ b.b_title }</a>
 					</c:if> <c:if test="${ empty sessionScope.loginMember }">
@@ -191,27 +187,6 @@ function Change(){
 			</tr>
 		</c:forEach>
 	</table>
-	<br>
-	<!-- 검색 항목 영역 -->
-	<div align="center">
-		<select id="test" onchange="Change()">
-			<option value="1">제목</option>
-			<option value="2">날짜</option>
-		</select>
-		<div id="d1" style="display:block">
-			<form action="bsearchTitle.do" method="get">
-				<input type="search" name="keyword"> 
-				<input type="submit" value="검색">
-			</form>
-		</div>
-		<div id="d2" style="display:none">
-			<form action="bsearchDate.do" method="get">
-				<input type="date" name="begin"> 
-				<input type="date" name="end"> 
-				<input type="submit" value="검색">
-			</form>
-		</div>
-	</div>
 	<br>
 	
 <c:if test="${ empty action }">
@@ -276,131 +251,155 @@ function Change(){
 	</c:if>
 	</div>
 </c:if>
-	<!-- 검색 항목 별 페이징 처리 -->
+
+<br>
+
+<!-- ----------------------------------------- -->
+<c:if test="${ !empty action }">
+<!-- 검색 목록 페이징 처리 -->
 
 
-
-	<c:if test="${ !empty action }">
-		<!-- 검색 목록 페이징 처리 -->
-
-
-		<div style="text-align: center;">
-			<!-- 페이지 표시 영역 -->
-			<!-- 1페이지로 이동 처리 -->
-			<c:if test="${ currentPage eq 1 }">
+<div style="text-align:center;"> <!-- 페이지 표시 영역 -->
+	<!-- 1페이지로 이동 처리 -->
+	<c:if test="${ currentPage eq 1 }">
 		 [맨처음] &nbsp;
 	</c:if>
-			<c:if test="${ currentPage > 1 }">
-				<c:if test="${ action eq 'title' }">
-					<c:url var="bsl" value="nsearchTitle.do">
-						<c:param name="keyword" value="${ keyword }" />
-						<c:param name="page" value="1" />
-					</c:url>
-				</c:if>
-
-
-				<c:if test="${ action eq 'date' }">
-					<c:url var="bsl" value="bsearchDate.do">
-						<c:param name="begin" value="${ begin }" />
-						<c:param name="end" value="${ end }" />
-						<c:param name="page" value="1" />
-					</c:url>
-				</c:if>
-				<a href="${ bsl }">[맨처음]</a> &nbsp;
+	<c:if test="${ currentPage > 1 }">
+			<c:if test="${ action eq 'title' }">
+				<c:url var="bsl" value="bsearchTitle.do">
+					<c:param name="keyword" value="${ keyword }" />
+					<c:param name="page" value="1" />
+				</c:url>
+			</c:if>
+		
+		
+			<c:if test="${ action eq 'date' }">
+				<c:url var="bsl" value="bsearchDate.do">
+					<c:param name="begin" value="${ begin }" />
+					<c:param name="end" value="${ end }" />
+					<c:param name="page" value="1" />
+				</c:url>
+			</c:if>
+		<a href="${ bsl }">[맨처음]</a> &nbsp;
 	</c:if>
-			<!-- 이전 페이지그룹으로 이동 처리 -->
-			<c:if
-				test="${ (currentPage - 10) < startPage and (currentPage - 10) > 1 }">
-				<c:if test="${ action eq 'title' }">
-					<c:url var="bsl" value="bsearchTitle.do">
-						<c:param name="keyword" value="${ keyword }" />
-						<c:param name="page" value="${ startPage - 10 }" />
-					</c:url>
-				</c:if>
-
-				<c:if test="${ action eq 'date' }">
-					<c:url var="bsl" value="bsearchDate.do">
-						<c:param name="begin" value="${ begin }" />
-						<c:param name="end" value="${ end }" />
-						<c:param name="page" value="${ startPage - 10 }" />
-					</c:url>
-				</c:if>
-				<a href="${ bsl }">[이전그룹]</a> &nbsp;
+	<!-- 이전 페이지그룹으로 이동 처리 -->
+	<c:if test="${ (currentPage - 10) < startPage and (currentPage - 10) > 1 }">
+		<c:if test="${ action eq 'title' }">
+				<c:url var="bsl" value="bsearchTitle.do">
+					<c:param name="keyword" value="${ keyword }" />
+					<c:param name="page" value="${ startPage - 10 }" />
+				</c:url>
+			</c:if>
+		
+		
+		
+			<c:if test="${ action eq 'date' }">
+				<c:url var="bsl" value="bsearchDate.do">
+					<c:param name="begin" value="${ begin }" />
+					<c:param name="end" value="${ end }" />
+					<c:param name="page" value="${ startPage - 10 }" />
+				</c:url>
+			</c:if>
+		<a href="${ bsl }">[이전그룹]</a> &nbsp;
 	</c:if>
-			<c:if
-				test="${ !((currentPage - 10) < startPage and (currentPage - 10) > 1) }">
+	<c:if test="${ !((currentPage - 10) < startPage and (currentPage - 10) > 1) }">
 		[이전그룹] &nbsp;
 	</c:if>
-			<!-- 현재 페이지가 속한 페이지 그룹 페이지 숫자 출력 -->
-			<c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1">
-				<c:if test="${ p eq currentPage }">
-					<font size="4" color="red"><b>[${ p }]</b></font>
-				</c:if>
-				<c:if test="${ p ne currentPage }">
-					<c:if test="${ action eq 'title' }">
-						<c:url var="bsl" value="bsearchTitle.do">
-							<c:param name="keyword" value="${ keyword }" />
-							<c:param name="page" value="${ p }" />
-						</c:url>
-					</c:if>
-
-					<c:if test="${ action eq 'date' }">
-						<c:url var="bsl" value="bsearchDate.do">
-							<c:param name="begin" value="${ begin }" />
-							<c:param name="end" value="${ end }" />
-							<c:param name="page" value="${ p }" />
-						</c:url>
-					</c:if>
-					<a href="${ bsl }">${ p }</a>
-				</c:if>
-			</c:forEach>
-			<!-- 다음 페이지그룹으로 이동 처리 -->
-			<c:if
-				test="${ (currentPage + 10) > endPage and (currentPage + 10) < maxPage }">
-				<c:if test="${ action eq 'title' }">
-					<c:url var="bsl" value="bsearchTitle.do">
-						<c:param name="keyword" value="${ keyword }" />
-						<c:param name="page" value="${ endPage + 10 }" />
-					</c:url>
-				</c:if>
-
-
-				<c:if test="${ action eq 'date' }">
-					<c:url var="bsl" value="bsearchDate.do">
-						<c:param name="begin" value="${ begin }" />
-						<c:param name="end" value="${ end }" />
-						<c:param name="page" value="${ endPage + 10 }" />
-					</c:url>
-				</c:if>
-				<a href="${ bsl }">[다음그룹]</a> &nbsp;
+	<!-- 현재 페이지가 속한 페이지 그룹 페이지 숫자 출력 -->
+	<c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1">
+		<c:if test="${ p eq currentPage }">
+			<font size="4" color="red"><b>[${ p }]</b></font>
+		</c:if>
+		<c:if test="${ p ne currentPage }">
+			<c:if test="${ action eq 'title' }">
+				<c:url var="bsl" value="bsearchTitle.do">
+					<c:param name="keyword" value="${ keyword }" />
+					<c:param name="page" value="${ p }" />
+				</c:url>
+			</c:if>
+		
+		
+		
+			<c:if test="${ action eq 'date' }">
+				<c:url var="bsl" value="bsearchDate.do">
+					<c:param name="begin" value="${ begin }" />
+					<c:param name="end" value="${ end }" />
+					<c:param name="page" value="${ p }" />
+				</c:url>
+			</c:if>
+			<a href="${ bsl }">${ p }</a> 
+		</c:if>
+	</c:forEach>
+	<!-- 다음 페이지그룹으로 이동 처리 -->
+	<c:if test="${ (currentPage + 10) > endPage and (currentPage + 10) < maxPage }">
+		<c:if test="${ action eq 'title' }">
+				<c:url var="bsl" value="bsearchTitle.do">
+					<c:param name="keyword" value="${ keyword }" />
+					<c:param name="page" value="${ endPage + 10 }" />
+				</c:url>
+			</c:if>
+		
+		
+			<c:if test="${ action eq 'date' }">
+				<c:url var="bsl" value="bsearchDate.do">
+					<c:param name="begin" value="${ begin }" />
+					<c:param name="end" value="${ end }" />
+					<c:param name="page" value="${ endPage + 10 }" />
+				</c:url>
+			</c:if>
+		<a href="${ bsl }">[다음그룹]</a> &nbsp;
 	</c:if>
-			<c:if
-				test="${ !((currentPage + 10) > endPage and (currentPage + 10) < maxPage) }">
+	<c:if test="${ !((currentPage + 10) > endPage and (currentPage + 10) < maxPage) }">
 		[다음그룹] &nbsp;
 	</c:if>
-			<!-- 끝페이지로 이동 처리 -->
-			<c:if test="${ currentPage eq maxPage }">
+	<!-- 끝페이지로 이동 처리 -->
+	<c:if test="${ currentPage eq maxPage }">
 		[맨끝] &nbsp; 
 	</c:if>
-			<c:if test="${ currentPage < maxPage }">
-				<c:if test="${ action eq 'title' }">
-					<c:url var="bsl" value="bsearchTitle.do">
-						<c:param name="keyword" value="${ keyword }" />
-						<c:param name="page" value="${ maxPage }" />
-					</c:url>
-				</c:if>
+	<c:if test="${ currentPage < maxPage }">
+		<c:if test="${ action eq 'title' }">
+				<c:url var="bsl" value="bsearchTitle.do">
+					<c:param name="keyword" value="${ keyword }" />
+					<c:param name="page" value="${ maxPage }" />
+				</c:url>
+			</c:if>
+		
+		
+			<c:if test="${ action eq 'date' }">
+				<c:url var="bsl" value="bsearchDate.do">
+					<c:param name="begin" value="${ begin }" />
+					<c:param name="end" value="${ end }" />
+					<c:param name="page" value="${ maxPage }" />
+				</c:url>
+			</c:if>
+		<a href="${ bsl }">[맨끝]</a> &nbsp;
+	</c:if>
+</div>
+</c:if>	
 
-				<c:if test="${ action eq 'date' }">
-					<c:url var="bsl" value="bsearchDate.do">
-						<c:param name="begin" value="${ begin }" />
-						<c:param name="end" value="${ end }" />
-						<c:param name="page" value="${ maxPage }" />
-					</c:url>
-				</c:if>
-				<a href="${ bsl }">[맨끝]</a> &nbsp;
-	</c:if>
+
+	
+<br>
+	<!-- 검색 항목 영역 -->
+	<div align="center">
+		<select id="test" onchange="Change()">
+			<option value="1">제목</option>
+			<option value="2">날짜</option>
+		</select>
+		<div id="d1" style="display:block">
+			<form action="bsearchTitle.do" method="get">
+				<input type="search" name="keyword"> 
+				<input type="submit" value="검색">
+			</form>
 		</div>
-	</c:if>
+		<div id="d2" style="display:none">
+			<form action="bsearchDate.do" method="get">
+				<input type="date" name="begin"> 
+				<input type="date" name="end"> 
+				<input type="submit" value="검색">
+			</form>
+		</div>
+	</div>
 
 	<hr>
 	<c:import url="/WEB-INF/views/common/footer.jsp" />

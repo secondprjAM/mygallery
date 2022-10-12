@@ -137,22 +137,45 @@ cellpadding="5">
 				<c:param name="b_no" value="${ breport.b_no }" />
 				<c:param name="page" value="${ currentPage }" />
 			</c:url>
-			<a href="${ bup }">수정페이지로 이동</a> &nbsp;
-			<c:url var="bdl" value="/bdel.do">
+			<button class="button"><a href="${ bup }">수정하기</a></button> &nbsp;
+			<button class="button"><c:url var="bdl" value="/bdel.do"></button> 
 				<c:param name="b_no" value="${ breport.b_no }" />
 				<c:param name="b_lev" value="${ breport.b_lev }" />
 				<c:param name="b_refile" value="${ breport.b_refile }" />
-			</c:url>
-			<a href="${ bdl }">[글삭제]</a>
+			</c:url> &nbsp;
+			<a href="${ bdl }">[글삭제]</a> 
 		</c:if>
-&nbsp;
+&nbsp; 
 <button class="button" onclick="javascript:location.href='blist.do?page=${currentPage}';">목록</button>
 
 </div>
 
 <br>
+<table class="btable" align="center" width="500" border="0" cellspacing="1" 
+cellpadding="5">
+	<tr><td>${ breply.b_title }</td><td>${ breply.userid }</td>
+	<td><fmt:formatDate value="${ breply.b_date }" type="date" pattern="yyyy-MM-dd" /></td></tr>
+	<tr><td colspan="3" style="border:1px solide gray;">${ breply.b_content }</td></tr>
+	<tr><td colspan="3">
+	<!-- 본인이 등록한 게시글일 때는 수정과 삭제 기능 제공 -->
+		<c:if test="${ requestScope.breply.userid eq sessionScope.loginMember.userid }">
+			<c:url var="bup" value="/bupviewreply.do">
+				<c:param name="b_no" value="${ breport.b_no }" />
+				<c:param name="page" value="${ currentPage }" />
+			</c:url>
+			<button class="button"><a href="${ bup }">수정하기</a></button> &nbsp;
+			<button class="button"><c:url var="bdl" value="/bdel.do"></button> 
+				<c:param name="b_no" value="${ breply.b_no }" />
+				<c:param name="b_lev" value="${ breply.b_lev }" />
+			</c:url> &nbsp;
+			<a href="${ bdl }">[글삭제]</a> 
+		</c:if>
+	
+	
+	</td></tr>
+</table>
 
-
+<br><br>
 
 <c:import url="/WEB-INF/views/common/footer.jsp" />
 </body>

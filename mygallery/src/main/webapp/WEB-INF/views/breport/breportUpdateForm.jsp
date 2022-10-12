@@ -10,6 +10,80 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+<style type="text/css">
+btable {
+	width: 900px;
+	background-color: #fff;
+	border-collapse: collapse;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+.btable caption {
+	font-size: 20px;
+	margin-bottom: 30px;
+}
+
+.btable tr {
+	border-bottom: 1px solid #eee;
+}
+
+.btable tr:last-child {
+	border: none;
+}
+
+.btable tr:nth-child(odd) {
+	background-color: #ddd;
+}
+
+.btable th, .btable td {
+	padding: 12px;
+	text-align: center;
+}
+
+.btable tr th {
+	background-color: #FF8080;
+	color: #fff;
+}
+
+.btable tr th:first-child {
+	border-radius: 5px 0 0 0;
+}
+
+.wrap {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+
+.button {
+  width: 140px;
+  height: 45px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #000;
+  background-color: #FFA7A7;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+  }
+
+.button:hover {
+  background-color: #2EE59D;
+  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+  color: #fff;
+  transform: translateY(-7px);
+}
+</style>
 </head>
 <body>
 <!-- 절대경로로 대상 파일의 위치를 지정한 경우 -->
@@ -32,7 +106,7 @@
 		<input type="hidden" name="b_upfile" value="${ breport.b_upfile }">
 		<input type="hidden" name="b_refile" value="${ breport.b_refile }">
 	</c:if>
-<table align="center" width="500" border="1" cellspacing="0" cellpadding="5">
+<table class="btable" align="center" width="600" height="300" border="1" cellspacing="0" cellpadding="5">
 	<tr><th>제 목</th><td><input type="text" name="b_title" value="${ breport.b_title }"></td></tr>
 	<tr><th>작성자</th>
 	<td><input type="text" name="userid" readonly value="${ breport.userid }"></td></tr>
@@ -48,34 +122,36 @@
 		</td>
 	</tr>
 	<tr><th>내 용</th><td><textarea rows="5" cols="50" name="b_content">${ breport.b_content }</textarea></td></tr>
-	<tr><th colspan="2">
-		<input type="submit" value="수정하기"> &nbsp; 
-		<input type="reset" value="수정취소"> &nbsp; 
-		<button onclick="javascript:history.go(-1); return false;">이전페이지로 이동</button>
-	</th></tr>
 </table>
+<br>
+<div align="center">
+<button class="button"><input type="submit" value="수정하기"></button> &nbsp; 
+<button class="button"><input type="reset" value="수정취소"></button> &nbsp; 
+<button class="button" onclick="javascript:history.go(-1); return false;">이전페이지</button>
+</div>
 </form>
 </c:if>
 <!-- 댓글/대댓글 수정 폼 -->
-<c:if test="${ breport.b_lev ne 1 }">
+<c:if test="${ breply.b_lev eq 2 }">
 <form action="breplyup.do" method="post" >	
-	<input type="hidden" name="b_no" value="${ breport.b_no }">
-	<input type="hidden" name="page" value="${ currentPage }">
-	
-<table align="center" width="500" border="1" cellspacing="0" 
+	<input type="hidden" name="b_no" value="${ breply.b_no }">
+	<input type="hidden" name="b_ref" value="${ breply.b_ref }">
+<table class="btable" align="center" width="500" border="1" cellspacing="0" 
 cellpadding="5">
-	<tr><th>제 목</th><td><input type="text" name="b_title" value="${breport.b_title}"></td></tr>
+	<tr><th>제 목</th><td><input type="text" name="b_title" value="${breply.b_title}"></td></tr>
 	<tr><th>작성자</th>
-	<td><input type="text" name="userid" readonly value="${ breport.userid }"></td></tr>
+	<td><input type="text" name="userid" readonly value="${ breply.userid }"></td></tr>
 	
-	<tr><th>내 용</th><td><textarea rows="5" cols="50" name="b_content">${ breport.b_content }</textarea></td></tr>
-	<tr><th colspan="2">
-		<input type="submit" value="수정하기"> &nbsp; 
-		<input type="reset" value="수정취소"> &nbsp; 
-		<button onclick="javascript:history.go(-1); return false;">이전페이지로 이동</button>
-	</th></tr>
+	<tr><th>내 용</th><td><textarea rows="5" cols="50" name="b_content">${ breply.b_content }</textarea></td></tr>
 </table>
+<br><br>
+<div align="center">
+ <input class="button" type="submit" value="수정하기">&nbsp; 
+<button class="button" onclick="javascript:history.go(-1); return false;">이전페이지로 이동</button>
+</div>
 </form>
+<br>
+
 </c:if>
 <br>
 <hr>

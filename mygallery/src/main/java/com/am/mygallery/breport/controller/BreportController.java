@@ -196,7 +196,7 @@ public class BreportController {
 		
 		//게시글 상세보기 처리용
 		@RequestMapping("bdetail.do")
-		public ModelAndView breportDetailMethod(ModelAndView mv, 
+		public ModelAndView breportDetailMethod(ModelAndView mv, Breport reply,
 				@RequestParam("b_no") int b_no,
 				@RequestParam(name="page", required=false) String page) {
 			int currentPage = 1;
@@ -210,9 +210,19 @@ public class BreportController {
 			//해당 게시글 조회
 			Breport breport = breportService.selectBreport(b_no);
 			
+			//해당 원글에 대한 댓글조회
+			Breport breply = null;
+			if(reply.getB_ref() == 0) {
+				breply = breportService.selectReply(b_no);
+			}else {
+				breply = breportService.selectReply(reply.getB_ref());
+			}
+			
+			
 			if(breport != null) {
 				mv.addObject("breport", breport);
 				mv.addObject("currentPage", currentPage);
+				mv.addObject("breply", breply);
 				mv.setViewName("breport/breportDetailView");
 			}else {
 				mv.addObject("message", 
@@ -397,6 +407,25 @@ public class BreportController {
 			}
 		}
 		
+		@RequestMapping("bupviewreply.do")
+		public String moveBreportUpdateView(
+				@RequestParam("b_no") int b_no, 
+				Model model) {
+			//수정페이지로 보낼 breport 객체 정보 조회함
+			Breport breply = breportService.selectReply(b_no);
+			if(breply != null) {
+				model.addAttribute("breply", breply);
+				return "breport/breportUpdateForm";
+			}else {
+				model.addAttribute("message", 
+						b_no + "번 글 수정페이지로 이동 실패");
+				return "common/error";
+			}
+		}
+		
+		
+		
+		
 		//게시 원글 수정 요청 처리용
 		@RequestMapping(value="originup.do", method=RequestMethod.POST)
 		public String breportUpdateMethod(
@@ -489,11 +518,13 @@ public class BreportController {
 		//댓글, 대댓글 수정 처리용
 		@RequestMapping(value="breplyup.do", method=RequestMethod.POST)
 		public String replyUpdateMethod(Breport reply, 
-				@RequestParam("page") int page, Model model) {
+				 Model model) {
 			if(breportService.updateReply(reply) > 0) {
 				//댓글, 대댓글 수정 성공시 다시 상세페이지가 보여지게 한다면
-				model.addAttribute("b_no", reply.getB_no());
-				model.addAttribute("page", page);
+				Breport breply = breportService.selectReply(reply.getB_ref());
+				
+				model.addAttribute("b_no", breply.getB_ref());
+				model.addAttribute("breply", breply);
 				return "redirect:bdetail.do";
 			}else {
 				model.addAttribute("message", 
