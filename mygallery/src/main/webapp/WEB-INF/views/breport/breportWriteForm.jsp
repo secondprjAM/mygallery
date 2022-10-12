@@ -9,36 +9,28 @@
 <style type="text/css">
 
 .button {
-  width: 140px;
-  height: 45px;
-  font-family: 'Roboto', sans-serif;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 2.5px;
-  font-weight: 500;
-  color: #000;
-  background-color: #FFA7A7;
-  border: none;
-  border-radius: 45px;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease 0s;
-  cursor: pointer;
-  outline: none;
+		width: 100px;
+		height: 45px;
+		 font-size: 16px;
+		letter-spacing: 2px;
+		color: #000;
+		background-color: #f1f3f5;
+		border: none;
+		border-radius: 45px;
+		cursor: pointer;
+		outline: none;
+		transition: 0.6s;
   }
 
-.button:hover {
-  background-color: #2EE59D;
-  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
-  color: #fff;
-  transform: translateY(-7px);
-}
+	.button:hover {
+		background-color:salmon;
+	}
 
 </style>
 </head>
 <body>
 <!-- 절대경로로 대상 파일의 위치를 지정한 경우 -->
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
-<hr>
 <h2 align="center">버그리포트 등록</h2>
 <!-- form 태그에서 입력된 값들(문자열)과 첨부파일을 같이 전송하려면,
 	반드시 enctype 속성을 form 태그에 추가해야 됨

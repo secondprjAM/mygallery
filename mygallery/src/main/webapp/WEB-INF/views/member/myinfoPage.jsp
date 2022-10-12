@@ -78,16 +78,13 @@ a {
    </tr>   
    <tr>
       <th width="120">성 별 :</th>
-      <td>
+      
       <c:if test="${ member.usergender eq 'M' }">
-         <input type="radio" name="usergender" value="M" checked> 남자 &nbsp;
-         <input type="radio" name="usergender" value="F"> 여자
+         <td>남자</td> 
       </c:if>
       <c:if test="${ member.usergender eq 'F' }">
-         <input type="radio" name="usergender" value="M" > 남자 &nbsp;
-         <input type="radio" name="usergender" value="F" checked> 여자
+         <td >여자</td> 
       </c:if>
-      </td>
    </tr>
    <tr>
       <th width="120">이메일 :</th>

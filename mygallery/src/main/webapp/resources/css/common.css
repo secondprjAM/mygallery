@@ -1,8 +1,14 @@
 @charset "UTF-8";
+/* 로그인 페이지*/
 
 h1 {
 	font-size: 48pt;
 	margin: 0;
+}
+
+h2 {
+	font-weight:normal;
+	margin:50px auto;
 }
 
 div {
@@ -23,7 +29,51 @@ table#logtable input[type=submit] {
 	color: white;
 	padding: 8px 37px;
 	text-align: center;
-	transition: 0.3s;
+	transition: 0.6s;
 	font-weight: 400;
 	cursor: pointer;
 }
+/*검은 버튼 및 후버*/
+table#logtable input[type=submit]:hover {
+	background-color:salmon;
+	border:2px solid salmon;
+}
+.table {
+		 margin:50px auto;
+}
+/*버튼*/
+	 .button {
+		width: 100px;
+		height: 45px;
+		 font-size: 16px;
+		letter-spacing: 2px;
+		color: #000;
+		background-color: #f1f3f5;
+		border: none;
+		border-radius: 45px;
+		cursor: pointer;
+		outline: none;
+		transition: 0.6s;
+	}
+	
+		 .but {
+		width: 100px;
+		height: 35px;
+		 font-size: 16px;
+		letter-spacing: 2px;
+		color: #000;
+		border:3px solid  #f1f3f5;
+		background-color: #f1f3f5;
+		border-radius: 45px;
+		cursor: pointer;
+		outline: none;
+		transition: 0.6s;
+	}
+	
+	.but:hover {
+		border:3px solid salmon;
+	}
+	
+	.button:hover {
+		background-color:salmon;
+	}

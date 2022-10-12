@@ -141,14 +141,14 @@ function Change(){
 <body>
 	<!-- 상대경로로 대상 파일의 위치를 지정한 경우 -->
 	<c:import url="../common/menubar.jsp" />
-	<h2 style="text-align:center;">버그리포트</h2>
+	<h2 style="text-align:center; margin:50px 0;">버그리포트</h2>
 
 	<!-- 목록 출력 영역 -->
 	<!-- => 로그인한 회원만 게시글 등록(쓰기) 버튼이 보이게 함 -->
 	<br>
 	<div class="wrap" align="right">
 		<button class="button"
-			onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/blist.do';" class="button">전체
+			onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/blist.do';" class="button" style="margin:0 auto;">전체
 			목록 보기</button>
 		<c:if
 			test="${ !empty sessionScope.loginMember and sessionScope.loginMember.useradmin ne 'Y' }">
@@ -157,7 +157,7 @@ function Change(){
 		</c:if>
 	</div>
 	<br>
-	<table class="btable" align="center" width="1000">
+	<table class="btable" align="center" width="1000" style="margin:20px auto;">
 		<tr>
 			<th>번호</th>
 			<th>제목</th>

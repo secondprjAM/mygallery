@@ -8,9 +8,7 @@
 <title></title>
 <style type ="text/css">
         footer{
-           position : absolute;
-           bottom : 0;
-           width:100%;
+         	width:100%;
             margin-top: 205px;
             padding-top: 50px;
             background-color: #333;

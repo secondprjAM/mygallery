@@ -60,7 +60,7 @@ public class MyCalendarController {
 
 
 		for(int i=1; i<today_info.get("start"); i++){
-			calendarData= new MyCalendar(null, null, null, null,0);
+			calendarData= new MyCalendar("", null, null, null);
 			dateList.add(calendarData);
 		}
 		//날짜 삽입
@@ -92,7 +92,7 @@ public class MyCalendarController {
 		if(dateList.size()%7!=0){
 
 			for (int i = 0; i < index; i++) {
-				calendarData= new MyCalendar(null, null, null, null);
+				calendarData= new MyCalendar("", null, null, null);
 				dateList.add(calendarData);
 			}
 		}
@@ -105,7 +105,7 @@ public class MyCalendarController {
 
 	//글쓰기 버튼 
 	@RequestMapping("calmovewrite.do")
-	public String moveMycalendarInsertView(@RequestParam("userid") String userid, Model model) {
+	public String moveInsertView(@RequestParam("userid") String userid, Model model) {
 		ArrayList<Gallery> list = galleryService.selectImgList(userid);
 		logger.info("갤러리 정보 : " + list);
 		if(list.size()>0) {
@@ -146,7 +146,7 @@ public class MyCalendarController {
 
 	//수정페이지 이동
 	@RequestMapping("calmoveup.do")
-	public String moveupdatePage(HttpServletRequest request, Model model) {
+	public String updatePage(HttpServletRequest request, Model model) {
 		String date = request.getParameter("date");
 		date = date.replace("-", "");
 		SearchCalendar cal = new SearchCalendar();

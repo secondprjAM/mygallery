@@ -8,7 +8,60 @@
 <title></title>
 <link rel="stylesheet" href="<c:url value="/resources/css/common.css" />">
 <style type="text/css">
-th {
+.h2 {
+	margin-bottom:-200px;
+}
+
+	th {
+		font-weight:normal;
+		font-size: 16px;
+	}
+	
+	td > input{
+		width: 15rem;
+		height:3rem; 
+		border:3px solid #f8f9fa; 
+		margin:-5px 0;
+	}
+	
+	.button {
+		width: 100px;
+		height: 45px;
+		 font-size: 16px;
+		letter-spacing: 2px;
+		color: #000;
+		background-color: #f1f3f5;
+		border: none;
+		border-radius: 45px;
+		cursor: pointer;
+		outline: none;
+		transition: 0.6s;
+	}
+	#button {
+		width: 100px;
+		height: 45px;
+		 font-size: 16px;
+		letter-spacing: 2px;
+		color: #000;
+		background-color: #f1f3f5;
+		border: none;
+		border-radius: 45px;
+		cursor: pointer;
+		outline: none;
+		transition: 0.6s;
+	}
+	#button:hover {
+		background-color:salmon;
+	}
+	.button:hover {
+		background-color:salmon;
+	}
+	
+	button {
+		cursor:point;
+	}
+	
+/* th {
 	font-size: 10pt;
 	margin: 0;
 	align: left;
@@ -59,7 +112,7 @@ a {
 }
 .startPage:active {
   color : black;
-}
+} */
 </style>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript">
@@ -161,15 +214,42 @@ function emailCK(){
 		}
 	});
 }
+function upload() {
+	const imageInput = $("#imageInput")[0];
+	console.log("imageInput: ", imageInput.files)
+	if (imageInput.files.length === 0) {
+		alert("파일은 선택해주세요");
+		return;
+	}
+
+	const formData = new FormData();
+	formData.append("image", imageInput.files[0]);
+	$.ajax({
+		type : "POST",
+		url : "saveNamecard.do",
+		processData : false,
+		contentType : false,
+		data : formData,
+		success : function(data) {
+			console.log("success : " + data); //Object 로 출력됨=
+			$('input[name=useremail]').attr('value', data);
+		},
+
+		error : function(jqXHR, textStatus, errorThrown) {
+			console.log("error : " + jqXHR + ", " + textStatus + ", "
+					+ errorThrown);
+		}
+	});
+}
 </script>
 </head>
 <body>
 	<c:import url="/WEB-INF/views/common/menubar.jsp" />
 	<br><br>
-	<h1 align="center">MyGallery</h1>
-	<h2 align="center">회원가입</h2>
+	<h1 align="center" style="font-weight:normal;">MyGallery</h1>
+	<h2 align="center"  class="h2">회원가입</h2>
 <form action="enroll.do" method="post">
-<table id="outer" align="center">
+<table id="outer" align="center" style="position:relative; left:80px;">
 	<tr>
 		<th>이 름 :</th>
 		<td>
@@ -180,7 +260,7 @@ function emailCK(){
 		<td>
 			<input type="text" name="userid" id="userid" placeholder="아이디" required>
 			&nbsp;
-			<input type="button" class="from-button" value="중복 체크" onclick="return dupCheckId();">
+			<input type="button" class="from-button" value="중복 체크" onclick="return dupCheckId();" style="width: 6rem; height:3rem; border:3px solid  #f8f9fa; cursor:pointer;">
 		</td>
 	</tr>
 	<tr>
@@ -196,7 +276,10 @@ function emailCK(){
 		<td class="input-group">
 			<input type="email" class="form-control" name="useremail" id="useremail" placeholder="이메일" required>
 			&nbsp;
-			<input type="button" class="from-button" value="파일업로드" onclick="#">
+			<form id="uploadForm" enctype="multipart/form-data">
+			<input type="file" class="from-button"  id="imageInput" style="width: 10rem; height:3rem; border:3px solid  #f8f9fa;  cursor:pointer; position:relative; top:-10px;"/>
+			<input type="button" class="from-button" value="파일업로드" onclick="upload(); height:3rem; border:3px solid  #f8f9fa;  cursor:pointer;">
+			</form>
 		</td>
 	</tr>
 	<tr>
@@ -205,14 +288,14 @@ function emailCK(){
 			<input class="form-control mail-check-input" placeholder="인증번호 6자리를 입력해주세요!" disabled="disabled" maxlength="6" required>
 			&nbsp;
 			<span id="mail-check-warn"/>
-			<input type="button" class="from-button btn btn-primary" id="mail-Check-Btn" value="본인 인증" onclick="emailCK(); return false" required></button>
+			<input type="button" class="from-button btn btn-primary" id="mail-Check-Btn" value="본인 인증" onclick="emailCK(); return false" required style="width: 6rem; height:3rem; border:3px solid  #f8f9fa;  cursor:pointer;"></button>
 		</td>
 	</tr>
 	<tr>
 		<th width="120">성 별 :</th>
 		<td>
-			<input type="radio" name="usergender" value="M" required> 남자 &nbsp;
-			<input type="radio" name="usergender" value="F" required> 여자
+			<input type="radio" name="usergender" value="M" required style="width: 1rem; height:1rem; cursor:pointer;"> 남자 &nbsp;
+			<input type="radio" name="usergender" value="F" required style="width: 1rem; height:1rem; cursor:pointer;"> 여자
 		</td>
 	</tr>
 	<div>
@@ -220,13 +303,13 @@ function emailCK(){
 	<tr>
 		<th colspan="2">
 			<input type="submit" class="from-button" value="가입하기"  disabled="disabled" name="enrolldo" id="enrolldo"> &nbsp; 
-			<input type="reset" class="from-button" value="작성취소"> &nbsp; 
-			<a class="startPage" href="main.do">시작페이지로 이동</a>
+			<input type="reset" class="from-button" value="작성취소"  id="button"> &nbsp; 
+			<button id="button"  style="width:180px;"><a class="startPage" href="main.do" style="text-decoration:none; color:#333;">시작페이지로 이동</a></button>
 		</th>		
 	</tr>
 </table>
 </form>
 
-<c:import url="/WEB-INF/views/common/footer.jsp" />
+<c:import url="/WEB-INF/views/common/footer2.jsp" />
 </body>
 </html>

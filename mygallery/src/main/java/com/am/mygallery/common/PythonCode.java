@@ -1,6 +1,7 @@
 package com.am.mygallery.common;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.am.mygallery.gallery.model.service.GalleryService;
 import com.am.mygallery.gallery.model.vo.Gallery;
@@ -77,5 +79,55 @@ public class PythonCode {
 		}
 
 	}
+	
+	@RequestMapping(value = "saveNamecard.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String imageInsertMethod(HttpServletRequest request, 
+			@RequestParam(name="image", required=false) MultipartFile mfile) {
+		String message = null;
+		//업로드된 파일 저장 폴더 지정
+		String savePath = request.getSession().getServletContext().getRealPath("resources/images/testcamera");
+		if(!mfile.isEmpty()) {
+			String fileName = mfile.getOriginalFilename();
+			String renameFileName = "namecard.png";
+			File renameFile = new File(savePath + "\\" + renameFileName);
 
+			//업로드된 파일 저장시키고, 바로 이름바꾸기 실행함
+			try {
+				mfile.transferTo(renameFile);
+			} catch (Exception e) {					
+				e.printStackTrace();
+
+			} 
+
+			//첨부파일이 있을 때만
+			//-------------------------------------------------------
+			String command = "C:\\venvs\\mygallery\\Scripts\\python.exe";
+			String arg1 = "C:\\project\\ai_python\\tesser.py";
+			ProcessBuilder builder = new ProcessBuilder(command, arg1);
+			Process process;
+			
+			try {
+				process = builder.start();
+				int exitVal = process.waitFor();  // 자식 프로세스가 종료될 때까지 기다림			
+				BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream(), "euc-kr")); // 서브 프로세스가 출력하는 내용을 받기 위해
+				String line;
+				if(br.readLine()==null) {
+					System.out.print("없음");
+				}else {
+					while ((line = br.readLine()) != null) {
+						System.out.println(">>>  " + line);
+						message = line;
+					}
+					if(exitVal != 0) {
+						// 비정상 종료
+						System.out.println("서브 프로세스가 비정상 종료되었다.");
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return message;
+	}
 }

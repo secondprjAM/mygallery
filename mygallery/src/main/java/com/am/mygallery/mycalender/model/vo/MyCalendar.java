@@ -23,18 +23,16 @@ public class MyCalendar  implements Serializable {
    private String userid;
    private String filename;
    private String calendar_content;
-   private int user_snum;
    
    public MyCalendar() {}
 
 
-   public MyCalendar(Date calendar_date, String userid, String filename, String calendar_content, int user_snum) {
+   public MyCalendar(Date calendar_date, String userid, String filename, String calendar_content) {
       super();
       this.calendar_date = calendar_date;
       this.userid = userid;
       this.filename = filename;
       this.calendar_content = calendar_content;
-      this.user_snum = user_snum;
    }
 
 
@@ -140,20 +138,13 @@ public class MyCalendar  implements Serializable {
    }
 
    
-   public int getUser_snum() {
-      return user_snum;
-   }
-
-
-   public void setUser_snum(int user_snum) {
-      this.user_snum = user_snum;
-   }
+  
 
 
    @Override
    public String toString() {
       return "MyCalendar [calendar_date=" + calendar_date + ", userid=" + userid + ", filename=" + filename
-            + ", calender_content=" + calendar_content + ", user_snum=" + user_snum + "]";
+            + ", calender_content=" + calendar_content + "]";
    }
 
 

@@ -21,17 +21,6 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-
-	function modalOpen(text, text2) {
-		$("#createBtn").click(function() {
-			var data = $(this).data('id');
-			$("#contents.body-contents").value(text2);
-			content = '<img src="resources/gallery/faceImages/' + text +'">';
-			$("#imgBox").html(content);
-			console.log(text);
-			console.log(text2);
-		});
-	}
 	function modalOpen2(date, schedule,filename) {
 		$("#date.body-date").val(date);
 		$("#contents.body-contents").val(schedule);
@@ -175,7 +164,8 @@ A:hover {
 	width: 100px;
 	height: 120px;
 	border: 2px solid #80808047;
-	background-color: #fa80726e;
+	/* background-color: #fa80726e; */
+	text-decoration:underline salmon 3px;
 	text-align: left;
 	vertical-align: top;
 }
@@ -331,7 +321,7 @@ width: 100px;
 			</div>
 			<table class="calendar_body" align="center">
 				<thead>
-					<tr style="border: 2px solid #80808047;">
+					<tr style="border: 2px solid #80808047; background-color:#fa80726e;">
 						<td class="day sun">일</td>
 						<td class="day">월</td>
 						<td class="day">화</td>
@@ -424,6 +414,8 @@ width: 100px;
 	</form>
 <%-- <c:import url="/WEB-INF/views/common/footer.jsp" /> --%>
 <footer>
+ <br>
+ <br>
  Copyright ©AM: Project By MyGallery. <br><br>
         팀장:문창기, 강처치, 김영재, 권혜영, 서보경, 선도원
 </footer>

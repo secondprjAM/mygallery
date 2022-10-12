@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+<link rel="stylesheet" href="<c:url value="/resources/css/common.css" />">
 <style>
 	table {
 		margin-top:50px;
@@ -42,6 +43,17 @@
 	.button:hover {
 		background-color:salmon;
 	}
+
+	footer{
+         width:100%;
+/*             margin-top: 205px; */
+            padding-top: 250px;
+            background-color: #333;
+            height: 150px;
+            text-align: center;
+            color: white;
+            font-weight: 200;
+  }
 </style>
 </head>
 <body>
@@ -50,7 +62,7 @@
 
 <br>
 <table align="center" width="500" cellspacing="0" 
-cellpadding="5">
+cellpadding="5"  class="table">
 	<tr><th>제 목</th><td>${ notice.notice_title }</td></tr>
 	<tr><th>작성자</th><td>${ notice.userid }</td></tr>
 	<tr><th>날 짜</th><td>${ notice.notice_date }</td></tr>
@@ -93,7 +105,9 @@ cellpadding="5">
 	</th></tr>
 </table>
 <br>
-
-<c:import url="/WEB-INF/views/common/footer.jsp" />
+<footer>
+<br><br> Copyright ©AM: Project By MyGallery. <br><br>
+        팀장:문창기, 강처치, 김영재, 권혜영, 서보경, 선도원
+</footer>
 </body>
 </html>
