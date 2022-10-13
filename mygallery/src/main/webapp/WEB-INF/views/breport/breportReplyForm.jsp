@@ -38,15 +38,31 @@
 	
 .button {
 	width:180px;
-  
-}
-</style>
+  	height: 45px;
+		 font-size: 16px;
+		letter-spacing: 2px;
+		color: #000;
+		background-color: #f1f3f5;
+		border: none;
+		border-radius: 45px;
+		cursor: pointer;
+		outline: none;
+		transition: 0.6s;
+	}
+	
+		.button:hover {
+		background-color:salmon;
+	}
+	
+	.box {
+		padding-left:100px;
+	}</style>
 
 </head>
 <body>
 	<!-- 절대경로로 대상 파일의 위치를 지정한 경우 -->
 	<c:import url="/WEB-INF/views/common/menubar.jsp" />
-	<h3 align="center">댓글 페이지</h3>
+	<h3 align="center" class="h3">댓글 페이지</h3>
 
 	<form action="breply.do" method="post">
 		<!-- 원글 번호도 함께 숨겨서 전송 -->
@@ -71,9 +87,9 @@
 			
 		</table>
 		<br>
-		<div align="center" style="margin:0 auto;">
-			<button class="button" type="submit" value="댓글등록" style="margin-left:-100px;">댓글등록</button> &nbsp;  
-			<button class="button" onclick="javascript:history.go(-1);">이전페이지로 이동</button>
+		<div align="center" style="margin:0 auto;" class="box">
+			<button class="button" type="submit" value="댓글등록" style="margin-left:-100px;" class="button">댓글등록</button> &nbsp;  
+			<button class="button" onclick="javascript:history.go(-1);" class="button">이전페이지로 이동</button>
 		</div>
 	</form>
 

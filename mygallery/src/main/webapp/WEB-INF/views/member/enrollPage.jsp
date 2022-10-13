@@ -174,21 +174,21 @@ function emailCK(){
 	const checkInput = $('.mail-check-input'); // 인증번호 입력하는곳 
 
 	
-	if ($('#useremail').val() != null){
-		$.ajax({
-			type : 'get',
-			//url : '<c:url value ="/MemberController/mailCheck?email="/>'+eamil, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
-			url : '<c:url value ="/mailCheck.do?email=' + $('#useremail').val() +'"/>',
-			success : function (data) {
-				console.log("data : " +  data);
-				checkInput.attr('disabled',false);
-				code =data;
-				alert('인증번호가 전송되었습니다.')
-			}		
-		}); // end ajax
-	}else{
-		alert('이메일을 작성해주세요.')
-	}
+	   if ($('#useremail').val() == ""){
+		      alert('이메일을 작성해주세요.')
+		   }else{
+		      $.ajax({
+		         type : 'get',
+		         //url : '<c:url value ="/MemberController/mailCheck?email="/>'+eamil, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
+		         url : '<c:url value ="/mailCheck.do?email=' + $('#useremail').val() +'"/>',
+		         success : function (data) {
+		            console.log("data : " +  data);
+		            checkInput.attr('disabled',false);
+		            code =data;
+		            alert('인증번호가 전송되었습니다.')
+		         }      
+		      }); // end ajax
+		   }
 	
 	$('.mail-check-input').blur(function () {
 		const inputCode = $(this).val();
@@ -198,15 +198,8 @@ function emailCK(){
 			$resultMsg.html('인증번호가 일치합니다.');
 			$resultMsg.css('color','green');
 			$('#mail-Check-Btn').attr('disabled',true);
-			$('#enrolldo').attr('disabled',false);
-		//	$('#userEamil1').attr('readonly',true);
-		//	$('#userEamil').attr('readonly',true);
-		//	$('#userEamil2').attr('readonly',true);
-		//	$('#userEmail2').attr('onFocus', 'this.initialSelect = this.selectedIndex');
-		//	$('#userEmail').attr('onFocus', 'this.initialSelect = this.selectedIndex');
-	    //	$('#userEmail2').attr('onChange', 'this.selectedIndex = this.initialSelect');
-	    //	$('#userEmail').attr('onChange', 'this.selectedIndex = this.initialSelect');
-	    	return true;  //전송 함
+			$('input[name=enrolldo]').attr('disabled',false);
+		return true;  //전송 함
 		}else{
 			$resultMsg.html('인증번호가 불일치 합니다. 다시 확인해주세요!.');
 			$resultMsg.css('color','red');
@@ -248,8 +241,8 @@ function upload() {
 	<br><br>
 	<h1 align="center" style="font-weight:normal;">MyGallery</h1>
 	<h2 align="center"  class="h2">회원가입</h2>
-<form action="enroll.do" method="post">
-<table id="outer" align="center" style="position:relative; left:80px;">
+<form action="enroll.do" method="post" onsubmit="return validate();">
+<table class="table" align="center" style="position:relative; left:80px;">
 	<tr>
 		<th>이 름 :</th>
 		<td>
@@ -302,7 +295,7 @@ function upload() {
 	</div>
 	<tr>
 		<th colspan="2">
-			<input type="submit" class="from-button" value="가입하기"  disabled="disabled" name="enrolldo" id="enrolldo"> &nbsp; 
+			<input type="submit" class="from-button" value="가입하기"  disabled="disabled" name="enrolldo" id="button"> &nbsp; 
 			<input type="reset" class="from-button" value="작성취소"  id="button"> &nbsp; 
 			<button id="button"  style="width:180px;"><a class="startPage" href="main.do" style="text-decoration:none; color:#333;">시작페이지로 이동</a></button>
 		</th>		

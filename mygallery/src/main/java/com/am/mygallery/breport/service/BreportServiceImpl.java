@@ -86,5 +86,10 @@ public class BreportServiceImpl implements BreportService{
 	public int selectSearchDListCount(SearchDate date) {
 		return breportDao.selectSearchDListCount(date);
 	}
+
+	@Override
+	public Breport selectReply(int b_no) {
+		return breportDao.selectReply(b_no);
+	}
 	
 }

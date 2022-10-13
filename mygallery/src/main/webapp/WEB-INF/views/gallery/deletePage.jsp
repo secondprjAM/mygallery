@@ -59,7 +59,7 @@
 	
 
 <hr style="clear:both;">
-<c:import url="/WEB-INF/views/common/footer.jsp"/>
+<c:import url="/WEB-INF/views/common/footer2.jsp"/>
 
 
 </body>

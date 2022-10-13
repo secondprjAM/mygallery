@@ -111,7 +111,7 @@ section div {
             <li><a href="${ pageContext.servletContext.contextPath }/nlist.do">공지사항관리</a></li>
             <li><a href="${ pageContext.servletContext.contextPath }/blist.do">버그리포트</a></li>
             <li><a href="${ pageContext.servletContext.contextPath }/mlist.do">회원관리</a></li>
-            <li><c:url var="callMyinfo" value="/admininfo.do">
+            <li><c:url var="callMyinfo" value="/myinfo.do">
                         <c:param name="userid" value="${ loginMember.userid }" />
                    </c:url>
                    <a href="${ callMyinfo }">내정보</a></li>            

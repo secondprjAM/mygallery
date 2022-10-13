@@ -31,10 +31,8 @@
 			               B_LEV, B_REF, B_REPLY_REF, 
 			               B_REPLY_SEQ, B_READCOUNT 
 			       FROM (SELECT * FROM BREPORT 
-			              ORDER BY B_REF DESC, 
-			              			B_REPLY_REF DESC,
-			                        B_LEV ASC, 
-			                        B_REPLY_SEQ ASC))  
+			              WHERE B_LEV = 1
+			              ORDER BY B_REF DESC))  
 			where rnum >= #{startRow} and rnum <= #{endRow}
 		]]>
 	</select>
@@ -95,6 +93,10 @@
 		where b_no = #{ b_no }
 	</select>
 	
+	<select id="selectReply" parameterType="_int" resultMap="resultBreport">
+		select * from breport
+		where b_ref = #{ b_no } and b_lev = 2
+	</select>
 	
 	<update id="updateReplySeq1" parameterType="Breport">
 		update breport

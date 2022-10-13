@@ -24,5 +24,6 @@ public interface BreportService {
 	int deleteBreport(Breport breport);  //게시글 삭제용
 	int selectSearchTListCount(String keyword);
 	int selectSearchDListCount(SearchDate date);
+	Breport selectReply(int b_no);
 	
 }

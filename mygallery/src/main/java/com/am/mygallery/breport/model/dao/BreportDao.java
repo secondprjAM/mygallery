@@ -96,6 +96,9 @@ public class BreportDao {
 		return session.selectOne("breportMapper.getSearchDListCount", date);
 	}
 
+	public Breport selectReply(int b_no) {
+		return session.selectOne("breportMapper.selectReply", b_no);
+	}
 	
 
 	

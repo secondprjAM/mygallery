@@ -172,6 +172,6 @@ input[type=radio]{
 	<script type="text/javascript"
 		src="${ pageContext.servletContext.contextPath }/resources/js/app.js"></script>
 
-	<c:import url="/WEB-INF/views/common/footer.jsp" />
+	<c:import url="/WEB-INF/views/common/footer2.jsp" />
 </body>
 </html>
