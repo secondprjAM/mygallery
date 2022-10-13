@@ -146,14 +146,13 @@ function Change(){
 	<!-- 목록 출력 영역 -->
 	<!-- => 로그인한 회원만 게시글 등록(쓰기) 버튼이 보이게 함 -->
 	<br>
-	<div class="wrap" align="right">
-		<button class="button"
+	 <div align="center" >
+		<button 
 			onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/blist.do';" class="button" style="margin:0 auto;">전체
 			목록 보기</button>
 		<c:if
 			test="${ !empty sessionScope.loginMember and sessionScope.loginMember.useradmin ne 'Y' }">
-			<hr>
-			<button class="button" onclick="showWriteForm();">글등록</button>
+			<button class="button" onclick="showWriteForm();" >글등록</button>
 		</c:if>
 	</div>
 	<br>
@@ -176,12 +175,8 @@ function Change(){
 					<c:param name="page" value="${ currentPage }" />
 				</c:url>
 				<td>
-					<!-- 제목 글자 앞에 댓글과 대댓글 표시 기호 붙임
-				들여쓰기 처리 : 원글과 구분지음
-			 --> <c:if test="${ b.b_lev eq 2 }">&nbsp; &nbsp; ▶ </c:if> <c:if
-						test="${ b.b_lev eq 3 }">&nbsp; &nbsp; &nbsp; &nbsp; ▶▶ </c:if> <!-- 로그인한 회원만 상세보기 할 수 있게 한다면 -->
-					<c:if test="${ !empty sessionScope.loginMember }">
-						<a href="${ bdt }" style="text-decoration:none;">${ b.b_title }</a>
+				<c:if test="${ !empty sessionScope.loginMember }">
+					<a href="${ bdt }" style="text-decoration:none;">${ b.b_title }</a>
 					</c:if> <c:if test="${ empty sessionScope.loginMember }">
 				${ b.b_title }
 			</c:if>

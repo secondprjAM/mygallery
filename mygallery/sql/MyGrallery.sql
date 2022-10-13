@@ -217,4 +217,9 @@ insert into STICKER values(sticker_seq.nextval, 'admin', 'rabbit_right.png', 'ra
 
 insert into STICKER values(sticker_seq.nextval, 'admin', 'rabbit_left.png', 'rabbit_left.png', sysdate,'lef');
 
+insert into STICKER values(sticker_seq.nextval, 'admin', 'fox_nose.png', 'fox_nose.png', sysdate,'nose');
+
+insert into STICKER values(sticker_seq.nextval, 'admin', 'fox_right.png', 'fox_right.png', sysdate,'rig');
+
+insert into STICKER values(sticker_seq.nextval, 'admin', 'fox_left.png', 'fox_left.png', sysdate,'lef');
 commit;
