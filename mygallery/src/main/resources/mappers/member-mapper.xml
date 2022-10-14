@@ -99,11 +99,42 @@
 		order by userid asc
 	</select>
 	
-	<!-- 관리자 제외한 회원 조회용 -->
-	<select id="selectList2" resultMap="resultList">
-		select * from member
-		where userid not like '%admin%'
-		order by userid asc
+	<!-- 관리자 제외한 회원 조회용 & 페이징 처리 -->
+	<select id="selectList2" parameterType="Paging" resultMap="resultList">
+	    <![CDATA[
+		select * 
+		from (select rownum rnum, userid, username,  
+					useremail, usergender, userloginok
+			 from (select * from member		
+			 		where userid not like '%admin%' 
+			 		order by userid asc)) 
+		where rnum >= #{startRow} and rnum <= #{endRow}
+	    ]]>
+	</select>
+	
+	<!-- 회원 검색 처리용 쿼리문 & 검색 페이징 -->
+	<select id="selectSearchUseridP" parameterType="SearchPaging" resultMap="resultList">
+		<![CDATA[
+		select * 
+		from (select rownum rnum, userid, username,  
+					useremail, usergender, userloginok
+				from (select * from member
+					where userid like '%' || #{ keyword } || '%' and userid not like '%admin%' 
+					order by userid asc)) 
+		where rnum >= #{startRow} and rnum <= #{endRow}
+	    ]]>
+	</select>
+	
+	<select id="selectSearchLoginOKP" parameterType="SearchPaging" resultMap="resultList">
+		<![CDATA[
+		select * 
+		from (select rownum rnum, userid, username,  
+					useremail, usergender, userloginok
+			 	from (select * from member
+						where userloginok = #{ keyword } and userid not like '%admin%' 
+						order by userid asc)) 
+		where rnum >= #{startRow} and rnum <= #{endRow}
+	    ]]>
 	</select>
 	
 </mapper>

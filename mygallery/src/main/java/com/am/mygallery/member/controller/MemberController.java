@@ -23,6 +23,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.am.mygallery.common.Paging;
+import com.am.mygallery.common.SearchPaging;
 import com.am.mygallery.member.model.service.MailSendService;
 import com.am.mygallery.member.model.service.MemberService;
 import com.am.mygallery.member.model.vo.Member;
@@ -476,33 +477,92 @@ public String changeLoginOKMethod(Member member, Model model) {
 }
 
 //회원 검색 처리용 
-@RequestMapping(value="msearch.do", method=RequestMethod.POST)
+@RequestMapping(value="msearch.do", method= {RequestMethod.POST, RequestMethod.GET})
 public String memberSearchMethod(
-		HttpServletRequest request, Model model) {
-	String action = request.getParameter("action");
-	String keyword = request.getParameter("keyword");
-		
-	//서비스 메소드 리턴값 받을 리스트 준비
-	ArrayList<Member> list = null;
-	
-	switch(action) {
-	
-		case "userid": 	list = memberService.selectSearchUserid(keyword);
-				break;
-	
-		case "userloginok": list = memberService.selectSearchLoginOK(keyword);
-				break;
-				
-		case "0" : list = memberService.selectList2(null);
-				break;
-		
-	}
-	
-	if(list.size() > 0) {
-		model.addAttribute("list", list);
-		return "member/memberListView";
-	}else {
-		return "member/memberListView";
-	}
+      HttpServletRequest request, Model model) {
+   String action = request.getParameter("action");
+   String keyword = request.getParameter("keyword");
+   String page = request.getParameter("page");
+   
+      
+   //서비스 메소드 리턴값 받을 리스트 준비
+   ArrayList<Member> list = null;
+   
+   switch(action) {
+   
+      case "userid":    list = memberService.selectSearchUserid(keyword);
+            break;
+   
+      case "userloginok": list = memberService.selectSearchLoginOK(keyword);
+            break;
+            
+      case "0" : list = memberService.selectList2(null);
+            break;
+      
+   }
+   
+   int currentPage = 1;
+   if(page != null) {
+      currentPage = Integer.parseInt(page);
+   }
+   
+   //한 페이지에 게시글 10개씩 출력되게 하는 경우
+   //페이징 계산 처리 -- 별도의 클래스로 작성해도 됨 ---------------
+   //별도의 클래스의 메소드에서 Paging 을 리턴하면 됨
+   int limit = 10;  //한 페이지에 출력할 목록 갯수
+   //전체 검색 키워드 갯수 계산을 위해 총 목록 갯수 조회해 옴
+   int listCount = list.size();
+   //페이지 수 계산
+   //주의 : 목록이 11개이면 페이지 수는 2페이지가 됨
+   // 나머지 목록 1개도 1페이지가 필요함
+   int maxPage = (int)((double)listCount / limit + 0.9);
+   //현재 페이지가 포함된 페이지 그룹의 시작값 지정
+   // => 뷰 아래쪽에 표시할 페이지 수를 10개로 하는 경우
+   int startPage = (currentPage / 10) * 10 + 1;
+   //현재 페이지가 포함된 페이지 그룹의 끝값 지정
+   int endPage = startPage + 10 - 1;
+   
+   if(maxPage < endPage) {
+      endPage = maxPage;
+   }
+   
+   //쿼리문에 전달할 현재 페이지에 적용할 목록의 시작행과 끝행 계산
+   int startRow = (currentPage - 1) * limit + 1;
+   int endRow = startRow + limit - 1;
+   
+   //페이징 계산 처리 끝 ---------------------------------------
+   SearchPaging searchpaging = new SearchPaging(keyword, startRow, endRow);
+   
+   switch(action) {
+   
+   case "userid":    list = memberService.selectSearchUseridP(searchpaging);
+         break;
+
+   case "userloginok": list = memberService.selectSearchLoginOKP(searchpaging);
+         break;
+         
+   case "0" : list = memberService.selectList2(null);
+         break;
+   
 }
+
+   
+   if(list.size() > 0) {
+      model.addAttribute("list", list);
+      model.addAttribute("action", action);
+      model.addAttribute("keyword", keyword);
+      
+      model.addAttribute("listCount", listCount);
+      model.addAttribute("maxPage", maxPage);
+      model.addAttribute("currentPage", currentPage);
+      model.addAttribute("startPage", startPage);
+      model.addAttribute("endPage", endPage);
+      model.addAttribute("limit", limit);
+      
+      return "member/memberListView";
+   }else {
+      return "member/memberListView";
+   }
+}
+
 } //controller 끝

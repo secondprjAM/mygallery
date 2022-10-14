@@ -271,7 +271,7 @@ function upload() {
 			&nbsp;
 			<form id="uploadForm" enctype="multipart/form-data">
 			<input type="file" class="from-button"  id="imageInput" style="width: 10rem; height:3rem; border:3px solid  #f8f9fa;  cursor:pointer; position:relative; top:-10px;"/>
-			<input type="button" class="from-button" value="파일업로드" onclick="upload(); height:3rem; border:3px solid  #f8f9fa;  cursor:pointer;">
+			<input type="button" class="from-button" value="파일업로드" onclick="upload();" style= "height:3rem; border:3px solid  #f8f9fa;  cursor:pointer;">
 			</form>
 		</td>
 	</tr>

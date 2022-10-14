@@ -189,26 +189,87 @@ where importance = 0;
 -------------------------------
 
 insert into member values('admin','$2a$10$DS4ynMypwGsVbJip6QwC6ub1JnfgJb9KRZgS/mAh616t91By93FDG', 'mcg8031@naver.com','관리자','M','Y','Y');
-insert into member values('user01','$2a$10$DS4ynMypwGsVbJip6QwC6ub1JnfgJb9KRZgS/mAh616t91By93FDG', 'mcg8031@naver.com','유저1','M','N','Y');
+insert into member values('user01','$2a$10$DS4ynMypwGsVbJip6QwC6ub1JnfgJb9KRZgS/mAh616t91By93FDG', 'test@naver.com','유저1','M','N','Y');
+insert into member values('user02','$2a$10$DS4ynMypwGsVbJip6QwC6ub1JnfgJb9KRZgS/mAh616t91By93FDG', 'tes@naver.com','유저2','M','N','Y');
+insert into member values('user03','$2a$10$DS4ynMypwGsVbJip6QwC6ub1JnfgJb9KRZgS/mAh616t91By93FDG', 'tes@naver.com','유저3','M','N','Y');
+insert into member values('user04','$2a$10$DS4ynMypwGsVbJip6QwC6ub1JnfgJb9KRZgS/mAh616t91By93FDG', 'test@naver.com','유저4','M','N','Y');
+insert into member values('user05','$2a$10$DS4ynMypwGsVbJip6QwC6ub1JnfgJb9KRZgS/mAh616t91By93FDG', 'test@naver.com','유저1','M','N','Y');
+insert into member values('user06','$2a$10$DS4ynMypwGsVbJip6QwC6ub1JnfgJb9KRZgS/mAh616t91By93FDG', 'tes@naver.com','유저2','M','N','Y');
+insert into member values('user07','$2a$10$DS4ynMypwGsVbJip6QwC6ub1JnfgJb9KRZgS/mAh616t91By93FDG', 'tes@naver.com','유저3','M','N','Y');
+insert into member values('user08','$2a$10$DS4ynMypwGsVbJip6QwC6ub1JnfgJb9KRZgS/mAh616t91By93FDG', 'test@naver.com','유저4','M','N','Y');
+insert into member values('user09','$2a$10$DS4ynMypwGsVbJip6QwC6ub1JnfgJb9KRZgS/mAh616t91By93FDG', 'test@naver.com','유저1','M','N','Y');
+insert into member values('user10','$2a$10$DS4ynMypwGsVbJip6QwC6ub1JnfgJb9KRZgS/mAh616t91By93FDG', 'tes@naver.com','유저2','M','N','Y');
+insert into member values('user11','$2a$10$DS4ynMypwGsVbJip6QwC6ub1JnfgJb9KRZgS/mAh616t91By93FDG', 'tes@naver.com','유저3','M','N','Y');
+insert into member values('user12','$2a$10$DS4ynMypwGsVbJip6QwC6ub1JnfgJb9KRZgS/mAh616t91By93FDG', 'test@naver.com','유저4','M','N','Y');
+insert into member values('user13','$2a$10$DS4ynMypwGsVbJip6QwC6ub1JnfgJb9KRZgS/mAh616t91By93FDG', 'test@naver.com','유저1','M','N','Y');
+insert into member values('user14','$2a$10$DS4ynMypwGsVbJip6QwC6ub1JnfgJb9KRZgS/mAh616t91By93FDG', 'tes@naver.com','유저2','M','N','Y');
+insert into member values('user15','$2a$10$DS4ynMypwGsVbJip6QwC6ub1JnfgJb9KRZgS/mAh616t91By93FDG', 'tes@naver.com','유저3','M','N','Y');
+insert into member values('user16','$2a$10$DS4ynMypwGsVbJip6QwC6ub1JnfgJb9KRZgS/mAh616t91By93FDG', 'test@naver.com','유저4','M','N','Y');
+insert into member values('user17','$2a$10$DS4ynMypwGsVbJip6QwC6ub1JnfgJb9KRZgS/mAh616t91By93FDG', 'test@naver.com','유저1','M','N','Y');
+insert into member values('user18','$2a$10$DS4ynMypwGsVbJip6QwC6ub1JnfgJb9KRZgS/mAh616t91By93FDG', 'tes@naver.com','유저2','M','N','Y');
+insert into member values('user19','$2a$10$DS4ynMypwGsVbJip6QwC6ub1JnfgJb9KRZgS/mAh616t91By93FDG', 'tes@naver.com','유저3','M','N','Y');
+insert into member values('user20','$2a$10$DS4ynMypwGsVbJip6QwC6ub1JnfgJb9KRZgS/mAh616t91By93FDG', 'test@naver.com','유저4','M','N','Y');
+
 
 ---------------------------------------공지글 2개 등록
-INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지1번',sysdate,'첫번째 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지1번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지2번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지3번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지4번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지5번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지6번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지7번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지8번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지9번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지10번',sysdate,' 공지글입니다.',default,default,default,default);
 
-INSERT INTO "NOTICE" VALUES (notice_seq.nextval, 'admin','공지2번',sysdate,'두번째 공지글입니다.',default,default,default,default);
----------------------------------------공지글 2개 등록
-INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지1번',sysdate,'첫번째 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지11번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지12번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지13번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지14번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지15번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지16번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지17번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지18번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지19번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지20번',sysdate,' 공지글입니다.',default,default,default,default);
 
-INSERT INTO "NOTICE" VALUES (notice_seq.nextval, 'admin','공지2번',sysdate,'두번째 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지21번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지22번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지23번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지24번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지25번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지26번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지27번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지28번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지29번',sysdate,' 공지글입니다.',default,default,default,default);
+INSERT INTO NOTICE VALUES (notice_seq.nextval, 'admin','공지30번',sysdate,' 공지글입니다.',default,default,default,default);
+
 
 
 ---------------------------------------버그리포트 2개 등록
-INSERT INTO "BREPORT" VALUES (bug_seq.nextval, 'user01','문제있어요',sysdate,'문제가있네요',default,default,default,
-default,default,default,default);
-INSERT INTO "BREPORT" VALUES (bug_seq.nextval, 'user01','문제없어요',sysdate,'문제가없어요',default,default,default,
-default,default,default,default);
+INSERT INTO BREPORT VALUES (bug_seq.nextval, 'user01','문제있어요',sysdate,'문제가있네요',default,default,default,default,default,default,default);
+INSERT INTO BREPORT VALUES (bug_seq.nextval, 'user01','문제없어요',sysdate,'문제가없어요',default,default,default,default,default,default,default);
+INSERT INTO BREPORT VALUES (bug_seq.nextval, 'user02','문제있어요',sysdate,'문제가있네요',default,default,default,default,default,default,default);
+INSERT INTO BREPORT VALUES (bug_seq.nextval, 'user01','문제없어요',sysdate,'문제가없어요',default,default,default,default,default,default,default);
+INSERT INTO BREPORT VALUES (bug_seq.nextval, 'user03','문제있어요',sysdate,'문제가있네요',default,default,default,default,default,default,default);
+INSERT INTO BREPORT VALUES (bug_seq.nextval, 'user01','문제없어요',sysdate,'문제가없어요',default,default,default,default,default,default,default);
+INSERT INTO BREPORT VALUES (bug_seq.nextval, 'user01','문제있어요',sysdate,'문제가있네요',default,default,default,default,default,default,default);
+INSERT INTO BREPORT VALUES (bug_seq.nextval, 'user01','문제없어요',sysdate,'문제가없어요',default,default,default,default,default,default,default);
+INSERT INTO BREPORT VALUES (bug_seq.nextval, 'user01','문제있어요',sysdate,'문제가있네요',default,default,default,default,default,default,default);
+INSERT INTO BREPORT VALUES (bug_seq.nextval, 'user11','문제없어요',sysdate,'문제가없어요',default,default,default,default,default,default,default);
+INSERT INTO BREPORT VALUES (bug_seq.nextval, 'user01','문제있어요',sysdate,'문제가있네요',default,default,default,default,default,default,default);
+INSERT INTO BREPORT VALUES (bug_seq.nextval, 'user01','문제없어요',sysdate,'문제가없어요',default,default,default,default,default,default,default);
+INSERT INTO BREPORT VALUES (bug_seq.nextval, 'user01','문제있어요',sysdate,'문제가있네요',default,default,default,default,default,default,default);
+INSERT INTO BREPORT VALUES (bug_seq.nextval, 'user01','문제없어요',sysdate,'문제가없어요',default,default,default,default,default,default,default);
+INSERT INTO BREPORT VALUES (bug_seq.nextval, 'user01','문제있어요',sysdate,'문제가있네요',default,default,default,default,default,default,default);
+INSERT INTO BREPORT VALUES (bug_seq.nextval, 'user01','문제없어요',sysdate,'문제가없어요',default,default,default,default,default,default,default);
+INSERT INTO BREPORT VALUES (bug_seq.nextval, 'user01','문제있어요',sysdate,'문제가있네요',default,default,default,default,default,default,default);
+INSERT INTO BREPORT VALUES (bug_seq.nextval, 'user01','문제없어요',sysdate,'문제가없어요',default,default,default,default,default,default,default);
 
 ---------------------------------------갤러리 등록
-insert into gallery values(gallery_seq.nextval, 'admin', '20200320510186.jpg', '20200320510186.jpg', sysdate);
+insert into gallery values(gallery_seq.nextval, 'admin', '20221013010634.jpg', '20221013010634.jpg', sysdate);
+insert into gallery values(gallery_seq.nextval, 'admin', '20221013031836.jpg', '20221013031836.jpg', sysdate);
 
 ---------------------------------------스티커 등록
 insert into STICKER values(sticker_seq.nextval, 'admin', 'rabbit_nose.png', 'rabbit_nose.png', sysdate,'nose');

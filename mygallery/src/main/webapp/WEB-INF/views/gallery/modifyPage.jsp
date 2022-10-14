@@ -10,6 +10,7 @@
 <title></title>
 <!-- ============================================================================================== -->
 <style type="text/css">
+body {padding: 0 100px;}
 label:before {
 	content:
 		url("https://cdn1.iconfinder.com/data/icons/windows8_icons_iconpharm/26/unchecked_checkbox.png");
@@ -75,11 +76,14 @@ input[type=radio]{
 	<c:import url="/WEB-INF/views/common/menubar.jsp" />
 
 	<center>
+	<br>
+	<br>
 		<h3>Modify Page</h3>
+		<br>
 	</center>
 
 	<h2>이미지</h2>
-	<form action="python.do" method="post">
+	<form width="500" action="python.do" method="post">
 		<fieldset id="chk1">
 			<c:forEach items="${ requestScope.list }" var="g">
 				<c:if test="${ !empty g.img_rename }">

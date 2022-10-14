@@ -87,7 +87,7 @@ a {
 <br><br>
 <h1 align="center">MyGallery</h1>
 <h2 align="center">회원 정보 수정 페이지</h2>
-<form action="resetpwd.do" method="POST"  >
+<form action="resetpwd.do" method="POST"    onsubmit="return isSame();">
    <table align="center"  class="table" style="text-align:center;">
       <input type="hidden" name="userid" value="${ member.userid }" readonly>
       <tr>
