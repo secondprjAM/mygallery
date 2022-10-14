@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.am.mygallery.common.Paging;
+import com.am.mygallery.common.SearchPaging;
 import com.am.mygallery.member.model.dao.MemberDao;
 import com.am.mygallery.member.model.vo.Member;
 
@@ -88,6 +89,16 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public ArrayList<Member> selectList2(Paging page) {
-		return memberDao.selectList2();
+		return memberDao.selectList2(page);
 	}
+
+	@Override
+	public ArrayList<Member> selectSearchUseridP(SearchPaging searchpaging) {
+		return memberDao.selectSearchUseridP(searchpaging);
+	}
+
+	@Override
+	public ArrayList<Member> selectSearchLoginOKP(SearchPaging searchpaging) {
+		return memberDao.selectSearchLoginOKP(searchpaging);
+	}	
 }

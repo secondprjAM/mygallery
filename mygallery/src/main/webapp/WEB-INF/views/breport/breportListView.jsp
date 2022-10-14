@@ -192,27 +192,7 @@ function Change(){
 		</c:forEach>
 	</table>
 	<br>
-	<!-- 검색 항목 영역 -->
-	<div align="center">
-		<select id="test" onchange="Change()"  style="width: 4rem; height:3rem; border:3px solid  #f8f9fa;position:relative; top:50px;text-align:center; right:260px;">
-			<option value="1">제목</option>
-			<option value="2">날짜</option>
-		</select>
-		<div id="d1" style="display:block">
-			<form action="bsearchTitle.do" method="get">
-				<input type="search" name="keyword" id="d1_input"  style="width: 25rem;height:3rem; border:3px solid #f8f9fa;"> 
-				<input type="submit" value="검색"  style="width: 3rem;height:3rem;border:none; background-color:#f8f9fa; cursor:pointer;" class="btn">
-			</form>
-		</div>
-		<div id="d2" style="display:none">
-			<form action="bsearchDate.do" method="get">
-				<input type="date" name="begin" style="width: 12rem;height:2.5rem; border:3px solid #f8f9fa;" class="datedate"> 
-				<input type="date" name="end" style="width: 12rem;height:2.5rem; border:3px solid #f8f9fa;" class="datedate"> 
-				<input type="submit" value="검색" style="width: 3rem;height:3rem;border:none; background-color:#f8f9fa; cursor:pointer;" class="btn">
-			</form>
-		</div>
-	</div>
-	<br>
+	
 	
 <c:if test="${ empty action }">
 	<!-- 페이징 처리 -->
@@ -401,8 +381,28 @@ function Change(){
 	</c:if>
 		</div>
 	</c:if>
-
-	<c:import url="/WEB-INF/views/common/footer.jsp" />
+<!-- 검색 항목 영역 -->
+	<div align="center">
+		<select id="test" onchange="Change()"  style="width: 4rem; height:3rem; border:3px solid  #f8f9fa;position:relative; top:50px;text-align:center; right:260px;">
+			<option value="1">제목</option>
+			<option value="2">날짜</option>
+		</select>
+		<div id="d1" style="display:block">
+			<form action="bsearchTitle.do" method="get">
+				<input type="search" name="keyword" id="d1_input"  style="width: 25rem;height:3rem; border:3px solid #f8f9fa;"> 
+				<input type="submit" value="검색"  style="width: 3rem;height:3rem;border:none; background-color:#f8f9fa; cursor:pointer;" class="btn">
+			</form>
+		</div>
+		<div id="d2" style="display:none">
+			<form action="bsearchDate.do" method="get">
+				<input type="date" name="begin" style="width: 12rem;height:2.5rem; border:3px solid #f8f9fa;" class="datedate"> 
+				<input type="date" name="end" style="width: 12rem;height:2.5rem; border:3px solid #f8f9fa;" class="datedate"> 
+				<input type="submit" value="검색" style="width: 3rem;height:3rem;border:none; background-color:#f8f9fa; cursor:pointer;" class="btn">
+			</form>
+		</div>
+	</div>
+	<br>
+	<c:import url="/WEB-INF/views/common/footer2.jsp" />
 </body>
 </html>
 

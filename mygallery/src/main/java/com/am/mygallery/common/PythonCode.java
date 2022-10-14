@@ -113,7 +113,7 @@ public class PythonCode {
 				BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream(), "euc-kr")); // 서브 프로세스가 출력하는 내용을 받기 위해
 				String line;
 				if(br.readLine()==null) {
-					System.out.print("없음");
+					
 				}else {
 					while ((line = br.readLine()) != null) {
 						System.out.println(">>>  " + line);
@@ -121,7 +121,7 @@ public class PythonCode {
 					}
 					if(exitVal != 0) {
 						// 비정상 종료
-						System.out.println("서브 프로세스가 비정상 종료되었다.");
+						System.out.println("서브 프로세스가 비정상 종료되었습니다.");
 					}
 				}
 			} catch (Exception e) {

@@ -7,6 +7,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.am.mygallery.common.Paging;
+import com.am.mygallery.common.SearchPaging;
 import com.am.mygallery.member.model.vo.Member;
  
 @Repository("memberDao")  //xml 자동 등록됨 (id지정함)
@@ -76,9 +78,20 @@ public class MemberDao {
 		return session.update("memberMapper.updateLoginOK", member);
 	}
 
-	public ArrayList<Member> selectList2() {
-		List<Member> list = session.selectList("memberMapper.selectList2");
+	public ArrayList<Member> selectList2(Paging page) {
+		List<Member> list = session.selectList("memberMapper.selectList2", page);
 		return (ArrayList<Member>)list;
 	}
 
+	public ArrayList<Member> selectSearchUseridP(SearchPaging searchpaging) {
+		List<Member> list = session.selectList(
+				"memberMapper.selectSearchUseridP", searchpaging);
+		return (ArrayList<Member>)list;
+		}
+
+	public ArrayList<Member> selectSearchLoginOKP(SearchPaging searchpaging) {
+		List<Member> list = session.selectList(
+				"memberMapper.selectSearchLoginOKP", searchpaging	);
+		return (ArrayList<Member>)list;
+	}
 }

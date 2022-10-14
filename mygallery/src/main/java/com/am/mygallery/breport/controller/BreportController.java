@@ -234,7 +234,6 @@ public class BreportController {
 			return mv;
 		}
 		
-		//게시글 첨부파일 다운로드 처리용
 		@RequestMapping("bfdown.do")
 		public ModelAndView fileDownMethod(ModelAndView mv, 
 				HttpServletRequest request, 

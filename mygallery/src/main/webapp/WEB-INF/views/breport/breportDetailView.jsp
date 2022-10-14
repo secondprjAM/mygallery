@@ -11,7 +11,7 @@
 <meta charset="UTF-8">
 <title></title>
 <style type="text/css">
-.table {
+.table, .btable {
 		 margin:50px auto;
 }
 h2 {
@@ -49,7 +49,7 @@ h2 {
 .button:hover {
 background-color:salmon;
 }
-</style>
+a{text-decoration:none; color:#333;}</style>
 </head>
 <body>
 <!-- 절대경로로 대상 파일의 위치를 지정한 경우 -->
@@ -118,17 +118,17 @@ cellpadding="5">
 <br>
 <table class="btable" align="center" width="500" border="0" cellspacing="1" 
 cellpadding="5">
-	<tr><td>${ breply.b_title }</td><td>${ breply.userid }</td>
+	<tr><td  style="border:none; font-weight:bold;font-size:20px;">${ breply.b_title }</td><td>${ breply.userid }</td>
 	<td><fmt:formatDate value="${ breply.b_date }" type="date" pattern="yyyy-MM-dd" /></td></tr>
 	<tr><td colspan="3" style="border:1px solide gray;">${ breply.b_content }</td></tr>
-	<tr><td colspan="3">
+	<tr style="border:none;text-align:center"><td colspan="3">
 	<!-- 본인이 등록한 게시글일 때는 수정과 삭제 기능 제공 -->
 		<c:if test="${ requestScope.breply.userid eq sessionScope.loginMember.userid }">
 			<c:url var="bup" value="/bupviewreply.do">
 				<c:param name="b_no" value="${ breport.b_no }" />
 				<c:param name="page" value="${ currentPage }" />
 			</c:url>
-			<button class="button"><a href="${ bup }">수정하기</a></button> &nbsp;
+			<button class="button"><a href="${ bup }" style="text-decoration:none; color:#333;">수정하기</a></button> &nbsp;
 			<button class="button"><c:url var="bdl" value="/bdel.do"></button> 
 				<c:param name="b_no" value="${ breply.b_no }" />
 				<c:param name="b_lev" value="${ breply.b_lev }" />
